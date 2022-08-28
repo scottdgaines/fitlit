@@ -9,8 +9,9 @@ class User {
     this.friends = userObj.friends;
   }
 
-  returnUserName() {
-    
+  returnUserFirstName() {
+    let arrayedName = this.name.split(" ");
+    return arrayedName[0];
   };
 };
 
