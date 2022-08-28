@@ -8,8 +8,12 @@ class UserRepository {
   };
 
   returnAllUserStepGoal(){
-
-  }
+    let allSteps = this.userData.reduce((totalStepCount, user) => {
+      totalStepCount += user.dailyStepGoal
+      return totalStepCount;
+    }, 0)
+    return parseInt(allSteps / this.userData.length)
+  };
 };
 
 export default UserRepository;
