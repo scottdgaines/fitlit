@@ -34,10 +34,17 @@ let mainDisplay
 let myDayInfo
 let myAverageInfo
 let myWeekInfo
+let navIcons = [waterIcon, sleepIcon, activityIcon];
+//need one for onload display box, welcome header
 
 //EVENT LISTENERS:
-//loop to add EL to each nav bar icon
-//pageload fires generateRandomUser
+window.addEventListener('load', generateRandomUser); //pageload fires generateRandomUser
+//other EH's to fill user-specific info.
+
+navIcons.forEach(icon => {
+  icon.addEventListener('click', changeDisplay)
+}); //loop to add EL to each nav bar icon
+
 
 //EVENT HANDLERS:
 function generateRandomUser(userData) {
@@ -46,10 +53,22 @@ function generateRandomUser(userData) {
 };
 
 function welcomeUser() {
-  welcomeMessage.innerHTML = ``
-}
+  welcomeMessage.innerHTML = `Hi, ${currentUser.returnUserFirstName}!`
+};
 
+function changeDisplay() {
+  hide();
+  unhide(mainDisplay);
+  unhide();
+}; //will need to hide lg box with welcome msg, unhide mainDisplay, unhide welcome header
 
+function hide(element) {
+  element.classList.add('hidden');
+};
+
+function unhide(element {
+  element.classList.remove('hidden');
+});
 //On load, generate random user from data set
 //on load, we see a transparent version of logo and welcome message that will be hidden
 //when user clicks an icon in navBar
