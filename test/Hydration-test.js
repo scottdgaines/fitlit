@@ -4,19 +4,33 @@ import Hydration from '../src/Hydration.js';
 describe('Hydration', () => {
     let hydrationObject1;
     let hydrationObject2;
+    let hydrationObject3;
+    let array;
 
     beforeEach(() => {
         hydrationObject1 = new Hydration({
-            'id': 1,
+            'userID': 1,
             'date': '2022/08/29',
             'numOunces': 36
         });
 
         hydrationObject2 = new Hydration({
-            'id': 2,
+            'userID': 2,
             'date': '2022/08/28',
             'numOunces': 42
         });
+
+        hydrationObject3 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/27',
+            'numOunces': 23
+        })
+
+        array = [
+            hydrationObject1,
+            hydrationObject2,
+            hydrationObject3
+        ]
     });
 
     it('Should be a function', () => {
@@ -29,8 +43,8 @@ describe('Hydration', () => {
     });
 
     it('Should have an id', () => {
-        expect(hydrationObject1.user).to.equal(1);
-        expect(hydrationObject2.user).to.equal(2);
+        expect(hydrationObject1.userID).to.equal(1);
+        expect(hydrationObject2.userID).to.equal(2);
     });
 
     it('Should have an date', () => {
@@ -39,7 +53,11 @@ describe('Hydration', () => {
     });
 
     it('Should list the number of ounces consumed', () => {
-        expect(hydrationObject1.ouncesConsumed).to.equal(36);
-        expect(hydrationObject2.ouncesConsumed).to.equal(42);
+        expect(hydrationObject1.numOunces).to.equal(36);
+        expect(hydrationObject2.numOunces).to.equal(42);
     });
+
+    it('Should return the total average ounces consumed for a user', () => {
+        expect(hydrationObject1.returnAllTimeHydration(array, 2)).to.equal(32.5);
+    })
 });
