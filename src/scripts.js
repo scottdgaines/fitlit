@@ -31,7 +31,7 @@ let userInfoContainer = document.getElementById('myUserInfo');
 let userInfotext
 let userStepGoalContainer = document.getElementById('userStepsContainer');
 let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
-let mainDisplay = document.getElementById('userDataContainer'); //check that this is right
+let mainDisplay = document.getElementById('userDataContainer');
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
@@ -57,7 +57,7 @@ function generatePageLoad() {
   renderAvgStepGoal();
 };
 
-function generateRandomUser(userData) { //would it be better to pass in userRepository.data?
+function generateRandomUser(userData) {
   let currentUserObj = userData[Math.floor(Math.random() * userData.length)];
   currentUser = new User(currentUserObj);
 };
@@ -90,9 +90,12 @@ function renderMyInfo(currentUser) {
     Stride Length: ${currentUser.strideLength}`
 };
 
-function renderMyFriends() {
+function renderMyFriends(currentUser) {
+  currentUser.friends.forEach(friend => {
+
+  })
   //loop over friend list
-  //for each
+  //for each friend, add image and name.
 }
 //On load, generate random user from data set
 //on load, we see a transparent version of logo and welcome message that will be hidden
