@@ -1,5 +1,5 @@
 class UserRepository {
-  constructor (data){
+  constructor (data) {
     this.userData = data;
   };
   returnUserData(id){
@@ -7,7 +7,7 @@ class UserRepository {
     return userInfo
   };
 
-  returnAllUserStepGoal(){
+  returnAllUserStepGoal() { //pass in sleep, water, or steps and add conditionals
     let allSteps = this.userData.reduce((totalStepCount, user) => {
       totalStepCount += user.dailyStepGoal
       return totalStepCount;

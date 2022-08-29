@@ -22,32 +22,42 @@ let userRepository = new UserRepository(userData);
 let currentUser
 
 //QUERY SELECTORS:
-let waterIcon
-let sleepIcon
-let activityIcon
-let welcomeMessage
-let friendBox
-let userInfoBox
-let userStepGoal
-let averageStepGoal
-let mainDisplay
-let myDayInfo
-let myAverageInfo
-let myWeekInfo
+let waterIcon = document.getElementById('water-icon');
+let sleepIcon = document.getElementById('sleep-icon');
+let activityIcon = document.getElementById('activity-icon');
+let welcomeMessage = document.getElementById('welcomeMessage');
+let friendContainer = document.getElementById('myFriendBoxContainer');
+let userInfoContainer = document.getElementById('myUserInfo');
+let userInfotext
+let userStepGoalContainer = document.getElementById('userStepsContainer');
+let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
+let mainDisplay = document.getElementById('userDataContainer'); //check that this is right
+let myDayInfoContainer = document.getElementById('myDayInfoContainer');
+let myAverageInfo = document.getElementById('myAverageInfoContainer');
+let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon];
-//need one for onload display box, welcome header
+let logoContainer = document.getElementById('logoContainer');
+
+//need one for welcome header
 
 //EVENT LISTENERS:
-window.addEventListener('load', generateRandomUser); //pageload fires generateRandomUser
-//other EH's to fill user-specific info.
+window.addEventListener('load', generatePageLoad);
 
 navIcons.forEach(icon => {
   icon.addEventListener('click', changeDisplay)
-}); //loop to add EL to each nav bar icon
+});
 
 
 //EVENT HANDLERS:
-function generateRandomUser(userData) {
+function generatePageLoad() {
+  generateRandomUser(userData); //will that work? don't we need to declare userData as a variable?
+  renderMyInfo();
+  renderMyFriends();
+  renderMyStepGoal();
+  renderAvgStepGoal();
+};
+
+function generateRandomUser(userData) { //would it be better to pass in userRepository.data?
   let currentUserObj = userData[Math.floor(Math.random() * userData.length)];
   currentUser = new User(currentUserObj);
 };
@@ -69,6 +79,21 @@ function hide(element) {
 function unhide(element {
   element.classList.remove('hidden');
 });
+
+function renderMyInfo(currentUser) {
+  var userAvatar = document.createElement('img');
+  userAvatar.classList.add('medium');
+  userInfoContainer.appendChild(userAvatar);
+  userInfoContainer.innerHTML = `Name: ${currentUser.name}
+    Address: ${currentUser.address}
+    Email: ${currentUser.email}
+    Stride Length: ${currentUser.strideLength}`
+};
+
+function renderMyFriends() {
+  //loop over friend list
+  //for each
+}
 //On load, generate random user from data set
 //on load, we see a transparent version of logo and welcome message that will be hidden
 //when user clicks an icon in navBar
