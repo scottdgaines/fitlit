@@ -59,5 +59,9 @@ describe('Hydration', () => {
 
     it('Should return the total average ounces consumed for a user', () => {
         expect(hydrationObject1.returnAllTimeHydration(array, 2)).to.equal(32.5);
-    })
+    });
+
+    it('Should return the total number of ounces a user consumed on a specific date', () => {
+      expect(hydrationObject1.userOuncesByDay(array, 2, '2022/08/28')).to.equal(42);
+    });
 });
