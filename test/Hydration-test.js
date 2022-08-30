@@ -5,6 +5,12 @@ describe('Hydration', () => {
     let hydrationObject1;
     let hydrationObject2;
     let hydrationObject3;
+    let hydrationObject4;
+    let hydrationObject5;
+    let hydrationObject6;
+    let hydrationObject7;
+    let hydrationObject8;
+    let hydrationObject9;
     let array;
 
     beforeEach(() => {
@@ -22,14 +28,55 @@ describe('Hydration', () => {
 
         hydrationObject3 = new Hydration({
             'userID': 2,
-            'date': '2022/08/27',
+            'date': '2022/08/26',
+            'numOunces': 2
+        });
+
+        hydrationObject4 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/24',
+            'numOunces': 10
+        })
+
+        hydrationObject5 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/21',
             'numOunces': 23
         })
+        hydrationObject6 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/27',
+            'numOunces': 60
+        });
+
+        hydrationObject7 = new Hydration({
+            'userID': 2,
+            'date': '2022/07/27',
+            'numOunces': 19
+        });
+
+        hydrationObject8 = new Hydration({
+            'userID': 2,
+            'date': '2022/06/27',
+            'numOunces': 20
+        });
+
+        hydrationObject9 = new Hydration({
+            'userID': 2,
+            'date': '2022/05/27',
+            'numOunces': 40
+        });
 
         array = [
             hydrationObject1,
             hydrationObject2,
-            hydrationObject3
+            hydrationObject3,
+            hydrationObject4,
+            hydrationObject5,
+            hydrationObject6,
+            hydrationObject7,
+            hydrationObject8,
+            hydrationObject9
         ]
     });
 
@@ -58,6 +105,14 @@ describe('Hydration', () => {
     });
 
     it('Should return the total average ounces consumed for a user', () => {
-        expect(hydrationObject1.returnAllTimeHydration(array, 2)).to.equal(32.5);
-    })
+        expect(hydrationObject1.returnAllTimeHydration(array, 2)).to.equal(27);
+    });
+
+    it('Should return the total number of ounces a user consumed on a specific date', () => {
+      expect(hydrationObject1.returnUserOuncesByDay(array, 2, '2022/08/28')).to.equal(42);
+    });
+
+    it('Should return a week\'s data for a user', () => {
+      expect(hydrationObject1.returnUserWeekData(array, 2)).to.deep.equal([42, 2, 10, 23, 60, 19, 20])
+    });
 });
