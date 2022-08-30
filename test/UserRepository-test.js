@@ -1,12 +1,15 @@
 import { expect } from 'chai';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
+import sleepData from '../src/sampleSleep';
+// import sampleHydration from '..src/sampleHydration';
 
 describe('User Repository', () => {
   let user1;
   let user2;
   let users;
   let userRepository;
+
 
   beforeEach(() => {
     user1 = new User({
@@ -60,7 +63,7 @@ describe('User Repository', () => {
     expect(userRepository.returnUserData(1)).to.deep.equal(user1);
   });
 
-  it('should be able to calculate the average of all users\' step goals', () =>  {
-    expect(userRepository.returnAllUserStepGoal()).to.equal(7500);
+  it('should be able to calculate the average of all user data', () =>  {
+    expect(userRepository.returnAverageUserData(sleepData)).to.equal('3.64');
   });
 });
