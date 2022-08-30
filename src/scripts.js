@@ -16,10 +16,25 @@ console.log('This is the JavaScript entry file - your code begins here.');
 import userData from './data/users';
 import UserRepository from './UserRepository';
 import User from './User';
+import fetchData from './apiCalls.js';
 
 //GLOBAL VARIABLES:
 let userRepository = new UserRepository(userData);
-let currentUser
+let currentUser;
+let allUserData;
+let allSleepData;
+let allHydrationData;
+
+// FETCH PROMISE:
+function startData() {
+    Promise.all([fetchData('users'), fetchData('sleep'), fetchData('hydration')])
+      .then((dataSet) => {
+        allUserData = dataSet[0];
+        allSleepData = dataSet[1];
+        allHydrationData = dataSet[2];
+  });
+};
+
 
 //QUERY SELECTORS:
 let waterIcon = document.getElementById('water-icon');
@@ -37,8 +52,6 @@ let myAverageInfo = document.getElementById('myAverageInfoContainer');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon];
 let logoContainer = document.getElementById('logoContainer');
-
-//need one for welcome header
 
 //EVENT LISTENERS:
 window.addEventListener('load', generatePageLoad);
@@ -83,9 +96,9 @@ function hide(element) {
   element.classList.add('hidden');
 };
 
-function unhide(element {
+function unhide(element) {
   element.classList.remove('hidden');
-});
+};
 
 function renderMyInfo(currentUser) {
   var userAvatar = document.createElement('img');
@@ -117,10 +130,10 @@ function renderMyFriends(currentUser) {
   });
 };
 
-function renderData(dataType) {
-  myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
-//consider making more dynamic to take in both dataType AND element where it will display
-}
+// function renderData(dataType) {
+//   myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
+// //consider making more dynamic to take in both dataType AND element where it will display
+// }
 
 
 
