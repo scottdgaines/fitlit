@@ -90,13 +90,25 @@ function renderMyInfo(currentUser) {
     Stride Length: ${currentUser.strideLength}`
 };
 
-function renderMyFriends(currentUser) {
-  currentUser.friends.forEach(friend => {
+function makeAFriend(friendName) {
+  var friendDisplay = document.createElement('div');
+  var friendIcon = document.createElement('img');
+  var friendNameElement = document.createElement('h6');
+  friendIcon.src = './images/friendIcon.svg';
+  friendIcon.classList.add('small');
+  friendDisplay.appendChild(friendIcon);
+  friendDisplay.appendChild(friendNameElement);
+  friendNameElement.innerText = friendName;
+  return friendDisplay;
+};
 
-  })
-  //loop over friend list
-  //for each friend, add image and name.
-}
+function renderMyFriends(currentUser) {
+  currentUser.friends.forEach(friendID => {
+    const friendObj = userData.find(userObj => friendID === userObj.id)
+    const friendName = friendObj.name
+    myFriendBoxContainer.appendChild(makeAFriend(friendName))
+  });
+};
 //On load, generate random user from data set
 //on load, we see a transparent version of logo and welcome message that will be hidden
 //when user clicks an icon in navBar
