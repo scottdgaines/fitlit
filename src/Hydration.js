@@ -21,11 +21,22 @@ class Hydration {
       return userAverage
     };
 
-    userOuncesByDay(array, userID, date) {
+    returnUserOuncesByDay(array, userID, date) {
       const newArray = this.findUser(array, userID);
       const dailyOunces = newArray.find(element => element.date === date)
       return dailyOunces.numOunces;
     };
+
+    returnUserWeekData(array, userID) {
+      const user = this.findUser(array, userID);
+      const userDatesArray = array
+        .filter(element => element.userID === userID)
+        .splice(0,7)
+        .map(hydrationObj => hydrationObj.numOunces)
+
+      return userDatesArray;
+    };
+
 };
 
 
