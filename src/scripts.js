@@ -50,7 +50,7 @@ navIcons.forEach(icon => {
 
 //EVENT HANDLERS:
 function generatePageLoad() {
-  generateRandomUser(userData); //will that work? don't we need to declare userData as a variable?
+  generateRandomUser(userData);
   renderMyInfo();
   renderMyFriends();
   renderMyStepGoal();
@@ -67,10 +67,17 @@ function welcomeUser() {
 };
 
 function changeDisplay() {
-  hide();
-  unhide(mainDisplay);
-  unhide();
-}; //will need to hide lg box with welcome msg, unhide mainDisplay, unhide welcome header
+  if (event.target.id === 'water-icon') {
+    renderData(water);
+  } else if (event.target.id === 'sleep-icon') {
+    renderData(sleep);
+  } else if (event.target.id === 'activity-icon') {
+    renderData(activity);
+  }
+  hide(welcomeMessage);
+  unhide(userDataContainer);
+  unhide(logoContainer);
+};
 
 function hide(element) {
   element.classList.add('hidden');
@@ -109,15 +116,14 @@ function renderMyFriends(currentUser) {
     myFriendBoxContainer.appendChild(makeAFriend(friendName))
   });
 };
-//On load, generate random user from data set
-//on load, we see a transparent version of logo and welcome message that will be hidden
-//when user clicks an icon in navBar
-//my info box will populate
-// welcome message will populate (running user.return user first name);
-//my friends will populate (from user.friends array)
 
-//event listeners on navbar icons
-//all clicks hide big welcome message, unhide welcome message at top
+function renderData(dataType) {
+  myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
+//consider making more dynamic to take in both dataType AND element where it will display
+}
+
+
+
 //click on a water/sleep/activity icon populates the larger bubbles with
 //user info from user class
 //average step goal for all users will populate in box, also user's step goal
