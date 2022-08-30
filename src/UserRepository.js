@@ -1,5 +1,5 @@
 class UserRepository {
-  constructor (data){
+  constructor (data) {
     this.userData = data;
   };
 
@@ -7,6 +7,7 @@ class UserRepository {
     let userInfo = this.userData.find(user => id === user.id)
     return userInfo
   };
+
 //dataType ===  sleep array
 //returnAverageUserData(sleepData)
   returnAverageUserData(dataArray){
