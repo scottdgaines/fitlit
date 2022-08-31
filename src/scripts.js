@@ -86,6 +86,7 @@ navIcons.forEach(icon => {
 function generatePageLoad(userData) {
   currentUser = generateRandomUser(userData);
   console.log(currentUser)
+  welcomeUser(currentUser)
   renderMyInfo(currentUser);
   renderMyFriends(currentUser, userData);
   // renderMyStepGoal(userData);
@@ -97,8 +98,8 @@ function generateRandomUser(userData) {
   return currentUser = new User(currentUserObj);
 };
 
-function welcomeUser() {
-  welcomeMessage.innerHTML = `Hi, ${currentUser.returnUserFirstName}!`
+function welcomeUser(currentUser) {
+  welcomeMessage.innerHTML = `Hi, ${currentUser.returnUserFirstName()}!`
 };
 
 function changeDisplay() {
@@ -153,10 +154,10 @@ function renderMyFriends(currentUser, allUserData) {
   });
 };
 
-// function renderData(dataType) {
-//   myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
-// //consider making more dynamic to take in both dataType AND element where it will display
-// }
+function renderData(dataType) {
+  myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
+//consider making more dynamic to take in both dataType AND element where it will display
+}
 
 
 
