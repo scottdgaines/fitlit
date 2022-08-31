@@ -1,7 +1,7 @@
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
-console.log(userData,"<>>>>userData")
+// console.log(userData,"<>>>>userData")
 // An example of how you tell webpack to use a CSS file
 import './css/styles.css';
 
@@ -13,34 +13,48 @@ console.log('This is the JavaScript entry file - your code begins here.');
 // An example of how you tell webpack to use a JS file
 
 //IMPORTS:
-import userData from './data/users';
+// import userData from './data/users';
 import UserRepository from './UserRepository';
 import User from './User';
 import fetchData from './apiCalls.js';
 
 //GLOBAL VARIABLES:
-let userRepository = new UserRepository(userData);
+let userRepository;
 let currentUser;
 let allUserData;
 let allSleepData;
 let allHydrationData;
+let allDataPoints = [allUserData, allSleepData, allHydrationData]
 
 // FETCH PROMISE:
+let dataTypes = [
+  'users',
+  'sleep',
+  'hydration'
+];
+
+let requests = dataTypes.map(dataType => fetchData(dataType));
+
+Promise.all(requests)
+  .then(responses => responses.forEach((request, index) => {
+    let name = allDataPoints[index];
+    name = request;
+  }
+));
+
 function startData() {
-    Promise.all([fetchData('users'), fetchData('sleep'), fetchData('hydration')])
+    Promise.all([fetchData('users', 'userData'), fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData')])
       .then((dataSet) => {
         allUserData = dataSet[0];
         allSleepData = dataSet[1];
         allHydrationData = dataSet[2];
-  });
+        generatePageLoad(allUserData);
+
+  })
 };
 
-function printData() {
-  startData().then((a) => console.log(a))
-}
+// startData();
 
-printData();
-console.log(allHydrationData);
 
 
 //QUERY SELECTORS:
@@ -61,7 +75,7 @@ let navIcons = [waterIcon, sleepIcon, activityIcon];
 let logoContainer = document.getElementById('logoContainer');
 
 //EVENT LISTENERS:
-window.addEventListener('load', generatePageLoad);
+window.addEventListener('load', startData);
 
 navIcons.forEach(icon => {
   icon.addEventListener('click', changeDisplay)
@@ -69,17 +83,18 @@ navIcons.forEach(icon => {
 
 
 //EVENT HANDLERS:
-function generatePageLoad() {
-  generateRandomUser(userData);
-  renderMyInfo();
-  renderMyFriends();
-  renderMyStepGoal();
-  renderAvgStepGoal();
+function generatePageLoad(userData) {
+  currentUser = generateRandomUser(userData);
+  console.log(currentUser)
+  renderMyInfo(currentUser);
+  renderMyFriends(currentUser, userData);
+  // renderMyStepGoal(userData);
+  // renderAvgStepGoal(userData);
 };
 
 function generateRandomUser(userData) {
   let currentUserObj = userData[Math.floor(Math.random() * userData.length)];
-  currentUser = new User(currentUserObj);
+  return currentUser = new User(currentUserObj);
 };
 
 function welcomeUser() {
@@ -129,9 +144,10 @@ function makeAFriend(friendName) {
   return friendDisplay;
 };
 
-function renderMyFriends(currentUser) {
+function renderMyFriends(currentUser, allUserData) {
+  console.log(currentUser.friends)
   currentUser.friends.forEach(friendID => {
-    const friendObj = userData.find(userObj => friendID === userObj.id)
+    const friendObj = allUserData.find(userObj => friendID === userObj.id)
     const friendName = friendObj.name
     myFriendBoxContainer.appendChild(makeAFriend(friendName))
   });
