@@ -1,9 +1,24 @@
 import { expect } from 'chai';
 import User from '../src/User.js';
+import Hydration from '../src/Hydration.js'
+
 
 describe('User', () => {
     let user1;
     let user2;
+    let hydrationObject1;
+    let hydrationObject2;
+    let hydrationObject3;
+    let hydrationObject4;
+    let hydrationObject5;
+    let hydrationObject6;
+    let hydrationObject7;
+    let hydrationObject8;
+    let hydrationObject9;
+    let hydrationObject10;
+    let array;
+    let array1;
+
 
     beforeEach(() => {
         user1 = new User({
@@ -34,6 +49,89 @@ describe('User', () => {
                   19
                 ]
         });
+
+        hydrationObject1 = new Hydration({
+            'userID': 1,
+            'date': '2022/08/29',
+            'numOunces': 36
+        });
+
+        hydrationObject2 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/28',
+            'numOunces': 42
+        });
+
+        hydrationObject3 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/26',
+            'numOunces': 2
+        });
+
+        hydrationObject4 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/24',
+            'numOunces': 10
+        })
+
+        hydrationObject5 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/21',
+            'numOunces': 23
+        })
+        hydrationObject6 = new Hydration({
+            'userID': 2,
+            'date': '2022/08/27',
+            'numOunces': 60
+        });
+
+        hydrationObject7 = new Hydration({
+            'userID': 2,
+            'date': '2022/07/27',
+            'numOunces': 19
+        });
+
+        hydrationObject8 = new Hydration({
+            'userID': 2,
+            'date': '2022/06/27',
+            'numOunces': 20
+        });
+
+        hydrationObject9 = new Hydration({
+            'userID': 2,
+            'date': '2022/05/27',
+            'numOunces': 40
+        });
+
+        hydrationObject10 = new Hydration({
+            'userID': 1,
+            'date': '2022/08/15',
+            'numOunces': 30
+        });
+
+        array = [
+            hydrationObject1,
+            hydrationObject2,
+            hydrationObject3,
+            hydrationObject4,
+            hydrationObject5,
+            hydrationObject6,
+            hydrationObject7,
+            hydrationObject8,
+            hydrationObject9,
+            hydrationObject10
+        ];
+
+        array1 = [
+            hydrationObject2,
+            hydrationObject3,
+            hydrationObject4,
+            hydrationObject5,
+            hydrationObject6,
+            hydrationObject7,
+            hydrationObject8,
+            hydrationObject9
+        ];
     });
 
     it('Should be a function', () => {
@@ -84,4 +182,21 @@ describe('User', () => {
         expect(user1.returnUserFirstName()).to.equal('Luisa');
         expect(user2.returnUserFirstName()).to.equal('Jarvis');
     });
+
+    it('Should filter all entries for a user', () => {
+        expect(user2.findUser(array)).to.deep.equal(array1);
+    });
+
+    it('Should return the total average ounces consumed for a user', () => {
+        expect(user1.returnAllTimeHydration(array)).to.equal(33);
+    });
+
+    it('Should return the total number of ounces a user consumed on a specific date', () => {
+      expect(user1.returnUserOuncesByDay(array, '2022/08/15')).to.equal(30);
+    });
+
+    it('Should return a week\'s data for a user', () => {
+      expect(user2.returnUserWeekData(array)).to.deep.equal([42, 2, 10, 23, 60, 19, 20]);
+    });
+
 });
