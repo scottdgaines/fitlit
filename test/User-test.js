@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import User from '../src/User.js';
 import Hydration from '../src/Hydration.js'
 
+
 describe('User', () => {
     let user1;
     let user2;
@@ -17,6 +18,7 @@ describe('User', () => {
     let hydrationObject10;
     let array;
     let array1;
+
 
     beforeEach(() => {
         user1 = new User({
@@ -196,4 +198,5 @@ describe('User', () => {
     it('Should return a week\'s data for a user', () => {
       expect(user2.returnUserWeekData(array)).to.deep.equal([42, 2, 10, 23, 60, 19, 20]);
     });
+
 });
