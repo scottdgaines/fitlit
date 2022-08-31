@@ -35,6 +35,13 @@ function startData() {
   });
 };
 
+function printData() {
+  startData().then((a) => console.log(a))
+}
+
+printData();
+console.log(allHydrationData);
+
 
 //QUERY SELECTORS:
 let waterIcon = document.getElementById('water-icon');
