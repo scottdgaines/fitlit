@@ -145,17 +145,18 @@ describe('User', () => {
               "sleepQuality": 2.2
         });
 
-        sleepObject2 = new Sleep({
+        sleepObject2 = new Sleep ({
+          "userID": 2,
+          "date": "2019/06/15",
+          "hoursSlept": 7,
+          "sleepQuality": 4.7
+        });
+
+        sleepObject3 = new Sleep({
               "userID": 2,
               "date": "2019/06/16",
               "hoursSlept": 7.5,
               "sleepQuality": 3.8
-        });
-        sleepObject3 = new Sleep ({
-              "userID": 2,
-              "date": "2019/06/15",
-              "hoursSlept": 7,
-              "sleepQuality": 4.7
         });
 
         sleepArray = [
@@ -231,17 +232,17 @@ describe('User', () => {
     });
 
     it('Should return a week\'s data for a user', () => {
-      expect(user2.returnUserWeekData(hydrationArray, 'numOunces')).to.deep.equal([42, 2, 10, 23, 60, 19, 20]);
-      expect(user2.returnUserWeekData(sleepArray, 'hoursSlept')).to.deep.equal([7.5, 7]);
-      expect(user2.returnUserWeekData(sleepArray, 'sleepQuality')).to.deep.equal([3.8, 4.7]);
+      expect(user2.returnUserWeekData(hydrationArray, 'numOunces')).to.deep.equal(['2022/08/08: 40', '2022/08/07: 20', '2022/08/06: 19', '2022/08/05: 60', '2022/08/04: 23', '2022/08/03: 10', '2022/08/02: 2']);
+      expect(user2.returnUserWeekData(sleepArray, 'hoursSlept')).to.deep.equal(['2019/06/16: 7.5', '2019/06/15: 7']);
+      expect(user2.returnUserWeekData(sleepArray, 'sleepQuality')).to.deep.equal(['2019/06/16: 3.8', '2019/06/15: 4.7']);
     });
 
     it('Should return the user\'s average hours of sleep per day', () => {
-      expect(user2.returnAverageHoursPerDay(sleepArray)).to.equal(7.25);
+      expect(user2.returnOverallAverageHours(sleepArray)).to.equal(7.25);
     });
 
     it('Should return the user\'s average sleep quality per day', () => {
-      expect(user2.returnAverageQualityPerDay(sleepArray)).to.equal(4.25);
+      expect(user2.returnOverallAverageQuality(sleepArray)).to.equal(4.25);
     });
 
     it('Should return the hours a user slept on a specific day', () => {
