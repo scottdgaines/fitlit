@@ -67,10 +67,6 @@ let logoContainer = document.getElementById('logoContainer');
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
 
-// navIcons.forEach(icon => {
-//   icon.addEventListener('click', changeDisplay)
-// });
-
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
