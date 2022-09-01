@@ -6,9 +6,13 @@
 import './css/styles.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
+import './images/turing-logo.png';
+import './images/fitlit_sleep_icon.svg';
+import './images/fitlit_water_icon.svg';
+import './images/fitlit_step_icon.svg';
+import './images/sample_avatar.svg';
+import './images/friendIcon.svg';
 
-console.log('This is the JavaScript entry file - your code begins here.');
 
 // An example of how you tell webpack to use a JS file
 
@@ -27,34 +31,16 @@ let allHydrationData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData]
 
 // FETCH PROMISE:
-let dataTypes = [
-  'users',
-  'sleep',
-  'hydration'
-];
-
-let requests = dataTypes.map(dataType => fetchData(dataType));
-
-Promise.all(requests)
-  .then(responses => responses.forEach((request, index) => {
-    let name = allDataPoints[index];
-    name = request;
-  }
-));
-
 function startData() {
     Promise.all([fetchData('users', 'userData'), fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData')])
       .then((dataSet) => {
-        allUserData = dataSet[0];
+        allUserData = new UserRepository(dataSet[0]);
         allSleepData = dataSet[1];
         allHydrationData = dataSet[2];
-        generatePageLoad(allUserData);
+        generatePageLoad(allUserData); //since generatePageLoad happens after promise is resolved, how come I can't access currentUser globally later?
 
   })
 };
-
-// startData();
-
 
 
 //QUERY SELECTORS:
@@ -64,12 +50,16 @@ let activityIcon = document.getElementById('activity-icon');
 let welcomeMessage = document.getElementById('welcomeMessage');
 let friendContainer = document.getElementById('myFriendBoxContainer');
 let userInfoContainer = document.getElementById('myUserInfo');
-let userInfotext
+let userInfotext;
 let userStepGoalContainer = document.getElementById('userStepsContainer');
+let userStepGoalText = document.getElementById('userStepGoalText');
 let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
+let averageStepGoalText = document.getElementById('avgStepGoal');
 let mainDisplay = document.getElementById('userDataContainer');
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
+let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
+let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon];
 let logoContainer = document.getElementById('logoContainer');
@@ -77,20 +67,19 @@ let logoContainer = document.getElementById('logoContainer');
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
 
-navIcons.forEach(icon => {
-  icon.addEventListener('click', changeDisplay)
-});
-
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
-  currentUser = generateRandomUser(userData);
-  console.log(currentUser)
+  currentUser = generateRandomUser(userData.userData);
   welcomeUser(currentUser)
   renderMyInfo(currentUser);
-  renderMyFriends(currentUser, userData);
-  // renderMyStepGoal(userData);
-  // renderAvgStepGoal(userData);
+  renderMyFriends(currentUser, userData.userData);
+  renderMyStepGoal(currentUser);
+  renderAvgStepGoal(userData);
+  navIcons.forEach(icon => {
+    icon.addEventListener('click', function() {changeDisplay(currentUser)
+    })
+  })
 };
 
 function generateRandomUser(userData) {
@@ -102,13 +91,13 @@ function welcomeUser(currentUser) {
   welcomeMessage.innerHTML = `Hi, ${currentUser.returnUserFirstName()}!`
 };
 
-function changeDisplay() {
+function changeDisplay(currentUser) {
   if (event.target.id === 'water-icon') {
-    renderData(water);
+    renderData('water', currentUser);
   } else if (event.target.id === 'sleep-icon') {
-    renderData(sleep);
+    renderData(sleep, currentUser);
   } else if (event.target.id === 'activity-icon') {
-    renderData(activity);
+    renderData(activity, currentUser);
   }
   hide(welcomeMessage);
   unhide(userDataContainer);
@@ -146,7 +135,6 @@ function makeAFriend(friendName) {
 };
 
 function renderMyFriends(currentUser, allUserData) {
-  console.log(currentUser.friends)
   currentUser.friends.forEach(friendID => {
     const friendObj = allUserData.find(userObj => friendID === userObj.id)
     const friendName = friendObj.name
@@ -154,10 +142,23 @@ function renderMyFriends(currentUser, allUserData) {
   });
 };
 
-// function renderData(dataType) {
-//   myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
-// //consider making more dynamic to take in both dataType AND element where it will display
-// }
+
+function renderMyStepGoal(user) {
+  userStepGoalText.innerText = user.dailyStepGoal;
+};
+
+function renderAvgStepGoal(dataSet) {
+  averageStepGoalText.innerText = dataSet.returnAverageUserData('steps');
+};
+
+function renderData(dataType, user) {
+  if (dataType === 'water') {
+    dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, "2019/06/16")} ounces of water!`
+  }
+//call currentUser.whatever to get data. Need to move these methods into user I think
+//consider making more dynamic to take in both dataType AND element where it will display
+}
+
 
 
 

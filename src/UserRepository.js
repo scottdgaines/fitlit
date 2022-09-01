@@ -8,8 +8,6 @@ class UserRepository {
     return userInfo
   };
 
-//dataType ===  sleep array
-//returnAverageUserData(sleepData)
   returnAverageUserData(dataArray){
     if (dataArray === 'steps') {
         let average = this.userData.reduce((total, user) => {
