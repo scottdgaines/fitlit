@@ -20,6 +20,14 @@ class User {
     return newArray;
   };
 
+  findMostRecentDate(array){
+    const userArray = this.findUser(array);
+    const datesArray = userArray.map(entry => {
+      return entry.date
+    }).reverse()
+    return datesArray[0];
+  };
+
   returnAllTimeHydration(array) {
     const newArray = this.findUser(array);
     const userTotal = newArray.reduce((totalOunces, day) => {

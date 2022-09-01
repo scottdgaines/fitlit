@@ -95,9 +95,9 @@ function changeDisplay(currentUser) {
   if (event.target.id === 'water-icon') {
     renderData('water', currentUser);
   } else if (event.target.id === 'sleep-icon') {
-    renderData(sleep, currentUser);
+    renderData('sleep', currentUser);
   } else if (event.target.id === 'activity-icon') {
-    renderData(activity, currentUser);
+    renderData('activity', currentUser);
   }
   hide(welcomeMessage);
   unhide(userDataContainer);
@@ -154,10 +154,15 @@ function renderAvgStepGoal(dataSet) {
 function renderData(dataType, user) {
   if (dataType === 'water') {
     dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, "2019/06/16")} ounces of water!`
+  } else if (dataType === 'sleep'){
+    dayInfoText.innerText = `slept ${user.returnSleepHoursByDay(allSleepData, "2019/06/16")} of hours and your quality of sleep was a ${user.returnSleepQualityByDay(allSleepData, "2019/06/16")} out of 5!`
+  } else {
+    myDayInfoContainer.innerText = `Go take a walk!`
   }
+};
 //call currentUser.whatever to get data. Need to move these methods into user I think
 //consider making more dynamic to take in both dataType AND element where it will display
-}
+
 
 
 
