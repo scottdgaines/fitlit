@@ -142,6 +142,7 @@ function renderMyFriends(currentUser, allUserData) {
   });
 };
 
+
 function renderMyStepGoal(user) {
   userStepGoalText.innerText = user.dailyStepGoal;
 };
@@ -157,6 +158,7 @@ function renderData(dataType, user) {
 //call currentUser.whatever to get data. Need to move these methods into user I think
 //consider making more dynamic to take in both dataType AND element where it will display
 }
+
 
 
 
