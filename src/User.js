@@ -36,16 +36,45 @@ class User {
     return dailyOunces.numOunces;
   };
 
-  returnUserWeekData(array) {
+  returnUserWeekData(array, neededData) {
     const userArray = this.findUser(array);
     const userDatesArray = userArray
       .splice(0,7)
-      .map(hydrationObj => hydrationObj.numOunces)
+      .map(hydrationObj => hydrationObj[neededData])
 
     return userDatesArray;
+  };
+
+  returnAverageHoursPerDay(array){
+    const newArray = this.findUser(array);
+    const averageHours = newArray.reduce((totalHours, day) => {
+        totalHours += day.hoursSlept;
+        return totalHours
+    }, 0)
+      return averageHours / newArray.length
+  };
+
+  returnAverageQualityPerDay(array){
+    const newArray = this.findUser(array);
+    const averageQuality = newArray.reduce((totalQuality, day) => {
+      totalQuality += day.sleepQuality;
+      return totalQuality
+    }, 0)
+    return averageQuality / newArray.length
+  };
+
+  returnSleepHoursByDay(array, date) {
+    const newArray = this.findUser(array);
+    const dailyHours = newArray.find(element => element.date === date)
+    return dailyHours.hoursSlept;
+  };
+
+  returnSleepQualityByDay(array, date) {
+    const newArray = this.findUser(array);
+    const dailyQuality = newArray.find(element => element.date === date)
+    return dailyQuality.sleepQuality;
   };
 
 };
 
 export default User;
-
