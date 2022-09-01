@@ -59,6 +59,7 @@ let mainDisplay = document.getElementById('userDataContainer');
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
+let averageInfoText = document.getElementById('averageInfoText');
 let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon];
@@ -93,11 +94,11 @@ function welcomeUser(currentUser) {
 
 function changeDisplay(currentUser) {
   if (event.target.id === 'water-icon') {
-    renderData('water', currentUser);
+    renderDailyData('water', currentUser);
   } else if (event.target.id === 'sleep-icon') {
-    renderData(sleep, currentUser);
+    renderDailyData('sleep', currentUser);
   } else if (event.target.id === 'activity-icon') {
-    renderData(activity, currentUser);
+    renderDailyData('activity', currentUser);
   }
   hide(welcomeMessage);
   unhide(userDataContainer);
@@ -142,7 +143,6 @@ function renderMyFriends(currentUser, allUserData) {
   });
 };
 
-
 function renderMyStepGoal(user) {
   userStepGoalText.innerText = user.dailyStepGoal;
 };
@@ -151,16 +151,28 @@ function renderAvgStepGoal(dataSet) {
   averageStepGoalText.innerText = dataSet.returnAverageUserData('steps');
 };
 
-function renderData(dataType, user) {
+function renderDailyData(dataType, user) {
   if (dataType === 'water') {
-    dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, "2019/06/16")} ounces of water!`
+    dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
+    averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
+    weekInfoText.innerText = `Your weekly amount of water consumed is `
+    weeklyDataMessage(allHydrationData, 'numOunces', user)
+  } else if (dataType === 'sleep'){
+    dayInfoText.innerText = `slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} of hours and your quality of sleep was a ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} out of 5!`
+    averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} out of 5! `
+    weekInfoText.innerText = `Here are the hours of sleep you achieved in the last week: `
+    weeklyDataMessage(allSleepData, 'hoursSlept', user)
+    weekInfoText.innerText += `Here is how well you slept in the last week: `
+    weeklyDataMessage(allSleepData, 'sleepQuality', user)
+  } else {
+    myDayInfoContainer.innerText = `Go take a walk!`
   }
-//call currentUser.whatever to get data. Need to move these methods into user I think
-//consider making more dynamic to take in both dataType AND element where it will display
 }
 
-
-
+function weeklyDataMessage(array, neededData, user){
+user.returnUserWeekData(array, neededData).forEach(array =>
+  weekInfoText.innerText += ` ${array}, `)
+}
 
 //click on a water/sleep/activity icon populates the larger bubbles with
 //user info from user class
