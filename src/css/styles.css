@@ -1,5 +1,65 @@
+/* Styling index.html */
+/* Arranged in order of appearance */
+
+
 body, html {
-  background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-  background-repeat: no-repeat;
-  height: 100%;
+  background-color: #F0F4FF;
+  display: flex;
+  justify-content: center;
+}
+
+.left-aside {
+  align-items: right;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 10px 8px;
+  width: 250px;
+}
+
+.display-box {
+  background-color: #E1E8FF;
+  border: 2px solid #8892B3;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px #777777;
+  height: 50%;
+  margin: 0px 0px 10px 0px;
+  width: 100%;
+}
+
+.navigation-bar {
+
+}
+
+.my-friend-box-container {
+  overflow-y: scroll;
+}
+
+.main-display {
+  background-color: #E1E8FF;
+  border: 2px solid gray;
+  border-radius: 15px;
+  height: 100px;
+  margin-top: 10px;
+  opacity: 0.85;
+  width: 55vw;
+}
+
+.right-aside {
+  align-items: left;
+  border: 2px solid blue;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 10px 8px;
+  width: 250px;
+}
+
+.my-user-info-container {
+
+}
+
+.steps-box-container {
+
 }
