@@ -7,6 +7,9 @@ import './css/styles.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
+import './images/fitlit_step_icon.svg'
+import './images/fitlit_sleep_icon.svg'
+import './images/fitlit_hydration_icon.svg'
 
 console.log('This is the JavaScript entry file - your code begins here.');
 
@@ -154,10 +157,10 @@ function renderMyFriends(currentUser, allUserData) {
   });
 };
 
-function renderData(dataType) {
-  myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
-//consider making more dynamic to take in both dataType AND element where it will display
-}
+// function renderData(dataType) {
+//   myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
+// //consider making more dynamic to take in both dataType AND element where it will display
+// }
 
 
 
