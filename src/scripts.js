@@ -154,10 +154,10 @@ function renderMyFriends(currentUser, allUserData) {
   });
 };
 
-function renderData(dataType) {
-  myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
-//consider making more dynamic to take in both dataType AND element where it will display
-}
+// function renderData(dataType) {
+//   myDayInfoContainer.innerText = //call currentUser.whatever to get data. Need to move these methods into user I think
+// //consider making more dynamic to take in both dataType AND element where it will display
+// }
 
 
 
