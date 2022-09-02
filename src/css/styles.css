@@ -3,12 +3,12 @@
 body, html {
   background-color: #F0F4FF;
   display: flex;
+  font-family: 'Dosis', sans-serif;
   justify-content: center;
 }
 
 .left-aside {
   align-items: right;
-  border: 2px solid red;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -17,36 +17,56 @@ body, html {
 }
 
 .display-box {
-  background-color: #E1E8FF;
+  background-color: #FFFFFF;
   border: 2px solid #8892B3;
   border-radius: 20px;
-  box-shadow: 3px 3px 3px #777777;
+  box-shadow: 3px 3px 3px #8892B3;
   height: 50%;
   margin: 0px 0px 10px 0px;
   width: 100%;
 }
 
 .navigation-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
 
+.icon {
+  background: transparent;
+  cursor: pointer;
+  fill: none;
+  height: 85px;
 }
 
 .my-friend-box-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   overflow-y: scroll;
 }
 
+.my-friends-header {
+  /* text:  */
+}
+
 .main-display {
-  background-color: #E1E8FF;
+  background-color: #FFFFFF;
   border: 2px solid gray;
   border-radius: 15px;
+  box-shadow: 3px 3px 3px #8892B3;
+  font-size: large;
+  font-weight: bold;
   height: 100px;
   margin: 10px 15px 0px 15px;
   opacity: 0.85;
   width: 55vw;
 }
 
+
+
 .right-aside {
   align-items: left;
-  border: 2px solid blue;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -58,6 +78,23 @@ body, html {
 
 }
 
+.user-avatar {
+  align-items: center;
+  border: 3px solid black;
+  height: 100px;
+  position: center;
+}
+
+.my-user-info {
+  border: 3px solid black;
+}
+
 .steps-box-container {
 
+}
+
+/* Additional Styling Properties */
+
+.hide {
+  display: none;
 }
