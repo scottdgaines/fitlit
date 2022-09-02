@@ -14,6 +14,7 @@ import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
 
 
+
 // An example of how you tell webpack to use a JS file
 
 //IMPORTS:
@@ -47,6 +48,7 @@ function startData() {
 let waterIcon = document.getElementById('water-icon');
 let sleepIcon = document.getElementById('sleep-icon');
 let activityIcon = document.getElementById('activity-icon');
+let welcomeUserName = document.getElementById('welcomeUserName')
 let welcomeMessage = document.getElementById('welcomeMessage');
 let friendContainer = document.getElementById('myFriendBoxContainer');
 let userInfoContainer = document.getElementById('myUserInfo');
@@ -56,6 +58,7 @@ let userStepGoalText = document.getElementById('userStepGoalText');
 let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
 let averageStepGoalText = document.getElementById('avgStepGoal');
 let mainDisplay = document.getElementById('userDataContainer');
+let userDataContainer = document.getElementById('userDataContainer')
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
@@ -89,7 +92,7 @@ function generateRandomUser(userData) {
 };
 
 function welcomeUser(currentUser) {
-  welcomeMessage.innerHTML = `Hi, ${currentUser.returnUserFirstName()}!`
+  welcomeUserName.innerText = `Hi, ${currentUser.returnUserFirstName()}!`
 };
 
 function changeDisplay(currentUser) {
@@ -128,7 +131,7 @@ function makeAFriend(friendName) {
   var friendIcon = document.createElement('img');
   var friendNameElement = document.createElement('h6');
   friendIcon.src = './images/friendIcon.svg';
-  friendIcon.classList.add('small');
+  friendIcon.classList.add('icon');
   friendDisplay.appendChild(friendIcon);
   friendDisplay.appendChild(friendNameElement);
   friendNameElement.innerText = friendName;
@@ -153,11 +156,14 @@ function renderAvgStepGoal(dataSet) {
 
 function renderDailyData(dataType, user) {
   if (dataType === 'water') {
+    hideWelcomeMessage()
+    showDataContainer();
     dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
     weekInfoText.innerText = `Your weekly amount of water consumed is `
     weeklyDataMessage(allHydrationData, 'numOunces', user)
   } else if (dataType === 'sleep'){
+    showDataContainer()
     dayInfoText.innerText = `slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} of hours and your quality of sleep was a ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} out of 5!`
     averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} out of 5! `
     weekInfoText.innerText = `Here are the hours of sleep you achieved in the last week: `
@@ -165,14 +171,24 @@ function renderDailyData(dataType, user) {
     weekInfoText.innerText += `Here is how well you slept in the last week: `
     weeklyDataMessage(allSleepData, 'sleepQuality', user)
   } else {
+    showDataContainer()
     myDayInfoContainer.innerText = `Go take a walk!`
   }
+}
+
+function hideWelcomeMessage() {
+  welcomeMessage.classList.add('hide');
+}
+
+function showDataContainer() {
+  userDataContainer.classList.remove('hide');
 }
 
 function weeklyDataMessage(array, neededData, user){
 user.returnUserWeekData(array, neededData).forEach(array =>
   weekInfoText.innerText += ` ${array}, `)
 }
+
 
 //click on a water/sleep/activity icon populates the larger bubbles with
 //user info from user class

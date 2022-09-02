@@ -1,5 +1,111 @@
+/* Styling index.html */
+/* Arranged in order of appearance */
 body, html {
-  background-image: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-  background-repeat: no-repeat;
-  height: 100%;
+  background-color: #F0F4FF;
+  display: flex;
+  font-family: 'Dosis', sans-serif;
+  justify-content: center;
+}
+
+.left-aside {
+  align-items: right;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 10px 8px;
+  width: 250px;
+}
+
+.display-box {
+  background-color: #FFFFFF;
+  border: 2px solid #8892B3;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px #8892B3;
+  height: 50%;
+  margin: 0px 0px 10px 0px;
+  width: 100%;
+}
+
+.navigation-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.icon {
+  background: transparent;
+  cursor: pointer;
+  fill: none;
+  height: 85px;
+}
+
+.my-friend-box-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.my-friends-header {
+  /* text:  */
+}
+
+.main-display {
+  background-color: #FFFFFF;
+  border: 2px solid gray;
+  border-radius: 15px;
+  box-shadow: 3px 3px 3px #8892B3;
+  font-size: large;
+  font-weight: bold;
+  height: 100px;
+  margin: 10px 15px 0px 15px;
+  opacity: 0.85;
+  width: 55vw;
+}
+
+.welcome-message {
+  font-size: 30px;
+}
+
+.right-aside {
+  align-items: left;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 10px 8px;
+  width: 250px;
+}
+
+.user-data-container {
+  border: 2px solid #8892B3;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 3px 3px 3px #8892B3;
+  height: 30vw;
+  margin-top: 25px;
+}
+
+.user-avatar {
+  align-items: center;
+  border: 3px solid black;
+  height: 100px;
+  position: center;
+}
+
+.my-user-info {
+  border: 3px solid black;
+}
+
+.steps-box-container {
+
+}
+
+/* Additional Styling Properties */
+
+.hide {
+  display: none;
+}
+
+.text {
+  color: #464F6D;
 }

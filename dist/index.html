@@ -3,28 +3,32 @@
   <head>
     <meta charset="UTF-8">
     <title>Fitlit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400&display=swap" rel="stylesheet">
   </head>
   <body>
     <aside  class="left-aside" id="leftAside">
-      <nav class="navigation-bar" id="navigationBar">
-        <img role="button" src=" " class="water-icon" id= "water-icon" alt="water icon">
-        <img role="button" src=" " class="sleep-icon" id= "sleep-icon" alt="sleep icon">
-        <img role="button" src=" " class="activity-icon" id= "activity-icon" alt="activity icon">
+      <nav class="navigation-bar display-box" id="navigationBar">
+        <img role="button" src="./images/fitlit_water_icon.svg" class="water-icon icon" id="water-icon" alt="water icon">
+        <img role="button" src="./images/fitlit_sleep_icon.svg" class="sleep-icon icon" id="sleep-icon" alt="sleep icon">
+        <img role="button" src="./images/fitlit_step_icon.svg" class="activity-icon icon" id="activity-icon" alt="activity icon">
       </nav>
-      <section class="my-friend-box-container" id="myFriendBoxContainer">
-        <h4 class="my-friends-header" id="myFriendsHeader">My Friends</h4>
+      <section class="my-friend-box-container display-box" id="myFriendBoxContainer">
+        <h4 class="my-friends-header text" id="myFriendsHeader">My Friends</h4>
       </section>
     </aside>
     <section class="main-display" id="mainDisplay">
       <section class="logo-container" id="logoContainer">
-        <img src= " " class="logo" id="logo" alt="project logo">
-          <h1>Fitlit</h1>
+        <img src= "" class="logo icon" id="logo" alt="project logo">
+          <h1 class="text">Fitlit</h1>
         <!-- <h3 class="welcome-User" id="welcomeUser" -->
       </section>
-      <section class="welcome-Message" id="welcomeMessage">Welcome to your fitlit page. CLick on the icons to navigate through your dashboard.</section>
-      <section class="user-data-container" id="userDataContainer">
-        <div class="my-day-info-container" id="myDayInfoContainer"></div>
-          <h3 class="info-container-header">Today, you have <span id="dayInfoText"></span></h3>
+      <section class="welcome-message text" id="welcomeMessage"><span id="welcomeUserName"></span><br> Welcome to your fitlit page. Click on the icons to navigate through your dashboard.</section>
+      <section class="user-data-container text hide" id="userDataContainer">
+        <!-- <img src= "./images/fitlit_water_icon.svg" class="logo icon" id="logo" alt="project logo"> -->
+        <div class="my-day-info-container text" id="myDayInfoContainer"></div>
+          <h3 class="info-container-header" id="infoContainerHeader">Today, you have <span id="dayInfoText"></span></h3>
         <div class="my-average-info-container" id="myAverageInfoContainer"></div>
           <h3 class="info-container-header">Your all-time average is <span id="averageInfoText"></span></h3>
         <div class="my-week-info-container" id="myWeekInfoContainer"></div>
@@ -32,12 +36,12 @@
       </section>
     </section>
     <aside class="right-aside" id="rightAside">
-      <section class="my-user-info-container" id="myUserInfoContainer">
-        <h4 class="my-info-header" id="myInfoHeader">My Info</h4>
-        <img class="userAvatar" src="./images/sample_avatar.svg" alt='Cartoon woman' />
-        <div class="my-user-info" id="myUserInfo"></div>
+      <section class="my-user-info-container display-box" id="myUserInfoContainer">
+        <h4 class="my-info-header text" id="myInfoHeader">My Info</h4>
+        <img class="user-avatar" src="./images/sample_avatar.svg" alt='Cartoon woman' />
+        <div class="my-user-info text" id="myUserInfo"></div>
       </section>
-      <section class="steps-box-container" id="stepsBoxContainer">
+      <section class="steps-box-container text display-box" id="stepsBoxContainer">
         <div class="user-steps-container" id="userStepsContainer">
           <h5 class="user-steps-header" id="userStepsHeader">My Daily Step Goal: <span id="userStepGoalText"</span></h5>
         </div>
