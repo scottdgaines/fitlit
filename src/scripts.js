@@ -48,6 +48,7 @@ function startData() {
 let waterIcon = document.getElementById('water-icon');
 let sleepIcon = document.getElementById('sleep-icon');
 let activityIcon = document.getElementById('activity-icon');
+let welcomeUserName = document.getElementById('welcomeUserName')
 let welcomeMessage = document.getElementById('welcomeMessage');
 let friendContainer = document.getElementById('myFriendBoxContainer');
 let userInfoContainer = document.getElementById('myUserInfo');
@@ -91,7 +92,7 @@ function generateRandomUser(userData) {
 };
 
 function welcomeUser(currentUser) {
-  welcomeMessage.innerHTML = `Hi, ${currentUser.returnUserFirstName()}!`
+  welcomeUserName.innerText = `Hi, ${currentUser.returnUserFirstName()}!`
 };
 
 function changeDisplay(currentUser) {
@@ -172,6 +173,10 @@ function renderDailyData(dataType, user) {
     showDataContainer()
     myDayInfoContainer.innerText = `Go take a walk!`
   }
+}
+
+function hideDataConatainer() {
+  userDataContainer.classList.add('hide')
 }
 
 function showDataContainer() {
