@@ -20,13 +20,21 @@ class User {
     return newArray;
   };
 
+  findMostRecentDate(array){
+    const userArray = this.findUser(array);
+    const datesArray = userArray.map(entry => {
+      return entry.date
+    }).reverse()
+    return datesArray[0];
+  };
+
   returnAllTimeHydration(array) {
     const newArray = this.findUser(array);
     const userTotal = newArray.reduce((totalOunces, day) => {
           totalOunces += day.numOunces;
           return totalOunces
       }, 0)
-    let userAverage = userTotal / newArray.length;
+    let userAverage = parseFloat(userTotal / newArray.length).toFixed(2);
     return userAverage
   };
 
@@ -39,28 +47,29 @@ class User {
   returnUserWeekData(array, neededData) {
     const userArray = this.findUser(array);
     const userDatesArray = userArray
+      .reverse()
       .splice(0,7)
-      .map(hydrationObj => hydrationObj[neededData])
-
+      .map(dataObj =>
+        `${dataObj.date}: ${dataObj[neededData]}`)
     return userDatesArray;
   };
 
-  returnAverageHoursPerDay(array){
+  returnOverallAverageHours(array){
     const newArray = this.findUser(array);
     const averageHours = newArray.reduce((totalHours, day) => {
         totalHours += day.hoursSlept;
         return totalHours
     }, 0)
-      return averageHours / newArray.length
+      return parseFloat(averageHours / newArray.length).toFixed(2);
   };
 
-  returnAverageQualityPerDay(array){
+  returnOverallAverageQuality(array){
     const newArray = this.findUser(array);
     const averageQuality = newArray.reduce((totalQuality, day) => {
       totalQuality += day.sleepQuality;
       return totalQuality
     }, 0)
-    return averageQuality / newArray.length
+    return parseFloat(averageQuality / newArray.length).toFixed(2);
   };
 
   returnSleepHoursByDay(array, date) {
