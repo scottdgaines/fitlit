@@ -63,7 +63,9 @@ body, html {
   width: 55vw;
 }
 
-
+.welcome-message {
+  font-size: 30px;
+}
 
 .right-aside {
   align-items: left;
@@ -74,8 +76,13 @@ body, html {
   width: 250px;
 }
 
-.my-user-info-container {
-
+.user-data-container {
+  border: 2px solid #8892B3;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 3px 3px 3px #8892B3;
+  height: 30vw;
+  margin-top: 25px;
 }
 
 .user-avatar {
@@ -97,4 +104,8 @@ body, html {
 
 .hide {
   display: none;
+}
+
+.text {
+  color: #464F6D;
 }
