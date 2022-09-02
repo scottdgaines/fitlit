@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import User from '../src/User.js';
 import Hydration from '../src/Hydration.js'
+import Sleep from '../src/Sleep.js'
 
 
 describe('User', () => {
@@ -16,9 +17,13 @@ describe('User', () => {
     let hydrationObject8;
     let hydrationObject9;
     let hydrationObject10;
-    let array;
-    let array1;
-
+    let hydrationArray;
+    let hydrationArray1;
+    let sleepObject1;
+    let sleepObject2;
+    let sleepObject3;
+    let sleepArray;
+    let sleepArray1;
 
     beforeEach(() => {
         user1 = new User({
@@ -109,7 +114,7 @@ describe('User', () => {
             'numOunces': 30
         });
 
-        array = [
+        hydrationArray = [
             hydrationObject1,
             hydrationObject2,
             hydrationObject3,
@@ -122,7 +127,7 @@ describe('User', () => {
             hydrationObject10
         ];
 
-        array1 = [
+        hydrationArray1 = [
             hydrationObject2,
             hydrationObject3,
             hydrationObject4,
@@ -131,6 +136,32 @@ describe('User', () => {
             hydrationObject7,
             hydrationObject8,
             hydrationObject9
+        ];
+
+        sleepObject1 = new Sleep({
+              "userID": 1,
+              "date": "2019/06/15",
+              "hoursSlept": 6.1,
+              "sleepQuality": 2.2
+        });
+
+        sleepObject2 = new Sleep({
+              "userID": 2,
+              "date": "2019/06/16",
+              "hoursSlept": 7.5,
+              "sleepQuality": 3.8
+        });
+        sleepObject3 = new Sleep ({
+              "userID": 2,
+              "date": "2019/06/15",
+              "hoursSlept": 7,
+              "sleepQuality": 4.7
+        });
+
+        sleepArray = [
+          sleepObject1,
+          sleepObject2,
+          sleepObject3
         ];
     });
 
@@ -184,19 +215,38 @@ describe('User', () => {
     });
 
     it('Should filter all entries for a user', () => {
-        expect(user2.findUser(array)).to.deep.equal(array1);
+        expect(user2.findUser(hydrationArray)).to.deep.equal(hydrationArray1);
     });
 
     it('Should return the total average ounces consumed for a user', () => {
-        expect(user1.returnAllTimeHydration(array)).to.equal(33);
+        expect(user1.returnAllTimeHydration(hydrationArray)).to.equal(33);
     });
 
     it('Should return the total number of ounces a user consumed on a specific date', () => {
-      expect(user1.returnUserOuncesByDay(array, '2022/08/15')).to.equal(30);
+      expect(user1.returnUserOuncesByDay(hydrationArray, '2022/08/15')).to.equal(30);
     });
 
     it('Should return a week\'s data for a user', () => {
-      expect(user2.returnUserWeekData(array)).to.deep.equal([42, 2, 10, 23, 60, 19, 20]);
+      expect(user2.returnUserWeekData(hydrationArray, 'numOunces')).to.deep.equal([42, 2, 10, 23, 60, 19, 20]);
+      expect(user2.returnUserWeekData(sleepArray, 'hoursSlept')).to.deep.equal([7.5, 7]);
+      expect(user2.returnUserWeekData(sleepArray, 'sleepQuality')).to.deep.equal([3.8, 4.7]);
+
+
     });
 
+    it('Should return the user\'s average hours of sleep per day', () => {
+      expect(user2.returnAverageHoursPerDay(sleepArray)).to.equal(7.25);
+    });
+
+    it('Should return the user\'s average sleep quality per day', () => {
+      expect(user2.returnAverageQualityPerDay(sleepArray)).to.equal(4.25);
+    });
+
+    it('Should return the hours a user slept on a specific day', () => {
+      expect(user2.returnSleepHoursByDay(sleepArray, '2019/06/15')).to.equal(7);
+    });
+
+    it('Should return the sleep quality amount a user slept on a specific day', () => {
+      expect(user2.returnSleepQualityByDay(sleepArray, '2019/06/15')).to.equal(4.7);
+    });
 });
