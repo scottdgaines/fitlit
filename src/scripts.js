@@ -187,20 +187,27 @@ function showDataContainer() {
 }
 
 function weeklyDataMessage(array, neededData, user){
-user.returnUserWeekData(array, neededData).forEach(array =>
+const userWeekData = user.returnUserWeekData(array, neededData)
+userWeekData.forEach(array =>
   weekInfoText.innerText += ` ${array}, `)
-  renderWeeklyChart(array)
+  const data = [];
+  const dates = userWeekData.map(date => {
+    const splits = date.split(": ");
+    data.push(splits[1]);
+    return splits[0]
+  })
+  renderWeeklyChart(data, dates)
 }
 
-function renderWeeklyChart(data){
-  const ctx = document.getElementById('myChart');
-  const myChart = new Chart(ctx, {
+function renderWeeklyChart(data, dates){
+  const chartLayout = document.getElementById('myChart');
+  const myChart = new Chart(chartLayout, {
       type: 'line',
       data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: dates,
           datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
+              label: 'My Weekly Average',
+              data: data,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -229,7 +236,10 @@ function renderWeeklyChart(data){
       }
   });
 }
-
+//
+// function separateData(){
+//   weeklyDataMessage()
+// }
 
 
 //click on a water/sleep/activity icon populates the larger bubbles with
