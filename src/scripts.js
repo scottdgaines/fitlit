@@ -22,6 +22,8 @@ import './images/friendIcon.svg';
 import UserRepository from './UserRepository';
 import User from './User';
 import fetchData from './apiCalls.js';
+import { Chart } from 'chart.js';
+
 
 //GLOBAL VARIABLES:
 let userRepository;
