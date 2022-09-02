@@ -156,6 +156,7 @@ function renderAvgStepGoal(dataSet) {
 
 function renderDailyData(dataType, user) {
   if (dataType === 'water') {
+    hideWelcomeMessage()
     showDataContainer();
     dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
@@ -175,12 +176,12 @@ function renderDailyData(dataType, user) {
   }
 }
 
-function hideDataConatainer() {
-  userDataContainer.classList.add('hide')
+function hideWelcomeMessage() {
+  welcomeMessage.classList.add('hide');
 }
 
 function showDataContainer() {
-  userDataContainer.classList.remove('hide')
+  userDataContainer.classList.remove('hide');
 }
 
 function weeklyDataMessage(array, neededData, user){
