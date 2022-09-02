@@ -57,6 +57,7 @@ let userStepGoalText = document.getElementById('userStepGoalText');
 let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
 let averageStepGoalText = document.getElementById('avgStepGoal');
 let mainDisplay = document.getElementById('userDataContainer');
+let userDataContainer = document.getElementById('userDataContainer')
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
@@ -129,7 +130,7 @@ function makeAFriend(friendName) {
   var friendIcon = document.createElement('img');
   var friendNameElement = document.createElement('h6');
   friendIcon.src = './images/friendIcon.svg';
-  friendIcon.classList.add('small');
+  friendIcon.classList.add('icon');
   friendDisplay.appendChild(friendIcon);
   friendDisplay.appendChild(friendNameElement);
   friendNameElement.innerText = friendName;
@@ -154,11 +155,13 @@ function renderAvgStepGoal(dataSet) {
 
 function renderDailyData(dataType, user) {
   if (dataType === 'water') {
+    showDataContainer();
     dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
     weekInfoText.innerText = `Your weekly amount of water consumed is `
     weeklyDataMessage(allHydrationData, 'numOunces', user)
   } else if (dataType === 'sleep'){
+    showDataContainer()
     dayInfoText.innerText = `slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} of hours and your quality of sleep was a ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} out of 5!`
     averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} out of 5! `
     weekInfoText.innerText = `Here are the hours of sleep you achieved in the last week: `
@@ -166,8 +169,13 @@ function renderDailyData(dataType, user) {
     weekInfoText.innerText += `Here is how well you slept in the last week: `
     weeklyDataMessage(allSleepData, 'sleepQuality', user)
   } else {
+    showDataContainer()
     myDayInfoContainer.innerText = `Go take a walk!`
   }
+}
+
+function showDataContainer() {
+  userDataContainer.classList.remove('hide')
 }
 
 function weeklyDataMessage(array, neededData, user){
