@@ -7,7 +7,7 @@ class User {
     this.strideLength = userObj.strideLength;
     this.dailyStepGoal = userObj.dailyStepGoal;
     this.friends = userObj.friends;
-  }
+  };
 
   returnUserFirstName() {
     let arrayedName = this.name.split(" ");
