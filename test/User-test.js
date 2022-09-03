@@ -5,35 +5,21 @@ import Sleep from '../src/Sleep.js'
 
 
 describe('User', () => {
-    let user1;
-    let user2;
-    let hydrationObject1;
-    let hydrationObject2;
-    let hydrationObject3;
-    let hydrationObject4;
-    let hydrationObject5;
-    let hydrationObject6;
-    let hydrationObject7;
-    let hydrationObject8;
-    let hydrationObject9;
-    let hydrationObject10;
-    let hydrationArray;
-    let hydrationArray1;
-    let sleepObject1;
-    let sleepObject2;
-    let sleepObject3;
-    let sleepArray;
-    let sleepArray1;
+    let user1, user2;
+    let hydrationObject1, hydrationObject2, hydrationObject3, hydrationObject4, hydrationObject5, hydrationObject6, hydrationObject7, hydrationObject8, hydrationObject9, hydrationObject10;
+    let hydrationArray, hydrationArray1;
+    let sleepObject1, sleepObject2, sleepObject3;
+    let sleepArray, sleepArray1;
 
     beforeEach(() => {
         user1 = new User({
-            "id": 1,
-            "name": "Luisa Hane",
-            "address": "15195 Nakia Tunnel, Erdmanport VA 19901-1697",
-            "email": "Diana.Hayes1@hotmail.com",
-            "strideLength": 4.3,
-            "dailyStepGoal": 10000,
-            "friends": [
+            'id': 1,
+            'name': 'Luisa Hane',
+            'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
+            'email': 'Diana.Hayes1@hotmail.com',
+            'strideLength": 4.3,
+            "dailyStepGoal': 10000,
+            'friends': [
               16,
               4,
               8
@@ -41,19 +27,19 @@ describe('User', () => {
           });
 
         user2 = new User({
-                "id": 2,
-                "name": "Jarvis Considine",
-                "address": "30086 Kathryn Port, Ciceroland NE 07273",
-                "email": "Dimitri.Bechtelar11@gmail.com",
-                "strideLength": 4.5,
-                "dailyStepGoal": 5000,
-                "friends": [
-                  9,
-                  18,
-                  24,
-                  19
-                ]
-        });
+            'id': 2,
+            'name': 'Jarvis Considine',
+            'address': '30086 Kathryn Port, Ciceroland NE 07273',
+            'email': 'Dimitri.Bechtelar11@gmail.com',
+            'strideLength': 4.5,
+            'dailyStepGoal': 5000,
+            'friends': [
+              9,
+              18,
+              24,
+              19
+            ]
+          });
 
         hydrationObject1 = new Hydration({'userID': 1, 'date': '2022/08/29', 'numOunces': 36});
 
@@ -166,7 +152,7 @@ describe('User', () => {
     });
 
     it('Should find the most recent date for a user', () => {
-      expect(user2.findMostRecentDate(hydrationArray)).to.equal('2022/08/08')
+      expect(user2.findMostRecentDate(hydrationArray)).to.equal('2022/08/08');
     });
 
     it('Should return the total average ounces consumed for a user', () => {
