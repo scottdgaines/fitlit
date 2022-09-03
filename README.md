@@ -5,9 +5,9 @@ let's get lit
 [Project Wireframe](https://excalidraw.com/#json=wc3HAMJ52biTE6rWEUDRs,g2YzqQF7BI6AmCAkdvSW-A)
 
 ## Overview
-Tired of never being able to keep track of how much water you've consumed? Always wondered how many hours you've slept this week? FitLit is here to help!
+Tired of never being able to keep track of how much water 🚰 you've consumed, or how many steps 🚶🏿‍♀️ you've taken? Always wondered how many hours you've slept 😴 this week? FitLit is here to help!
 
-FitLit is an activity-tracking app that compiles and displays a user's data surrounding hydration, sleep, and their daily step goal. It was built using a previously-supplied data set with architectural and functionality requirements set by Turing School of Software and Design, following the principals of Test Driven Development and Object Oriented Programming.
+FitLit is an activity-tracking app that compiles and displays a user's data, including hydration, sleep, and daily step goal. It was built using a previously-supplied data set with architectural and functionality requirements set by Turing School of Software and Design, following the principals of Test Driven Development and Object Oriented Programming.
 
 ## Setup
 If you would like to pull down the code to your local machine, complete the following:
@@ -31,17 +31,33 @@ If you would like to pull down the code to your local machine, complete the foll
 
 ## Future Iterations
 Moving forward, and after revisiting the script to refactor for DRYness and formatting, we plan to develop features for:
--compiling daily, weekly, and average 'step' data
--Allowing the user to customize their avatar
--Allowing the user to navigate to their friends' profiles
--Allowing the user to search for people by name or username
+- Compiling daily, weekly, and average 'step' data
+- Allowing the user to customize their avatar
+- Allowing the user to navigate to their friends' profiles
+- Allowing the user to search for people by name or username
 
 ## Dev Notes
 ### Wins
+- Fully functional, interactive page
+- Excellent group dynamic and communication
+- Mostly-smooth git workflow
+- Learning how to implement a dynamic chart widget
+- Dynamic DOM manipulation functions
 
 ### Challenges
-- git error handling
-- commit frequency
+- Git error handling
+- Balancing commit frequencies among group members
+
+## Project Context
+We are students in the Front-End Program at [Turing School of Software and Design](https://frontend.turing.edu/). Fitlit is our Mod 2 group project, which means we have been software developers for just under 2 months! 🙌 
+
+Learning Goals for this project included:
+✔️ Planning and writing ES6 classes 
+✔️ Using object and array prototype methods to manipulate data
+✔️ Robust TDD
+✔️ Making network requests to retrieve data
+
+[Link to Project Description](https://frontend.turing.edu/projects/Fitlit-part-one.html)
 
 ## Dev Contacts
 Marianne Barton
@@ -49,6 +65,7 @@ Marianne Barton
 [LinkedIn](https://www.linkedin.com/in/marianne-barton-1307/)
 
 Alycia Canavan
+alycia.canavan@gmail.com
 [Github](https://github.com/alyciacan)
 [LinkedIn](https://www.linkedin.com/in/alycia-canavan/)
 
@@ -59,5 +76,6 @@ scottdgaines@gmail.com
 
 ## Credit
 - Icons created using Canva
-- Wireframe created using excalidraw
+- Wireframe created using Excalidraw
 - Project board created with Trello
+- 3rd party chart library Chart.js
