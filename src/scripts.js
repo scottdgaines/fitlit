@@ -21,14 +21,14 @@ let allHydrationData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
 
-// FETCH PROMISE:
+//FETCH PROMISE:
 function startData() {
     Promise.all([fetchData('users', 'userData'), fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData')])
       .then((dataSet) => {
         allUserData = new UserRepository(dataSet[0]);
         allSleepData = dataSet[1];
         allHydrationData = dataSet[2];
-        generatePageLoad(allUserData); //since generatePageLoad happens after promise is resolved, how come I can't access currentUser globally later?
+        generatePageLoad(allUserData);
   })
 };
 
@@ -38,15 +38,11 @@ let sleepIcon = document.getElementById('sleep-icon');
 let activityIcon = document.getElementById('activity-icon');
 let welcomeUserName = document.getElementById('welcomeUserName')
 let welcomeMessage = document.getElementById('welcomeMessage');
-let friendContainer = document.getElementById('myFriendBoxContainer');
 let userInfoContainer = document.getElementById('myUserInfo');
-let userInfotext;
 let infoContainerHeader = document.getElementById('infoContainerHeader')
-let userStepGoalContainer = document.getElementById('userStepsContainer');
 let userStepGoalText = document.getElementById('userStepGoalText');
 let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
 let averageStepGoalText = document.getElementById('avgStepGoal');
-let mainDisplay = document.getElementById('userDataContainer');
 let userDataContainer = document.getElementById('userDataContainer')
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
@@ -208,7 +204,7 @@ function weeklyDataMessage(array, neededData, user) {
       data[0].push(splits[1]);
       return splits[0];
       });
-    // );
+
 
     otherWeekData.forEach(dataPoint => {
       // weekInfoText.innerText += ` ${dataPoint}, ` REMOVES SLEEP DATA BANNER
@@ -321,4 +317,4 @@ function renderHydrationChart(data, dates) {
 
       }
   });
-}
+};
