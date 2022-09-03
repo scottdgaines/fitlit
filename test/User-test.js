@@ -99,26 +99,11 @@ describe('User', () => {
             hydrationObject9
         ];
 
-        sleepObject1 = new Sleep({
-              "userID": 1,
-              "date": "2019/06/15",
-              "hoursSlept": 6.1,
-              "sleepQuality": 2.2
-        });
+        sleepObject1 = new Sleep({'userID': 1, 'date': '2019/06/15', 'hoursSlept': 6.1, 'sleepQuality': 2.2});
 
-        sleepObject2 = new Sleep ({
-          "userID": 2,
-          "date": "2019/06/15",
-          "hoursSlept": 7,
-          "sleepQuality": 4.7
-        });
+        sleepObject2 = new Sleep ({'userID': 2, 'date': '2019/06/15', 'hoursSlept': 7, 'sleepQuality': 4.7});
 
-        sleepObject3 = new Sleep({
-              "userID": 2,
-              "date": "2019/06/16",
-              "hoursSlept": 7.5,
-              "sleepQuality": 3.8
-        });
+        sleepObject3 = new Sleep({'userID': 2, 'date': '2019/06/16', 'hoursSlept': 7.5, 'sleepQuality': 3.8});
 
         sleepArray = [
           sleepObject1,
