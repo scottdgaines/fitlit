@@ -83,7 +83,6 @@ class User {
     const dailyQuality = newArray.find(element => element.date === date)
     return dailyQuality.sleepQuality;
   };
-
 };
 
 export default User;
