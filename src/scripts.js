@@ -227,3 +227,4 @@ function renderWeeklyChart(data, dates){
           }
       }
   });
+}
