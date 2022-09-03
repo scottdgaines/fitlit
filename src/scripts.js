@@ -18,7 +18,8 @@ let currentUser;
 let allUserData;
 let allSleepData;
 let allHydrationData;
-let allDataPoints = [allUserData, allSleepData, allHydrationData]
+let allDataPoints = [allUserData, allSleepData, allHydrationData];
+let myChart;
 
 // FETCH PROMISE:
 function startData() {
@@ -141,7 +142,12 @@ function renderAvgStepGoal(dataSet) {
   averageStepGoalText.innerText = dataSet.returnAverageUserData('steps');
 };
 
+function resetChart() {
+  myChart.destroy();
+};
+
 function renderDailyData(dataType, user) {
+
   if (dataType === 'water') {
     hide(welcomeMessage);
     unhide(userDataContainer);
@@ -193,7 +199,11 @@ userWeekData.forEach(array =>
 
 function renderWeeklyChart(data, dates){
   const chartLayout = document.getElementById('myChart');
-  const myChart = new Chart(chartLayout, {
+  if(myChart) {
+    resetChart(myChart)
+  }
+
+  myChart = new Chart(chartLayout, {
       type: 'line',
       data: {
           labels: dates,
@@ -227,3 +237,4 @@ function renderWeeklyChart(data, dates){
           }
       }
   });
+}
