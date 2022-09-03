@@ -180,8 +180,8 @@ function updateBackgroundImage(dataType) {
 
 function weeklyDataMessage(array, neededData, user){
 const userWeekData = user.returnUserWeekData(array, neededData)
-userWeekData.forEach(array =>
-  weekInfoText.innerText += ` ${array}, `)
+// userWeekData.forEach(array =>
+//   weekInfoText.innerText += ` ${array}, `)
   const data = [];
   const dates = userWeekData.map(date => {
     const splits = date.split(": ");
@@ -224,6 +224,9 @@ function renderWeeklyChart(data, dates){
               y: {
                   beginAtZero: true
               }
-          }
+          },
+          maintainAspectRatio: false,
+        
       }
   });
+}
