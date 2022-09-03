@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400&display=swap" rel="stylesheet">
   </head>
   <body>
-    <aside  class="left-aside aside" id="leftAside">
+    <aside class="left-aside aside" id="leftAside">
       <nav class="navigation-bar display-box" id="navigationBar"><span class="text">Dashboard</span>
         <img role="button" src="./images/fitlit_water_icon.svg" class="water-icon icon" id="water-icon" alt="water icon">
         <img role="button" src="./images/fitlit_sleep_icon.svg" class="sleep-icon icon" id="sleep-icon" alt="sleep icon">
@@ -25,17 +25,17 @@
       </section>
       <section class="welcome-message text" id="welcomeMessage"><span id="welcomeUserName"></span> Welcome to your fitlit page! <p>Click on the icons to navigate through your dashboard.</p></section>
       <section class="user-data-container text hide display-box" id="userDataContainer">
-        <div class="my-day-info-container text" id="myDayInfoContainer">
-          <h3 class="info-container-header" id="infoContainerHeader">Today: </h3>
+        <div class="data-display" id="myDayInfoContainer">
+          <h3 class="header" id="infoContainerHeader">Today: </h3>
           <p id="dayInfoText"></p>
         </div>
-        <div class="my-average-info-container" id="myAverageInfoContainer">
-          <h3 class="info-container-header">All-time stats: </h3>
+        <div class="data-display" id="myAverageInfoContainer">
+          <h3 class="info-container header">All-time stats: </h3>
           <p id="averageInfoText"></p>
         </div>
         <div class="my-week-info-container" id="myWeekInfoContainer">
           <h3 class="info-container-header"><span id="weekInfoText"></span></h3>
-           <canvas id="myChart"></canvas>
+           <canvas class="my-chart" id="myChart"></canvas>
         </div>
       </section>
     </section>

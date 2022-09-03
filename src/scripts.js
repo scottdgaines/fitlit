@@ -335,7 +335,9 @@ function renderHydrationChart(data, dates) {
               y: {
                   beginAtZero: true
               }
-          }
+          },
+          maintainAspectRatio: false,
+        
       }
   });
 }
