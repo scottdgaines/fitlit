@@ -95,6 +95,7 @@ body, html {
   background-image: url('../images/fitlit_sleep_icon.svg');
   background-size: cover;
   background-position: center;
+  font-size: 18px;
 }
 
 .my-week-info-container {
@@ -147,3 +148,11 @@ body, html {
   height: 85px;
   width: 85px;
 }
+
+/* .sleep-background {
+  background-image: url('../images/fitlit_sleep_icon.svg');
+}
+
+.hydration-background {
+  background-image: url('../images/fitlit_hydration_icon.svg');
+} */
