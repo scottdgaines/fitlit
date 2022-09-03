@@ -12,6 +12,7 @@ import './images/fitlit_water_icon.svg';
 import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
+import './images/logo.svg'
 
 
 
@@ -158,6 +159,7 @@ function renderDailyData(dataType, user) {
   if (dataType === 'water') {
     hideWelcomeMessage();
     showDataContainer();
+    updateBackgroundImage('water');
     dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
     weekInfoText.innerText = `Your weekly amount of water consumed is `
@@ -165,6 +167,7 @@ function renderDailyData(dataType, user) {
   } else if (dataType === 'sleep'){
     hideWelcomeMessage();
     showDataContainer();
+    updateBackgroundImage('sleep')
     dayInfoText.innerText = `slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} of hours and your quality of sleep was a ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} out of 5!`
     averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} out of 5! `
     weekInfoText.innerText = `Here are the hours of sleep you achieved in the last week: `
@@ -174,6 +177,7 @@ function renderDailyData(dataType, user) {
   } else {
     hideWelcomeMessage();
     showDataContainer();
+    updateBackgroundImage('step');
     myDayInfoContainer.innerText = `Go take a walk!`
   }
 }
@@ -184,6 +188,13 @@ function hideWelcomeMessage() {
 
 function showDataContainer() {
   userDataContainer.classList.remove('hide');
+}
+
+function updateBackgroundImage(dataType) {
+  // myDayInfoContainer.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
+  //   alt="activity logo" />`
+  // myAverageInfo.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
+  // alt="activity logo" />`
 }
 
 function weeklyDataMessage(array, neededData, user){
