@@ -153,7 +153,11 @@ function renderDailyData(dataType, user) {
     dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
     weekInfoText.innerText = `Here is the water you consumed in the last week: `
+    myDayInfoContainer.classList.remove('sleep-background');
+    myDayInfoContainer.classList.remove('step-background');
     myDayInfoContainer.classList.add('hydration-background');
+    myaverageInfoContainer.classList.remove('sleep-background');
+    myaverageInfoContainer.classList.remove('step-background');
     myaverageInfoContainer.classList.add('hydration-background');
     weeklyDataMessage(allHydrationData, 'numOunces', user);
   } else if (dataType === 'sleep'){
@@ -179,6 +183,8 @@ function renderDailyData(dataType, user) {
     hide(myWeekInfo);
     unhide(userDataContainer);
     dayInfoText.innerText = `Go take a walk!`
+    myDayInfoContainer.classList.remove('hydration-background');
+    myDayInfoContainer.classList.remove('sleep-background');
     myDayInfoContainer.classList.add('step-background');
   }
 }
