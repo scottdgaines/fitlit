@@ -92,9 +92,9 @@ body, html {
   height: 200px;
   margin-top: 25px;
   width: 200px;
-  background-image: '../images/fitlit_sleep_icon.svg';
-  background-size: fill;
-  background-repeat: no-repeat;
+  background-image: url('../images/fitlit_sleep_icon.svg');
+  background-size: cover;
+  background-position: center;
 }
 
 .my-week-info-container {
