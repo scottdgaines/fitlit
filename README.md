@@ -3,6 +3,7 @@ let's get lit
 ---------
 
 -links to wireframe and trello board
+[Project Board](https://trello.com/b/QivjNRBQ/fitlit)
 ## Overview
 Tired of never being able to keep track of how much water you've consumed? Always wondered how many hours you've slept this week? FitLit is here to help!
 
@@ -16,7 +17,7 @@ If you would like to pull down the code to your local machine, complete the foll
 - Run `git clone <copied URL>` in your command line
 -`cd` into the root directory
 3. Run `npm install` in your command line to install the necessary dependencies
-3. 
+
 
 ## Technologies Used
 + HTML
