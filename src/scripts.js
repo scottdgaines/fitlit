@@ -167,7 +167,7 @@ function renderDailyData(dataType, user) {
     weekInfoText.innerText = `Here are the hours of sleep you achieved in the last week: `
     weeklyDataMessage(allSleepData, 'hoursSlept', user)
     weekInfoText.innerText += `Here is how well you slept in the last week: `
-    weeklyDataMessage(allSleepData, 'sleepQuality', user)
+    // weeklyDataMessage(allSleepData, 'sleepQuality', user)
   } else {
     hide(welcomeMessage);
     hide(myAverageInfo);
@@ -184,31 +184,128 @@ function updateBackgroundImage(dataType) {
   // alt="activity logo" />`
 }
 
-function weeklyDataMessage(array, neededData, user){
-const userWeekData = user.returnUserWeekData(array, neededData)
-userWeekData.forEach(array =>
-  weekInfoText.innerText += ` ${array}, `)
-  const data = [];
-  const dates = userWeekData.map(date => {
-    const splits = date.split(": ");
-    data.push(splits[1]);
-    return splits[0]
-  })
-  renderWeeklyChart(data, dates)
-}
+function weeklyDataMessage(array, neededData, user) {
+  if (neededData === 'hoursSlept') {
+    //also run sleepQuality
+    let userWeekData = user.returnUserWeekData(array, neededData);
+    let otherWeekData = user.returnUserWeekData(array, 'sleepQuality');
+    let data = [[],[]];
 
-function renderWeeklyChart(data, dates){
+    userWeekData.forEach(dataPoint =>
+      weekInfoText.innerText += ` ${dataPoint}, `)
+      let dates = userWeekData.map(date => {
+      let splits = date.split(": ");
+      data[0].push(splits[1]);
+      return splits[0];
+      });
+    // );
+
+    otherWeekData.forEach(dataPoint => {
+      weekInfoText.innerText += ` ${dataPoint}, `
+      let newSplits = dataPoint.split(": ");
+      data[1].push(newSplits[1]);
+      });
+
+    renderSleepChart(data, dates)
+
+  } else {
+  const userWeekData = user.returnUserWeekData(array, neededData)
+  userWeekData.forEach(dataPoint =>
+    weekInfoText.innerText += ` ${dataPoint}, `)
+    const data = [ ];
+    const dates = userWeekData.map(date => {
+      const splits = date.split(": ");
+      data.push(splits[1]);
+      return splits[0];
+    });
+    renderHydrationChart(data, dates);
+    };
+  };
+
+function renderSleepChart(data, dates) {
   const chartLayout = document.getElementById('myChart');
+
   if(myChart) {
     resetChart(myChart)
-  }
+  };
+
+  const dataSet1 = data[0];
+  const dataSet2 = data[1];
 
   myChart = new Chart(chartLayout, {
       type: 'line',
       data: {
           labels: dates,
           datasets: [{
-              label: 'My Weekly Average',
+              label: 'Hours slept',
+              data: dataSet1,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'Sleep quality',
+              data: dataSet2,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }
+        ]
+      },
+      options: {
+          interaction: {
+            mode: 'index'
+          },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+}
+
+function renderHydrationChart(data, dates) {
+  const chartLayout = document.getElementById('myChart');
+
+  if(myChart) {
+    resetChart(myChart)
+  };
+
+  myChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: dates,
+          datasets: [{
+              label: 'Ounces of water consumed',
               data: data,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -227,9 +324,13 @@ function renderWeeklyChart(data, dates){
                   'rgba(255, 159, 64, 1)'
               ],
               borderWidth: 1
-          }]
+          }
+        ]
       },
       options: {
+          interaction: {
+            mode: 'index'
+          },
           scales: {
               y: {
                   beginAtZero: true
