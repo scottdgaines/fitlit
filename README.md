@@ -1,78 +1,55 @@
-# FitLit Starter Kit
+# [FitLit]()
+let's get lit
+---------
 
-The details of this project are outline in [this project spec](http://frontend.turing.io/projects/fitlit.html).
+-links to wireframe and trello board
+## Overview
+Tired of never being able to keep track of how much water you've consumed? Always wondered how many hours you've slept this week? FitLit is here to help!
+
+FitLit is an activity-tracking app that compiles and displays a user's data surrounding hydration, sleep, and their daily step goal. It was built using a previously-supplied data set with architectural and functionality requirements set by Turing School of Software and Design, following the principals of Test Driven Development and Object Oriented Programming.
 
 ## Setup
+If you would like to pull down the code to your local machine, complete the following:
+1. Make a copy of this repository by pressing the 'Fork' button in the upper right corner, and following the prompts
+2. Pull your copy of the repository down to your local machine:
+- On the remote repository's page, click the green 'Code' button, select SSH, and copy the URL
+- Run `git clone <copied URL>` in your command line
+-`cd` into the root directory
+3. Run `npm install` in your command line to install the necessary dependencies
+3. 
 
-1. Within your group, decide on one person to have the project repository (repo) on their GitHub account. Then, that person should fork this repo - on the top right corner of this page, click the **Fork** button.
-1. Both memebers of the group should clone down the _forked_ repo. Since you don't want to name your project "activity-tracker-starter", you can use an optional argument when you run git clone (you replace the [...] with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` to install project dependencies.
-1. Run `npm start` in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page).  `Control + C` is the command to stop running the local server.  Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems. This command is not specific to Webpack; make note of it for future use.   
-1. Make sure both members of your team are collaborators on the forked repo.  
-1. Do not run `npm audit fix --force`.  This will update to the latest version of packages.  We need to be using `webpack-dev-server@3.11.2` which is not the latest version.  If you start to run into Webpack errors, first check that all group members are using the correct version.  
+## Technologies Used
++ HTML
++ CSS
++ Javascript
++ Mocha
++ Chai
++ Webpack
++ API Fetch Requests
++ Chart.js
+## Future Iterations
+Moving forward, and after revisiting the script to refactor for DRYness and formatting, we plan to develop features for:
+-compiling daily, weekly, and average 'step' data
+-Allowing the user to customize their avatar
+-Allowing the user to navigate to their friends' profiles
+-Allowing the user to search for people by name or username
+## Dev Notes
+### Wins
 
-## Testing
+### Challenges
+- git error handling
+- commit frequency
 
-There is no boilerplate for testing in this starter-kit repo. You will need to set this up yourself. However, if you ran `npm install`, then the tooling you need to start testing is already installed (`mocha` and `chai`).
+## Dev Contacts
+Marianne Barton
+[GitHub](https://github.com/mhbarton)
+[LinkedIn](https://www.linkedin.com/in/marianne-barton-1307/)
 
+Alycia Canavan
+[Github](https://github.com/alyciacan)
+[LinkedIn](https://www.linkedin.com/in/alycia-canavan/)
 
-## Data Model
-
-**Users**
-
-```
-[
-  {
-    "id": [number],
-    "name": [string],
-    "address": [string],
-    "email": [string],
-    "strideLength": [number - feet],
-    "dailyStepGoal": [number - steps],
-    "friends": [array - one-way connection to other user(s)]
-  },
-  ...more user data
-]
-```
-
-**Activity**
-
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "numSteps": [number - steps],
-    "minutesActive": [number - minutes],
-    "flightsOfStairs": [number - flights]
-  },
-  ...more activity data
-]
-```
-
-**Hydration**
-
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "numOunces": [number - ounces]
-  },
-  ...more hydration data
-]
-```
-
-**Sleep**
-
-```
-[
-  {
-    "userID": [number],
-    "date": [string YYYY/MM/DD],
-    "hoursSlept": [number - hours],
-    "sleepQuality": [number - unitless]
-  },
-  ...more sleep data
-]
-```
+Scott Gaines
+scottdgaines@gmail.com
+[Github](https://github.com/scottdgaines)
+[LinkeIn](https://www.linkedin.com/in/scottdgaines-fe/)
