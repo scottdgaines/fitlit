@@ -53,6 +53,7 @@ let welcomeMessage = document.getElementById('welcomeMessage');
 let friendContainer = document.getElementById('myFriendBoxContainer');
 let userInfoContainer = document.getElementById('myUserInfo');
 let userInfotext;
+let infoContainerHeader = document.getElementById('infoContainerHeader')
 let userStepGoalContainer = document.getElementById('userStepsContainer');
 let userStepGoalText = document.getElementById('userStepGoalText');
 let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
@@ -109,11 +110,11 @@ function changeDisplay(currentUser) {
 };
 
 function hide(element) {
-  element.classList.add('hidden');
+  element.classList.add('hide');
 };
 
 function unhide(element) {
-  element.classList.remove('hidden');
+  element.classList.remove('hide');
 };
 
 function renderMyInfo(currentUser) {
@@ -156,34 +157,32 @@ function renderAvgStepGoal(dataSet) {
 
 function renderDailyData(dataType, user) {
   if (dataType === 'water') {
-    hideWelcomeMessage();
-    showDataContainer();
-    dayInfoText.innerText = `consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
+    hide(welcomeMessage);
+    unhide(userDataContainer);
+    unhide(myAverageInfo);
+    unhide(myWeekInfo);
+    dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
     weekInfoText.innerText = `Your weekly amount of water consumed is `
     weeklyDataMessage(allHydrationData, 'numOunces', user)
   } else if (dataType === 'sleep'){
-    hideWelcomeMessage();
-    showDataContainer();
-    dayInfoText.innerText = `slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} of hours and your quality of sleep was a ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} out of 5!`
-    averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} out of 5! `
+    hide(welcomeMessage);
+    unhide(userDataContainer);
+    unhide(myAverageInfo);
+    unhide(myWeekInfo);
+    dayInfoText.innerText = `Today, you slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} hours and your quality of sleep was ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} / 5!`
+    averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} / 5! `
     weekInfoText.innerText = `Here are the hours of sleep you achieved in the last week: `
     weeklyDataMessage(allSleepData, 'hoursSlept', user)
     weekInfoText.innerText += `Here is how well you slept in the last week: `
     weeklyDataMessage(allSleepData, 'sleepQuality', user)
   } else {
-    hideWelcomeMessage();
-    showDataContainer();
-    myDayInfoContainer.innerText = `Go take a walk!`
+    hide(welcomeMessage);
+    hide(myAverageInfo);
+    hide(myWeekInfo);
+    unhide(userDataContainer);
+    dayInfoText.innerText = `Go take a walk!`
   }
-}
-
-function hideWelcomeMessage() {
-  welcomeMessage.classList.add('hide');
-}
-
-function showDataContainer() {
-  userDataContainer.classList.remove('hide');
 }
 
 function weeklyDataMessage(array, neededData, user){
