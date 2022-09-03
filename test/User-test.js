@@ -55,64 +55,25 @@ describe('User', () => {
                 ]
         });
 
-        hydrationObject1 = new Hydration({
-            'userID': 1,
-            'date': '2022/08/29',
-            'numOunces': 36
-        });
+        hydrationObject1 = new Hydration({'userID': 1, 'date': '2022/08/29', 'numOunces': 36});
 
-        hydrationObject2 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/01',
-            'numOunces': 42
-        });
+        hydrationObject2 = new Hydration({'userID': 2, 'date': '2022/08/01', 'numOunces': 42});
 
-        hydrationObject3 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/02',
-            'numOunces': 2
-        });
+        hydrationObject3 = new Hydration({'userID': 2, 'date': '2022/08/02', 'numOunces': 2});
 
-        hydrationObject4 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/03',
-            'numOunces': 10
-        })
+        hydrationObject4 = new Hydration({'userID': 2, 'date': '2022/08/03', 'numOunces': 10});
 
-        hydrationObject5 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/04',
-            'numOunces': 23
-        })
-        hydrationObject6 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/05',
-            'numOunces': 60
-        });
+        hydrationObject5 = new Hydration({'userID': 2, 'date': '2022/08/04', 'numOunces': 23});
 
-        hydrationObject7 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/06',
-            'numOunces': 19
-        });
+        hydrationObject6 = new Hydration({'userID': 2, 'date': '2022/08/05', 'numOunces': 60});
 
-        hydrationObject8 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/07',
-            'numOunces': 20
-        });
+        hydrationObject7 = new Hydration({'userID': 2, 'date': '2022/08/06', 'numOunces': 19});
 
-        hydrationObject9 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/08',
-            'numOunces': 40
-        });
+        hydrationObject8 = new Hydration({'userID': 2, 'date': '2022/08/07', 'numOunces': 20});
 
-        hydrationObject10 = new Hydration({
-            'userID': 1,
-            'date': '2022/08/15',
-            'numOunces': 30
-        });
+        hydrationObject9 = new Hydration({'userID': 2, 'date': '2022/08/08', 'numOunces': 40});
+
+        hydrationObject10 = new Hydration({'userID': 1, 'date': '2022/08/15', 'numOunces': 30});
 
         hydrationArray = [
             hydrationObject1,
