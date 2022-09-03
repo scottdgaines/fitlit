@@ -7,7 +7,7 @@ class User {
     this.strideLength = userObj.strideLength;
     this.dailyStepGoal = userObj.dailyStepGoal;
     this.friends = userObj.friends;
-  }
+  };
 
   returnUserFirstName() {
     let arrayedName = this.name.split(" ");
@@ -83,7 +83,6 @@ class User {
     const dailyQuality = newArray.find(element => element.date === date)
     return dailyQuality.sleepQuality;
   };
-
 };
 
 export default User;

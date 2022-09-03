@@ -1,5 +1,5 @@
 class UserRepository {
-  constructor (data) {
+  constructor(data) {
     this.userData = data;
   };
 

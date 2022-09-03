@@ -5,35 +5,21 @@ import Sleep from '../src/Sleep.js'
 
 
 describe('User', () => {
-    let user1;
-    let user2;
-    let hydrationObject1;
-    let hydrationObject2;
-    let hydrationObject3;
-    let hydrationObject4;
-    let hydrationObject5;
-    let hydrationObject6;
-    let hydrationObject7;
-    let hydrationObject8;
-    let hydrationObject9;
-    let hydrationObject10;
-    let hydrationArray;
-    let hydrationArray1;
-    let sleepObject1;
-    let sleepObject2;
-    let sleepObject3;
-    let sleepArray;
-    let sleepArray1;
+    let user1, user2;
+    let hydrationObject1, hydrationObject2, hydrationObject3, hydrationObject4, hydrationObject5, hydrationObject6, hydrationObject7, hydrationObject8, hydrationObject9, hydrationObject10;
+    let hydrationArray, hydrationArray1;
+    let sleepObject1, sleepObject2, sleepObject3;
+    let sleepArray, sleepArray1;
 
     beforeEach(() => {
         user1 = new User({
-            "id": 1,
-            "name": "Luisa Hane",
-            "address": "15195 Nakia Tunnel, Erdmanport VA 19901-1697",
-            "email": "Diana.Hayes1@hotmail.com",
-            "strideLength": 4.3,
-            "dailyStepGoal": 10000,
-            "friends": [
+            'id': 1,
+            'name': 'Luisa Hane',
+            'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
+            'email': 'Diana.Hayes1@hotmail.com',
+            'strideLength": 4.3,
+            "dailyStepGoal': 10000,
+            'friends': [
               16,
               4,
               8
@@ -41,78 +27,39 @@ describe('User', () => {
           });
 
         user2 = new User({
-                "id": 2,
-                "name": "Jarvis Considine",
-                "address": "30086 Kathryn Port, Ciceroland NE 07273",
-                "email": "Dimitri.Bechtelar11@gmail.com",
-                "strideLength": 4.5,
-                "dailyStepGoal": 5000,
-                "friends": [
-                  9,
-                  18,
-                  24,
-                  19
-                ]
-        });
+            'id': 2,
+            'name': 'Jarvis Considine',
+            'address': '30086 Kathryn Port, Ciceroland NE 07273',
+            'email': 'Dimitri.Bechtelar11@gmail.com',
+            'strideLength': 4.5,
+            'dailyStepGoal': 5000,
+            'friends': [
+              9,
+              18,
+              24,
+              19
+            ]
+          });
 
-        hydrationObject1 = new Hydration({
-            'userID': 1,
-            'date': '2022/08/29',
-            'numOunces': 36
-        });
+        hydrationObject1 = new Hydration({'userID': 1, 'date': '2022/08/29', 'numOunces': 36});
 
-        hydrationObject2 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/01',
-            'numOunces': 42
-        });
+        hydrationObject2 = new Hydration({'userID': 2, 'date': '2022/08/01', 'numOunces': 42});
 
-        hydrationObject3 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/02',
-            'numOunces': 2
-        });
+        hydrationObject3 = new Hydration({'userID': 2, 'date': '2022/08/02', 'numOunces': 2});
 
-        hydrationObject4 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/03',
-            'numOunces': 10
-        })
+        hydrationObject4 = new Hydration({'userID': 2, 'date': '2022/08/03', 'numOunces': 10});
 
-        hydrationObject5 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/04',
-            'numOunces': 23
-        })
-        hydrationObject6 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/05',
-            'numOunces': 60
-        });
+        hydrationObject5 = new Hydration({'userID': 2, 'date': '2022/08/04', 'numOunces': 23});
 
-        hydrationObject7 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/06',
-            'numOunces': 19
-        });
+        hydrationObject6 = new Hydration({'userID': 2, 'date': '2022/08/05', 'numOunces': 60});
 
-        hydrationObject8 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/07',
-            'numOunces': 20
-        });
+        hydrationObject7 = new Hydration({'userID': 2, 'date': '2022/08/06', 'numOunces': 19});
 
-        hydrationObject9 = new Hydration({
-            'userID': 2,
-            'date': '2022/08/08',
-            'numOunces': 40
-        });
+        hydrationObject8 = new Hydration({'userID': 2, 'date': '2022/08/07', 'numOunces': 20});
 
-        hydrationObject10 = new Hydration({
-            'userID': 1,
-            'date': '2022/08/15',
-            'numOunces': 30
-        });
+        hydrationObject9 = new Hydration({'userID': 2, 'date': '2022/08/08', 'numOunces': 40});
+
+        hydrationObject10 = new Hydration({'userID': 1, 'date': '2022/08/15', 'numOunces': 30});
 
         hydrationArray = [
             hydrationObject1,
@@ -138,26 +85,11 @@ describe('User', () => {
             hydrationObject9
         ];
 
-        sleepObject1 = new Sleep({
-              "userID": 1,
-              "date": "2019/06/15",
-              "hoursSlept": 6.1,
-              "sleepQuality": 2.2
-        });
+        sleepObject1 = new Sleep({'userID': 1, 'date': '2019/06/15', 'hoursSlept': 6.1, 'sleepQuality': 2.2});
 
-        sleepObject2 = new Sleep ({
-          "userID": 2,
-          "date": "2019/06/15",
-          "hoursSlept": 7,
-          "sleepQuality": 4.7
-        });
+        sleepObject2 = new Sleep ({'userID': 2, 'date': '2019/06/15', 'hoursSlept': 7, 'sleepQuality': 4.7});
 
-        sleepObject3 = new Sleep({
-              "userID": 2,
-              "date": "2019/06/16",
-              "hoursSlept": 7.5,
-              "sleepQuality": 3.8
-        });
+        sleepObject3 = new Sleep({'userID': 2, 'date': '2019/06/16', 'hoursSlept': 7.5, 'sleepQuality': 3.8});
 
         sleepArray = [
           sleepObject1,
@@ -220,7 +152,7 @@ describe('User', () => {
     });
 
     it('Should find the most recent date for a user', () => {
-      expect(user2.findMostRecentDate(hydrationArray)).to.equal('2022/08/08')
+      expect(user2.findMostRecentDate(hydrationArray)).to.equal('2022/08/08');
     });
 
     it('Should return the total average ounces consumed for a user', () => {
