@@ -83,25 +83,18 @@ body, html {
   width: 950px;
 }
 
+.header{
+  padding: 25px;
+}
+
 .data-display {
-  height: 225px;
-  margin-top: 50px;
-  width: 225px;
+  text-align: center;
+  height: 200px;
+  margin-top: 25px;
+  width: 200px;
   background-image: '../images/fitlit_sleep_icon.svg';
   background-size: fill;
   background-repeat: no-repeat;
-}
-
-.my-day-info-container {
-  height: 200px;
-  margin-top: 75px;
-  width: 200px;
-}
-
-.my-average-info-container {
-  height: 200px;
-  margin-top: 75px;
-  width: 200px;
 }
 
 .my-week-info-container {
@@ -137,5 +130,20 @@ body, html {
 }
 
 .my-chart{
-  padding-bottom: 50px;
+  padding-bottom: 75px;
+}
+
+.large{
+  height: 600px;
+  width: 600px;
+}
+
+.medium{
+  height: 300px;
+  width: 300px;
+}
+
+.small{
+  height: 85px;
+  width: 85px;
 }
