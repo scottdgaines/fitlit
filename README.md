@@ -1,9 +1,9 @@
 # [FitLit]()
 let's get lit
 ---------
-
--links to wireframe and trello board
 [Project Board](https://trello.com/b/QivjNRBQ/fitlit)
+[Project Wireframe](https://excalidraw.com/#json=wc3HAMJ52biTE6rWEUDRs,g2YzqQF7BI6AmCAkdvSW-A)
+
 ## Overview
 Tired of never being able to keep track of how much water you've consumed? Always wondered how many hours you've slept this week? FitLit is here to help!
 
@@ -28,12 +28,14 @@ If you would like to pull down the code to your local machine, complete the foll
 + Webpack
 + API Fetch Requests
 + Chart.js
+
 ## Future Iterations
 Moving forward, and after revisiting the script to refactor for DRYness and formatting, we plan to develop features for:
 -compiling daily, weekly, and average 'step' data
 -Allowing the user to customize their avatar
 -Allowing the user to navigate to their friends' profiles
 -Allowing the user to search for people by name or username
+
 ## Dev Notes
 ### Wins
 
@@ -53,4 +55,9 @@ Alycia Canavan
 Scott Gaines
 scottdgaines@gmail.com
 [Github](https://github.com/scottdgaines)
-[LinkeIn](https://www.linkedin.com/in/scottdgaines-fe/)
+[LinkedIn](https://www.linkedin.com/in/scottdgaines-fe/)
+
+## Credit
+- Icons created using Canva
+- Wireframe created using excalidraw
+- Project board created with Trello
