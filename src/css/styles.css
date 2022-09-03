@@ -83,6 +83,15 @@ body, html {
   width: 950px;
 }
 
+.data-display {
+  height: 225px;
+  margin-top: 50px;
+  width: 225px;
+  background-image: '../images/fitlit_sleep_icon.svg';
+  background-size: fill;
+  background-repeat: no-repeat;
+}
+
 .my-day-info-container {
   height: 200px;
   margin-top: 75px;
@@ -96,7 +105,7 @@ body, html {
 }
 
 .my-week-info-container {
-  height: 250px;
+  height: 300px;
   width: 750px;
 }
 
@@ -127,11 +136,6 @@ body, html {
   color: #464F6D;
 }
 
-.background-image {
-  position: relative;
-  height: 200px;
-  width: 200px;
-  opacity: 0.4;
-  position: fixed;
-  z-index: 0;
+.my-chart{
+  padding-bottom: 50px;
 }
