@@ -12,8 +12,7 @@ import './images/fitlit_water_icon.svg';
 import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
-
-
+import './images/logo.svg'
 
 // An example of how you tell webpack to use a JS file
 
@@ -39,10 +38,8 @@ function startData() {
         allSleepData = dataSet[1];
         allHydrationData = dataSet[2];
         generatePageLoad(allUserData); //since generatePageLoad happens after promise is resolved, how come I can't access currentUser globally later?
-
   })
 };
-
 
 //QUERY SELECTORS:
 let waterIcon = document.getElementById('water-icon');
@@ -71,7 +68,6 @@ let logoContainer = document.getElementById('logoContainer');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
-
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -185,11 +181,17 @@ function renderDailyData(dataType, user) {
   }
 }
 
-function weeklyDataMessage(array, neededData, user){
-user.returnUserWeekData(array, neededData).forEach(array =>
-  weekInfoText.innerText += ` ${array}, `)
+function updateBackgroundImage(dataType) {
+  // myDayInfoContainer.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
+  //   alt="activity logo" />`
+  // myAverageInfo.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
+  // alt="activity logo" />`
 }
 
+function weeklyDataMessage(array, neededData, user){
+  user.returnUserWeekData(array, neededData).forEach(array =>
+    weekInfoText.innerText += ` ${array}, `)
+}
 
 //click on a water/sleep/activity icon populates the larger bubbles with
 //user info from user class
