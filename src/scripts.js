@@ -288,7 +288,8 @@ function renderSleepChart(data, dates) {
               y: {
                   beginAtZero: true
               }
-          }
+          },
+          maintainAspectRatio: false,
       }
   });
 }
