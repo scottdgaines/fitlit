@@ -1,6 +1,6 @@
 /* Styling index.html */
 /* General styling classes */
-.aside { /* lines 11 & 42 */
+.aside { 
   align-items: right;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
   width: 200px;
 }
 
-.icon { /* line */
+.icon { 
   cursor: pointer;
   fill: none;
   height: 85px;
@@ -101,11 +101,8 @@ body, html { /* line 10 */
 
 .my-week-info-container { /* line 36 */
   height: 300px;
+  padding-bottom: 100px;
   width: 750px;
-}
-
-.my-chart { /* line 38 */
-  padding-bottom: 75px;
 }
 
 .my-user-info-text-container {
