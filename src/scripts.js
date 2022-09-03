@@ -52,6 +52,7 @@ let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
 let averageInfoText = document.getElementById('averageInfoText');
+let myaverageInfoContainer = document.getElementById('myAverageInfoContainer');
 let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon];
@@ -155,8 +156,10 @@ function renderDailyData(dataType, user) {
     unhide(myWeekInfo);
     dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
-    weekInfoText.innerText = `Your weekly amount of water consumed is `
-    weeklyDataMessage(allHydrationData, 'numOunces', user)
+    weekInfoText.innerText = `Here is the water you consumed in the last week: `
+    myDayInfoContainer.classList.add('hydration-background');
+    myaverageInfoContainer.classList.add('hydration-background');
+    weeklyDataMessage(allHydrationData, 'numOunces', user);
   } else if (dataType === 'sleep'){
     hide(welcomeMessage);
     unhide(userDataContainer);
@@ -164,16 +167,23 @@ function renderDailyData(dataType, user) {
     unhide(myWeekInfo);
     dayInfoText.innerText = `Today, you slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} hours and your quality of sleep was ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} / 5!`
     averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} / 5! `
-    weekInfoText.innerText = `Here are the hours of sleep you achieved in the last week: `
+    weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
+    myDayInfoContainer.classList.remove('hydration-background');
+    myDayInfoContainer.classList.remove('step-background');
+    myDayInfoContainer.classList.add('sleep-background');
+    myaverageInfoContainer.classList.remove('hydration-background');
+    myaverageInfoContainer.classList.remove('step-background');
+    myaverageInfoContainer.classList.add('sleep-background');
     weeklyDataMessage(allSleepData, 'hoursSlept', user)
-    weekInfoText.innerText += `Here is how well you slept in the last week: `
-    // weeklyDataMessage(allSleepData, 'sleepQuality', user)
+    // weekInfoText.innerText += `Here is how well you slept in the last week: ` REMOVES BANNER
+    // weeklyDataMessage(allSleepData, 'sleepQuality', user) BREAKS DUAL DATA SET FUNCTIONALITY
   } else {
     hide(welcomeMessage);
     hide(myAverageInfo);
     hide(myWeekInfo);
     unhide(userDataContainer);
     dayInfoText.innerText = `Go take a walk!`
+    myDayInfoContainer.classList.add('step-background');
   }
 }
 
@@ -191,8 +201,8 @@ function weeklyDataMessage(array, neededData, user) {
     let otherWeekData = user.returnUserWeekData(array, 'sleepQuality');
     let data = [[],[]];
 
-    userWeekData.forEach(dataPoint =>
-      weekInfoText.innerText += ` ${dataPoint}, `)
+    // userWeekData.forEach(dataPoint =>
+    //   weekInfoText.innerText += ` ${dataPoint}, `) REMOVES SLEEP DATA BANNER
       let dates = userWeekData.map(date => {
       let splits = date.split(": ");
       data[0].push(splits[1]);
@@ -201,7 +211,7 @@ function weeklyDataMessage(array, neededData, user) {
     // );
 
     otherWeekData.forEach(dataPoint => {
-      weekInfoText.innerText += ` ${dataPoint}, `
+      // weekInfoText.innerText += ` ${dataPoint}, ` REMOVES SLEEP DATA BANNER
       let newSplits = dataPoint.split(": ");
       data[1].push(newSplits[1]);
       });
@@ -210,8 +220,8 @@ function weeklyDataMessage(array, neededData, user) {
 
   } else {
   const userWeekData = user.returnUserWeekData(array, neededData)
-  userWeekData.forEach(dataPoint =>
-    weekInfoText.innerText += ` ${dataPoint}, `)
+  // userWeekData.forEach(dataPoint =>
+  //   weekInfoText.innerText += ` ${dataPoint}, `) REMOVES HYDRATION DATA BANNER
     const data = [ ];
     const dates = userWeekData.map(date => {
       const splits = date.split(": ");
@@ -268,7 +278,8 @@ function renderSleepChart(data, dates) {
               y: {
                   beginAtZero: true
               }
-          }
+          },
+          maintainAspectRatio: false,
       }
   });
 }

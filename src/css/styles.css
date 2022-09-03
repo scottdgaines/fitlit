@@ -1,6 +1,6 @@
 /* Styling index.html */
 /* General styling classes */
-.aside { /* lines 11 & 42 */
+.aside { 
   align-items: right;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
   width: 200px;
 }
 
-.icon { /* line */
+.icon { 
   cursor: pointer;
   fill: none;
   height: 85px;
@@ -85,7 +85,7 @@ body, html { /* line 10 */
 }
 
 .data-display { /* line 28 & 32 */
-  background-image: url('../images/fitlit_sleep_icon.svg');
+  background-image: url('../images/sleep-background.svg');
   background-size: cover;
   background-position: center;
   height: 200px;
@@ -101,11 +101,12 @@ body, html { /* line 10 */
 
 .my-week-info-container { /* line 36 */
   height: 300px;
+  padding-bottom: 100px;
   width: 750px;
 }
 
-.my-chart { /* line 38 */
-  padding-bottom: 75px;
+.my-user-info-text-container {
+  overflow-x: scroll;
 }
 
 .my-info-header { /* line 44 */
@@ -146,10 +147,14 @@ body, html { /* line 10 */
   width: 85px;
 }
 
-/* .sleep-background {
-  background-image: url('../images/fitlit_sleep_icon.svg');
+.sleep-background {
+  background-image: url('../images/sleep-background.svg');
 }
 
 .hydration-background {
-  background-image: url('../images/fitlit_hydration_icon.svg');
-} */
+  background-image: url('../images/hydration-background.svg');
+}
+
+.step-background {
+  background-image: url('../images/step-background.svg');
+}
