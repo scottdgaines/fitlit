@@ -1,11 +1,9 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// console.log(userData,"<>>>>userData")
-// An example of how you tell webpack to use a CSS file
+//IMPORTS:
+import UserRepository from './UserRepository';
+import User from './User';
+import fetchData from './apiCalls.js';
+import Chart from 'chart.js/auto';
 import './css/styles.css';
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png';
 import './images/fitlit_sleep_icon.svg';
 import './images/fitlit_water_icon.svg';
@@ -13,14 +11,6 @@ import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
 import './images/logo.svg'
-
-// An example of how you tell webpack to use a JS file
-
-//IMPORTS:
-// import userData from './data/users';
-import UserRepository from './UserRepository';
-import User from './User';
-import fetchData from './apiCalls.js';
 
 //GLOBAL VARIABLES:
 let userRepository;
@@ -189,10 +179,51 @@ function updateBackgroundImage(dataType) {
 }
 
 function weeklyDataMessage(array, neededData, user){
-  user.returnUserWeekData(array, neededData).forEach(array =>
-    weekInfoText.innerText += ` ${array}, `)
+const userWeekData = user.returnUserWeekData(array, neededData)
+userWeekData.forEach(array =>
+  weekInfoText.innerText += ` ${array}, `)
+  const data = [];
+  const dates = userWeekData.map(date => {
+    const splits = date.split(": ");
+    data.push(splits[1]);
+    return splits[0]
+  })
+  renderWeeklyChart(data, dates)
 }
 
-//click on a water/sleep/activity icon populates the larger bubbles with
-//user info from user class
-//average step goal for all users will populate in box, also user's step goal
+function renderWeeklyChart(data, dates){
+  const chartLayout = document.getElementById('myChart');
+  const myChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: dates,
+          datasets: [{
+              label: 'My Weekly Average',
+              data: data,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
