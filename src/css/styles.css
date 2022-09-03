@@ -85,7 +85,7 @@ body, html { /* line 10 */
 }
 
 .data-display { /* line 28 & 32 */
-  background-image: url('../images/fitlit_sleep_icon.svg');
+  background-image: url('../images/sleep-background.svg');
   background-size: cover;
   background-position: center;
   height: 200px;
@@ -147,10 +147,14 @@ body, html { /* line 10 */
   width: 85px;
 }
 
-/* .sleep-background {
-  background-image: url('../images/fitlit_sleep_icon.svg');
+.sleep-background {
+  background-image: url('../images/sleep-background.svg');
 }
 
 .hydration-background {
-  background-image: url('../images/fitlit_hydration_icon.svg');
-} */
+  background-image: url('../images/hydration-background.svg');
+}
+
+.step-background {
+  background-image: url('../images/step-background.svg');
+}
