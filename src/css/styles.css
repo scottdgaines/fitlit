@@ -108,6 +108,10 @@ body, html { /* line 10 */
   padding-bottom: 75px;
 }
 
+.my-user-info-text-container {
+  overflow-x: scroll;
+}
+
 .my-info-header { /* line 44 */
   text-align: center;
 }
