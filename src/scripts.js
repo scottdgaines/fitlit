@@ -12,6 +12,7 @@ import './images/fitlit_water_icon.svg';
 import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
+import './images/logo.svg'
 
 
 
@@ -190,12 +191,10 @@ function showDataContainer() {
 }
 
 function updateBackgroundImage(dataType) {
-  myDayInfoContainer.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
-    alt="activity logo" />`
-  myAverageInfo.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
-  alt="activity logo" />`
-  myWeekInfo.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
-  alt="activity logo" />`
+  // myDayInfoContainer.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
+  //   alt="activity logo" />`
+  // myAverageInfo.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
+  // alt="activity logo" />`
 }
 
 function weeklyDataMessage(array, neededData, user){
