@@ -69,9 +69,9 @@ body, html {
 }
 
 .welcome-message {
+  font-size: 30px;
   text-align: center;
   margin-top: 120px;
-  font-size: 30px;
 }
 
 .user-data-container {
@@ -80,24 +80,16 @@ body, html {
   flex-wrap: wrap;
   height: 605px;
   margin-top: 25px;
-  width: 1000px;
+  width: 950px;
 }
 
 .my-day-info-container {
-  border: 2px solid red;
   height: 200px;
-  display: flex;
   margin-top: 75px;
   width: 200px;
 }
 
-.day-info-text {
-  position: absolute;
-  z-index: 100;
-}
-
 .my-average-info-container {
-  border: 2px solid orange;
   height: 200px;
   margin-top: 75px;
   width: 200px;
@@ -130,7 +122,6 @@ body, html {
 .hide {
   display: none;
 }
-
 
 .text {
   color: #464F6D;
