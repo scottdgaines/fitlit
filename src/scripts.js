@@ -52,6 +52,7 @@ let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
 let averageInfoText = document.getElementById('averageInfoText');
+let myaverageInfoContainer = document.getElementById('myAverageInfoContainer');
 let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon];
@@ -156,15 +157,23 @@ function renderDailyData(dataType, user) {
     dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
     averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
     weekInfoText.innerText = `Here is the water you consumed in the last week: `
-    weeklyDataMessage(allHydrationData, 'numOunces', user)
+    myDayInfoContainer.classList.add('hydration-background');
+    myaverageInfoContainer.classList.add('hydration-background');
+    weeklyDataMessage(allHydrationData, 'numOunces', user);
   } else if (dataType === 'sleep'){
     hide(welcomeMessage);
     unhide(userDataContainer);
     unhide(myAverageInfo);
     unhide(myWeekInfo);
     dayInfoText.innerText = `Today, you slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} hours and your quality of sleep was ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} / 5!`
-    // averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} / 5! `
+    averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} / 5! `
     weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
+    myDayInfoContainer.classList.remove('hydration-background');
+    myDayInfoContainer.classList.remove('step-background');
+    myDayInfoContainer.classList.add('sleep-background');
+    myaverageInfoContainer.classList.remove('hydration-background');
+    myaverageInfoContainer.classList.remove('step-background');
+    myaverageInfoContainer.classList.add('sleep-background');
     weeklyDataMessage(allSleepData, 'hoursSlept', user)
     // weekInfoText.innerText += `Here is how well you slept in the last week: ` REMOVES BANNER
     // weeklyDataMessage(allSleepData, 'sleepQuality', user) BREAKS DUAL DATA SET FUNCTIONALITY
@@ -174,6 +183,7 @@ function renderDailyData(dataType, user) {
     hide(myWeekInfo);
     unhide(userDataContainer);
     dayInfoText.innerText = `Go take a walk!`
+    myDayInfoContainer.classList.add('step-background');
   }
 }
 
