@@ -8,7 +8,6 @@ body, html {
 }
 
 .aside {
-  border: 2px solid orange;
   align-items: right;
   display: flex;
   flex-direction: column;
@@ -29,13 +28,13 @@ body, html {
 }
 
 .navigation-bar {
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 }
 
-.icon {
-  background: transparent;
+.icon { 
   cursor: pointer;
   fill: none;
   height: 85px;
@@ -45,26 +44,33 @@ body, html {
   align-items: center;
   display: flex;
   flex-direction: column;
+  text-align: center;
   overflow-y: scroll;
 }
 
-.my-friends-header {
-}
-
 .main-display {
-  border: 2px solid red;
   height: 750px;
-  width: 1000px;
+  width: 950px;
   margin: 10px 20px;
 }
 
 .logo-container {
- height: 100px;
- width: 1000px
+  height: 100px;
+  width: 950px;
+}
+
+.logo-icon {
+  height: 100px;
+}
+
+.title {  
+  font-size: 40px;
+  text-align: right;
 }
 
 .welcome-message {
-  margin: 200px 50px;
+  text-align: center;
+  margin-top: 120px;
   font-size: 30px;
 }
 
@@ -80,13 +86,21 @@ body, html {
 .my-day-info-container {
   border: 2px solid red;
   height: 200px;
+  display: flex;
+  margin-top: 75px;
   width: 200px;
+}
+
+.day-info-text {
+  position: absolute;
+  z-index: 100;
 }
 
 .my-average-info-container {
   border: 2px solid orange;
-  height: 300px;
-  width: 300px;
+  height: 200px;
+  margin-top: 75px;
+  width: 200px;
 }
 
 .my-week-info-container {
@@ -94,24 +108,39 @@ body, html {
   width: 750px;
 }
 
-.user-avatar {
-  align-items: center;
-  border: 2px solid red;
-  height: 130px;
-  margin: 5px 0px 10px 50px;
-  position: center;
+.my-info-header {
+  text-align: center;
 }
 
-.my-user-info-container {
-  display: grid
+.user-avatar { /* line 44 */
+  height: 130px;
+  margin: 5px 0px 10px 50px;
+}
+
+.my-user-info {
+  margin-left: 10px;
+}
+
+.steps-box-container {
+  text-align: center;
+  height: 150px;
 }
 
 /* Additional Styling Properties */
-
 .hide {
   display: none;
 }
 
+
 .text {
   color: #464F6D;
+}
+
+.background-image {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  opacity: 0.4;
+  position: fixed;
+  z-index: 0;
 }
