@@ -76,21 +76,28 @@ function generateRandomUser(userData) {
   return currentUser = new User(currentUserObj);
 };
 
-function welcomeUser(currentUser) {
+function welcomeUser() {
   welcomeUserName.innerText = `Hi, ${currentUser.returnUserFirstName()}!`
+};
+
+function moveWelcomeMessage() {
+  welcomeUser(currentUser);
+  logoContainer.appendChild(welcomeUserName);
+  welcomeUserName.classList.add('welcome-header');
 };
 
 function changeDisplay(currentUser) {
   if (event.target.id === 'water-icon') {
-    renderDailyData('water', currentUser);
+    renderUserData('water', currentUser);
   } else if (event.target.id === 'sleep-icon') {
-    renderDailyData('sleep', currentUser);
+    renderUserData('sleep', currentUser);
   } else if (event.target.id === 'activity-icon') {
-    renderDailyData('activity', currentUser);
+    renderUserData('activity', currentUser);
   }
   hide(welcomeMessage);
   unhide(userDataContainer);
   unhide(logoContainer);
+  moveWelcomeMessage();
 };
 
 function hide(element) {
@@ -116,7 +123,7 @@ function makeAFriend(friendName) {
   var friendIcon = document.createElement('img');
   var friendNameElement = document.createElement('h6');
   friendIcon.src = './images/friendIcon.svg';
-  friendIcon.classList.add('icon');
+  friendIcon.classList.add('small')
   friendDisplay.appendChild(friendIcon);
   friendDisplay.appendChild(friendNameElement);
   friendNameElement.innerText = friendName;
@@ -143,11 +150,11 @@ function resetChart() {
   myChart.destroy();
 };
 
-function renderDailyData(dataType, user) {
+function renderUserData(dataType, user) {
+  hide(welcomeMessage);
+  unhide(userDataContainer);
 
   if (dataType === 'water') {
-    hide(welcomeMessage);
-    unhide(userDataContainer);
     unhide(myAverageInfo);
     unhide(myWeekInfo);
     dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
@@ -160,9 +167,7 @@ function renderDailyData(dataType, user) {
     myaverageInfoContainer.classList.remove('step-background');
     myaverageInfoContainer.classList.add('hydration-background');
     weeklyDataMessage(allHydrationData, 'numOunces', user);
-  } else if (dataType === 'sleep'){
-    hide(welcomeMessage);
-    unhide(userDataContainer);
+  } else if (dataType === 'sleep') {
     unhide(myAverageInfo);
     unhide(myWeekInfo);
     dayInfoText.innerText = `Today, you slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} hours and your quality of sleep was ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} / 5!`
@@ -178,10 +183,8 @@ function renderDailyData(dataType, user) {
     // weekInfoText.innerText += `Here is how well you slept in the last week: ` REMOVES BANNER
     // weeklyDataMessage(allSleepData, 'sleepQuality', user) BREAKS DUAL DATA SET FUNCTIONALITY
   } else {
-    hide(welcomeMessage);
-    hide(myAverageInfo);
     hide(myWeekInfo);
-    unhide(userDataContainer);
+    hide(myAverageInfo);
     dayInfoText.innerText = `Go take a walk!`
     myDayInfoContainer.classList.remove('hydration-background');
     myDayInfoContainer.classList.remove('sleep-background');
@@ -198,7 +201,6 @@ function updateBackgroundImage(dataType) {
 
 function weeklyDataMessage(array, neededData, user) {
   if (neededData === 'hoursSlept') {
-    //also run sleepQuality
     let userWeekData = user.returnUserWeekData(array, neededData);
     let otherWeekData = user.returnUserWeekData(array, 'sleepQuality');
     let data = [[],[]];
@@ -236,13 +238,12 @@ function weeklyDataMessage(array, neededData, user) {
 
 function renderSleepChart(data, dates) {
   const chartLayout = document.getElementById('myChart');
+  const dataSet1 = data[0];
+  const dataSet2 = data[1];
 
   if(myChart) {
     resetChart(myChart)
   };
-
-  const dataSet1 = data[0];
-  const dataSet2 = data[1];
 
   myChart = new Chart(chartLayout, {
       type: 'line',
@@ -320,7 +321,6 @@ function renderHydrationChart(data, dates) {
               }
           },
           maintainAspectRatio: false,
-
       }
   });
 };
