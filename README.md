@@ -52,10 +52,10 @@ Moving forward, and after revisiting the script to refactor for DRYness and form
 We are students in the Front-End Program at [Turing School of Software and Design](https://frontend.turing.edu/). Fitlit is our Mod 2 group project, which means we have been software developers for just under 2 months! 🙌 
 
 Learning Goals for this project included:
-✔️ Planning and writing ES6 classes 
-✔️ Using object and array prototype methods to manipulate data
-✔️ Robust TDD
-✔️ Making network requests to retrieve data
+✔️ Planning and writing ES6 classes      
+✔️ Using object and array prototype methods to manipulate data        
+✔️ Robust TDD          
+✔️ Making network requests to retrieve data        
 
 [Link to Project Description](https://frontend.turing.edu/projects/Fitlit-part-one.html)
 
