@@ -17,8 +17,8 @@ describe('User', () => {
             'name': 'Luisa Hane',
             'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
             'email': 'Diana.Hayes1@hotmail.com',
-            'strideLength": 4.3,
-            "dailyStepGoal': 10000,
+            'strideLength': 4.3,
+            'dailyStepGoal': 10000,
             'friends': [
               16,
               4,
@@ -156,7 +156,7 @@ describe('User', () => {
     });
 
     it('Should return the total average ounces consumed for a user', () => {
-        expect(user1.returnAllTimeHydration(hydrationArray)).to.equal(33);
+        expect(user1.returnAllTimeHydration(hydrationArray)).to.equal('33.00');
     });
 
     it('Should return the total number of ounces a user consumed on a specific date', () => {
@@ -170,11 +170,11 @@ describe('User', () => {
     });
 
     it('Should return the user\'s average hours of sleep per day', () => {
-      expect(user2.returnOverallAverageHours(sleepArray)).to.equal(7.25);
+      expect(user2.returnOverallAverageHours(sleepArray)).to.equal('7.25');
     });
 
     it('Should return the user\'s average sleep quality per day', () => {
-      expect(user2.returnOverallAverageQuality(sleepArray)).to.equal(4.25);
+      expect(user2.returnOverallAverageQuality(sleepArray)).to.equal('4.25');
     });
 
     it('Should return the hours a user slept on a specific day', () => {

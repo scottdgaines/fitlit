@@ -1,13 +1,15 @@
 import { expect } from 'chai';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
-import sleepData from '../src/sampleSleep';
+import Sleep from '../src/Sleep';
 
 describe('User Repository', () => {
     let user1;
     let user2;
     let users;
     let userRepository;
+    let sleepObject1, sleepObject2, sleepObject3;
+    let sleepArray;
 
     beforeEach(() => {
         user1 = new User({
@@ -42,6 +44,18 @@ describe('User Repository', () => {
         users = [user1, user2];
 
         userRepository = new UserRepository(users);
+
+        sleepObject1 = new Sleep({'userID': 1, 'date': '2019/06/15', 'hoursSlept': 6.1, 'sleepQuality': 2.2});
+
+        sleepObject2 = new Sleep ({'userID': 2, 'date': '2019/06/15', 'hoursSlept': 7, 'sleepQuality': 4.7});
+
+        sleepObject3 = new Sleep({'userID': 2, 'date': '2019/06/16', 'hoursSlept': 7.5, 'sleepQuality': 3.8});
+
+        sleepArray = [
+          sleepObject1,
+          sleepObject2,
+          sleepObject3
+        ];
     });
 
     it('Should be a function', () => {
@@ -61,6 +75,6 @@ describe('User Repository', () => {
     });
 
     it('Should be able to calculate the average of all user data', () =>  {
-      expect(userRepository.returnAverageUserData(sleepData)).to.equal('3.64');
+      expect(userRepository.returnAverageUserData(sleepArray)).to.equal('3.57');
     });
 });
