@@ -1,13 +1,24 @@
 # [FitLit]()
 let's get lit
 ---------
-[Project Board](https://trello.com/b/QivjNRBQ/fitlit)
+[Project Board](https://trello.com/b/QivjNRBQ/fitlit) | 
 [Project Wireframe](https://excalidraw.com/#json=wc3HAMJ52biTE6rWEUDRs,g2YzqQF7BI6AmCAkdvSW-A)
 
 ## Overview
 Tired of never being able to keep track of how much water 🚰 you've consumed, or how many steps 🚶🏿‍♀️ you've taken? Always wondered how many hours you've slept 😴 this week? FitLit is here to help!
 
 FitLit is an activity-tracking app that compiles and displays a user's data, including hydration, sleep, and daily step goal. It was built using a previously-supplied data set with architectural and functionality requirements set by Turing School of Software and Design, following the principals of Test Driven Development and Object Oriented Programming.
+
+## Project Context
+We are students in the Front-End Program at [Turing School of Software and Design](https://frontend.turing.edu/). Fitlit is our Mod 2 group project, which means we have been software developers for just under 2 months! 🙌 
+
+Learning Goals for this project included:      
+✔️ Planning and writing ES6 classes      
+✔️ Using object and array prototype methods to manipulate data        
+✔️ Robust TDD          
+✔️ Making network requests to retrieve data        
+
+[Link to Project Description](https://frontend.turing.edu/projects/Fitlit-part-one.html)
 
 ## Setup
 If you would like to pull down the code to your local machine, complete the following:
@@ -17,7 +28,6 @@ If you would like to pull down the code to your local machine, complete the foll
 - Run `git clone <copied URL>` in your command line
 -`cd` into the root directory
 3. Run `npm install` in your command line to install the necessary dependencies
-
 
 ## Technologies Used
 + HTML
@@ -47,31 +57,22 @@ Moving forward, and after revisiting the script to refactor for DRYness and form
 ### Challenges
 - Git error handling
 - Balancing commit frequencies among group members
-
-## Project Context
-We are students in the Front-End Program at [Turing School of Software and Design](https://frontend.turing.edu/). Fitlit is our Mod 2 group project, which means we have been software developers for just under 2 months! 🙌 
-
-Learning Goals for this project included:
-✔️ Planning and writing ES6 classes      
-✔️ Using object and array prototype methods to manipulate data        
-✔️ Robust TDD          
-✔️ Making network requests to retrieve data        
-
-[Link to Project Description](https://frontend.turing.edu/projects/Fitlit-part-one.html)
+- Learning to format charts using the third party library
 
 ## Dev Contacts
 Marianne Barton
-[GitHub](https://github.com/mhbarton)
+mhood24@gmail.com |
+[GitHub](https://github.com/mhbarton) |
 [LinkedIn](https://www.linkedin.com/in/marianne-barton-1307/)
 
 Alycia Canavan
-alycia.canavan@gmail.com
-[Github](https://github.com/alyciacan)
-[LinkedIn](https://www.linkedin.com/in/alycia-canavan/)
+alycia.canavan@gmail.com |
+[Github](https://github.com/alyciacan) |
+[LinkedIn](https://www.linkedin.com/in/alycia-canavan/) 
 
 Scott Gaines
-scottdgaines@gmail.com
-[Github](https://github.com/scottdgaines)
+scottdgaines@gmail.com |
+[Github](https://github.com/scottdgaines) |
 [LinkedIn](https://www.linkedin.com/in/scottdgaines-fe/)
 
 ## Credit
