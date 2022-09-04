@@ -121,8 +121,9 @@ function renderMyInfo(currentUser) {
 function makeAFriend(friendName) {
   var friendDisplay = document.createElement('div');
   var friendIcon = document.createElement('img');
-  var friendNameElement = document.createElement('h6');
+  var friendNameElement = document.createElement('h3');
   friendIcon.src = './images/friendIcon.svg';
+  friendIcon.alt = 'blank person avatar'
   friendIcon.classList.add('small')
   friendDisplay.appendChild(friendIcon);
   friendDisplay.appendChild(friendNameElement);
