@@ -1,6 +1,6 @@
 /* Styling index.html */
-/* General styling classes */
-.aside {
+/* General styling classes; Arranged alphabetically */
+.aside { 
   align-items: right;
   display: flex;
   flex-direction: column;
@@ -10,10 +10,26 @@
   width: 200px;
 }
 
-.icon {
+.header {
+  text-align: center;
+  font-size: 20px;
+}
+
+.icon { 
   cursor: pointer;
   fill: none;
   height: 85px;
+  width: 130px;
+}
+
+.data-display {
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  font-size: 18px;
+  margin-top: 25px;
+  text-align: center;
+  width: 200px;
 }
 
 .display-box {
@@ -40,6 +56,7 @@ body, html { /* line 10 */
 }
 
 .navigation-bar { /* line 12 */
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -47,7 +64,6 @@ body, html { /* line 10 */
 }
 
 .my-friend-box-container { /* line 17 */
-  align-items: center;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -91,29 +107,10 @@ body, html { /* line 10 */
   width: 950px;
 }
 
-.data-display { /* line 28 & 32 */
-  background-image: url('../images/sleep-background.svg');
-  background-size: cover;
-  background-position: center;
-  height: 200px;
-  font-size: 18px;
-  margin-top: 25px;
-  text-align: center;
-  width: 200px;
-}
-
-.header { /* line 29 & 33 */
-  padding: 18px;
-}
-
 .my-week-info-container { /* line 36 */
   height: 300px;
   padding-bottom: 100px;
   width: 750px;
-}
-
-.my-user-info-text-container {
-  overflow-x: scroll;
 }
 
 .my-info-header { /* line 44 */
@@ -125,6 +122,10 @@ body, html { /* line 10 */
   margin: 5px 0px 10px 50px;
 }
 
+.my-user-info-text-container { /* line 46 */
+  overflow-x: scroll;
+}
+
 .my-user-info { /* line 46 */
   margin-left: 10px;
 }
@@ -134,7 +135,7 @@ body, html { /* line 10 */
   text-align: center;
 }
 
-/* Additional Styling Properties */
+/* Styling Properties Added by Javascipt */
 .hide {
   display: none;
 }
@@ -154,12 +155,12 @@ body, html { /* line 10 */
   width: 85px;
 }
 
-.sleep-background {
-  background-image: url('../images/sleep-background.svg');
-}
-
 .hydration-background {
   background-image: url('../images/hydration-background.svg');
+}
+
+.sleep-background {
+  background-image: url('../images/sleep-background.svg');
 }
 
 .step-background {
