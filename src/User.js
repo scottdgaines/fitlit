@@ -20,7 +20,7 @@ class User {
     return newArray;
   };
 
-  findMostRecentDate(array){
+  findMostRecentDate(array) {
     const userArray = this.findUser(array);
     const datesArray = userArray.map(entry => {
       return entry.date
@@ -54,7 +54,7 @@ class User {
     return userDatesArray;
   };
 
-  returnOverallAverageHours(array){
+  returnOverallAverageHours(array) {
     const newArray = this.findUser(array);
     const averageHours = newArray.reduce((totalHours, day) => {
         totalHours += day.hoursSlept;
@@ -63,7 +63,7 @@ class User {
       return parseFloat(averageHours / newArray.length).toFixed(2);
   };
 
-  returnOverallAverageQuality(array){
+  returnOverallAverageQuality(array) {
     const newArray = this.findUser(array);
     const averageQuality = newArray.reduce((totalQuality, day) => {
       totalQuality += day.sleepQuality;

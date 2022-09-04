@@ -1,6 +1,6 @@
 /* Styling index.html */
 /* General styling classes; Arranged alphabetically */
-.aside { 
+.aside {
   align-items: right;
   display: flex;
   flex-direction: column;
@@ -12,10 +12,10 @@
 
 .header {
   text-align: center;
-  font-size: 20px;
+  font-size: 25px;
 }
 
-.icon { 
+.icon {
   cursor: pointer;
   fill: none;
   height: 85px;
@@ -131,7 +131,8 @@ body, html { /* line 10 */
 }
 
 .steps-box-container { /* line 48 */
-  height: 150px;
+  font-size: 20px;
+  height: 175px;
   text-align: center;
 }
 

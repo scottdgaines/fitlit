@@ -121,7 +121,7 @@ function renderMyInfo(currentUser) {
 function makeAFriend(friendName) {
   var friendDisplay = document.createElement('div');
   var friendIcon = document.createElement('img');
-  var friendNameElement = document.createElement('h3');
+  var friendNameElement = document.createElement('h5');
   friendIcon.src = './images/friendIcon.svg';
   friendIcon.alt = 'blank person avatar'
   friendIcon.classList.add('small')
@@ -181,8 +181,6 @@ function renderUserData(dataType, user) {
     myaverageInfoContainer.classList.remove('step-background');
     myaverageInfoContainer.classList.add('sleep-background');
     weeklyDataMessage(allSleepData, 'hoursSlept', user)
-    // weekInfoText.innerText += `Here is how well you slept in the last week: ` REMOVES BANNER
-    // weeklyDataMessage(allSleepData, 'sleepQuality', user) BREAKS DUAL DATA SET FUNCTIONALITY
   } else {
     hide(myWeekInfo);
     hide(myAverageInfo);
@@ -193,30 +191,18 @@ function renderUserData(dataType, user) {
   }
 }
 
-function updateBackgroundImage(dataType) {
-  // myDayInfoContainer.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
-  //   alt="activity logo" />`
-  // myAverageInfo.innerHTML = `<img class="background-image" src="./images/fitlit_${dataType}_icon.svg"
-  // alt="activity logo" />`
-}
-
 function weeklyDataMessage(array, neededData, user) {
   if (neededData === 'hoursSlept') {
     let userWeekData = user.returnUserWeekData(array, neededData);
     let otherWeekData = user.returnUserWeekData(array, 'sleepQuality');
     let data = [[],[]];
-
-    // userWeekData.forEach(dataPoint =>
-    //   weekInfoText.innerText += ` ${dataPoint}, `) REMOVES SLEEP DATA BANNER
-      let dates = userWeekData.map(date => {
+    let dates = userWeekData.map(date => {
       let splits = date.split(": ");
       data[0].push(splits[1]);
       return splits[0];
       });
 
-
     otherWeekData.forEach(dataPoint => {
-      // weekInfoText.innerText += ` ${dataPoint}, ` REMOVES SLEEP DATA BANNER
       let newSplits = dataPoint.split(": ");
       data[1].push(newSplits[1]);
       });
@@ -224,9 +210,7 @@ function weeklyDataMessage(array, neededData, user) {
     renderSleepChart(data, dates)
 
   } else {
-  const userWeekData = user.returnUserWeekData(array, neededData)
-  // userWeekData.forEach(dataPoint =>
-  //   weekInfoText.innerText += ` ${dataPoint}, `) REMOVES HYDRATION DATA BANNER
+    const userWeekData = user.returnUserWeekData(array, neededData)
     const data = [ ];
     const dates = userWeekData.map(date => {
       const splits = date.split(": ");
