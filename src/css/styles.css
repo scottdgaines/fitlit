@@ -1,6 +1,6 @@
 /* Styling index.html */
 /* General styling classes */
-.aside { 
+.aside {
   align-items: right;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
   width: 200px;
 }
 
-.icon { 
+.icon {
   cursor: pointer;
   fill: none;
   height: 85px;
@@ -61,12 +61,19 @@ body, html { /* line 10 */
 }
 
 .logo-container { /* line 22 */
+  align-items: center;
+  display: flex;
   height: 100px;
+  justify-content: space-between;
   width: 950px;
 }
 
 .logo-icon { /* line 23 */
   height: 100px;
+}
+
+.welcome-header {
+  padding-right: 25px;
 }
 
 .welcome-message { /* line 26 */
