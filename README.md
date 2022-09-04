@@ -9,6 +9,8 @@ Tired of never being able to keep track of how much water 🚰 you've consumed, 
 
 FitLit is an activity-tracking app that compiles and displays a user's data, including hydration, sleep, and daily step goal. It was built using a previously-supplied data set with architectural and functionality requirements set by Turing School of Software and Design, following the principals of Test Driven Development and Object Oriented Programming.
 
+![Fitlit GIF](https://user-images.githubusercontent.com/102000070/188325489-4765f3c2-477a-4863-bd97-5b7c8fd63820.gif)
+
 ## Project Context
 We are students in the Front-End Program at [Turing School of Software and Design](https://frontend.turing.edu/). Fitlit is our Mod 2 group project, which means we have been software developers for just under 2 months! 🙌 
 
