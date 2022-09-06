@@ -1,14 +1,14 @@
 class UserRepository {
-  constructor (data) {
+  constructor(data) {
     this.userData = data;
   };
 
-  returnUserData(id){
+  returnUserData(id) {
     let userInfo = this.userData.find(user => id === user.id)
     return userInfo
   };
 
-  returnAverageUserData(dataArray){
+  returnAverageUserData(dataArray) {
     if (dataArray === 'steps') {
         let average = this.userData.reduce((total, user) => {
             total += user.dailyStepGoal

@@ -1,9 +1,9 @@
 class Hydration {
-    constructor(hydrationObject) {
-        this.userID = hydrationObject.userID,
-        this.date = hydrationObject.date,
-        this.numOunces = hydrationObject.numOunces
-    };
+  constructor(hydrationObj) {
+    this.userID = hydrationObj.userID;
+    this.date = hydrationObj.date;
+    this.numOunces = hydrationObj.numOunces;
+  };
 };
 
-export default Hydration
+export default Hydration;

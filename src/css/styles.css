@@ -1,12 +1,5 @@
 /* Styling index.html */
-/* Arranged in order of appearance */
-body, html {
-  background-color: #F0F4FF;
-  display: flex;
-  font-family: 'Dosis', sans-serif;
-  justify-content: center;
-}
-
+/* General styling classes; Arranged alphabetically */
 .aside {
   align-items: right;
   display: flex;
@@ -14,6 +7,28 @@ body, html {
   height: 750px;
   margin-bottom: 10px;
   margin-top: 10px;
+  width: 200px;
+}
+
+.header {
+  text-align: center;
+  font-size: 25px;
+}
+
+.icon {
+  cursor: pointer;
+  fill: none;
+  height: 85px;
+  width: 130px;
+}
+
+.data-display {
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+  font-size: 18px;
+  margin-top: 25px;
+  text-align: center;
   width: 200px;
 }
 
@@ -27,110 +42,103 @@ body, html {
   width: 200px;
 }
 
-.navigation-bar {
-  text-align: center;
+.text {
+  color: #464F6D;
+}
+
+/* Specific styling classes */
+/* Arranged according to order of elements */
+body, html { /* line 10 */
+  background-color: #F0F4FF;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  font-family: 'Dosis', sans-serif;
+  justify-content: center;
 }
 
-.icon { 
-  cursor: pointer;
-  fill: none;
-  height: 85px;
-}
-
-.my-friend-box-container {
+.navigation-bar { /* line 12 */
   align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   text-align: center;
-  overflow-y: scroll;
 }
 
-.main-display {
-  height: 750px;
-  width: 950px;
-  margin: 10px 20px;
-}
-
-.logo-container {
-  height: 100px;
-  width: 950px;
-}
-
-.logo-icon {
-  height: 100px;
-}
-
-.title {  
-  font-size: 40px;
-  text-align: right;
-}
-
-.welcome-message {
-  font-size: 30px;
-  text-align: center;
-  margin-top: 120px;
-}
-
-.user-data-container {
+.my-friend-box-container { /* line 17 */
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  overflow-y: scroll;
+  text-align: center;
+}
+
+.main-display { /* line 21 */
+  height: 750px;
+  margin: 10px 20px;
+  width: 950px;
+}
+
+.logo-container { /* line 22 */
+  align-items: center;
+  display: flex;
+  height: 100px;
+  justify-content: space-between;
+  width: 950px;
+}
+
+.logo-icon { /* line 23 */
+  height: 100px;
+}
+
+.welcome-header {
+  padding-right: 25px;
+}
+
+.welcome-message { /* line 26 */
+  font-size: 30px;
+  margin-top: 120px;
+  text-align: center;
+}
+
+.user-data-container { /* line 27 */
+  display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   height: 605px;
   margin-top: 25px;
   width: 950px;
 }
 
-.header{
-  padding: 25px;
-}
-
-.data-display {
-  text-align: center;
-  height: 200px;
-  margin-top: 25px;
-  width: 200px;
-  background-image: '../images/fitlit_sleep_icon.svg';
-  background-size: fill;
-  background-repeat: no-repeat;
-}
-
-.my-week-info-container {
+.my-week-info-container { /* line 36 */
   height: 300px;
+  padding-bottom: 100px;
   width: 750px;
 }
 
-.my-info-header {
+.my-info-header { /* line 44 */
   text-align: center;
 }
 
-.user-avatar { /* line 44 */
+.user-avatar { /* line 45 */
   height: 130px;
   margin: 5px 0px 10px 50px;
 }
 
-.my-user-info {
+.my-user-info-text-container { /* line 46 */
+  overflow-x: scroll;
+}
+
+.my-user-info { /* line 46 */
   margin-left: 10px;
 }
 
-.steps-box-container {
+.steps-box-container { /* line 48 */
+  font-size: 20px;
+  height: 175px;
   text-align: center;
-  height: 150px;
 }
 
-/* Additional Styling Properties */
+/* Styling Properties Added by Javascipt */
 .hide {
   display: none;
-}
-
-.text {
-  color: #464F6D;
-}
-
-.my-chart{
-  padding-bottom: 75px;
 }
 
 .large{
@@ -146,4 +154,16 @@ body, html {
 .small{
   height: 85px;
   width: 85px;
+}
+
+.hydration-background {
+  background-image: url('../images/hydration-background.svg');
+}
+
+.sleep-background {
+  background-image: url('../images/sleep-background.svg');
+}
+
+.step-background {
+  background-image: url('../images/step-background.svg');
 }
