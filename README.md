@@ -28,7 +28,7 @@ If you would like to pull down the code to your local machine, complete the foll
 2. Pull your copy of the repository down to your local machine:
 - On the remote repository's page, click the green 'Code' button, select SSH, and copy the URL
 - Run `git clone <copied URL>` in your command line
--`cd` into the root directory
+- `cd` into the root directory
 3. Run `npm install` in your command line to install the necessary dependencies
 
 ## Technologies Used
