@@ -1,4 +1,4 @@
-# [FitLit]()
+# [FitLit](https://scottdgaines.github.io/fitlit/)
 let's get lit
 ---------
 
