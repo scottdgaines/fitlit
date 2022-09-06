@@ -62,17 +62,17 @@ Moving forward, and after revisiting the script to refactor for DRYness and form
 - Learning to format charts using the third party library
 
 ## Dev Contacts
-Marianne Barton
+Marianne Barton |
 mhood24@gmail.com |
 [GitHub](https://github.com/mhbarton) |
 [LinkedIn](https://www.linkedin.com/in/marianne-barton-1307/)
 
-Alycia Canavan
+Alycia Canavan |
 alycia.canavan@gmail.com |
 [Github](https://github.com/alyciacan) |
 [LinkedIn](https://www.linkedin.com/in/alycia-canavan/) 
 
-Scott Gaines
+Scott Gaines |
 scottdgaines@gmail.com |
 [Github](https://github.com/scottdgaines) |
 [LinkedIn](https://www.linkedin.com/in/scottdgaines-fe/)
