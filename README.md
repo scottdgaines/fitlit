@@ -1,4 +1,4 @@
-# [FitLit]()
+# [FitLit](https://scottdgaines.github.io/fitlit/)
 let's get lit
 ---------
 [Project Board](https://trello.com/b/QivjNRBQ/fitlit) | 
@@ -28,7 +28,7 @@ If you would like to pull down the code to your local machine, complete the foll
 2. Pull your copy of the repository down to your local machine:
 - On the remote repository's page, click the green 'Code' button, select SSH, and copy the URL
 - Run `git clone <copied URL>` in your command line
--`cd` into the root directory
+- `cd` into the root directory
 3. Run `npm install` in your command line to install the necessary dependencies
 
 ## Technologies Used
@@ -62,17 +62,17 @@ Moving forward, and after revisiting the script to refactor for DRYness and form
 - Learning to format charts using the third party library
 
 ## Dev Contacts
-Marianne Barton
+Marianne Barton |
 mhood24@gmail.com |
 [GitHub](https://github.com/mhbarton) |
 [LinkedIn](https://www.linkedin.com/in/marianne-barton-1307/)
 
-Alycia Canavan
+Alycia Canavan |
 alycia.canavan@gmail.com |
 [Github](https://github.com/alyciacan) |
 [LinkedIn](https://www.linkedin.com/in/alycia-canavan/) 
 
-Scott Gaines
+Scott Gaines |
 scottdgaines@gmail.com |
 [Github](https://github.com/scottdgaines) |
 [LinkedIn](https://www.linkedin.com/in/scottdgaines-fe/)
