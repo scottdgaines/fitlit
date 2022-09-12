@@ -100,14 +100,6 @@ function changeDisplay(currentUser) {
   moveWelcomeMessage();
 };
 
-function hide(element) {
-  element.classList.add('hide');
-};
-
-function unhide(element) {
-  element.classList.remove('hide');
-};
-
 function renderMyInfo(currentUser) {
   var userAvatar = document.createElement('img');
   userAvatar.classList.add('medium');
@@ -147,30 +139,6 @@ function renderAvgStepGoal(dataSet) {
   averageStepGoalText.innerText = dataSet.returnAverageUserData('steps');
 };
 
-function resetChart() {
-  myChart.destroy();
-};
-
-function showUserDataArea() {
-  hide(welcomeMessage);
-  unhide(userDataContainer);
-  unhide(myAverageInfo);
-  unhide(myWeekInfo);
-};
-
-function clearContainerBackgrounds() {
-  const backgrounds = ['sleep-background', 'step-background', 'hydration-background'];
-  backgrounds.forEach(background => {
-    myDayInfoContainer.classList.remove(background);
-    myAverageInfoContainer.classList.remove(background);
-  })
-};
-
-function fillContainerBackgrounds(icon) {
-  myDayInfoContainer.classList.add(icon);
-  myAverageInfoContainer.classList.add(icon);
-}
-
 function renderHydration(user) {
   dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
   averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
@@ -195,7 +163,6 @@ function renderActivity(user) {
   fillContainerBackgrounds('step-background');
 };
 
-
 function renderUserData(dataType, user) {
   if (dataType === 'water') {
     showUserDataArea();
@@ -209,10 +176,6 @@ function renderUserData(dataType, user) {
     renderActivity(user);
   }
 };
-
-function splitDates() {
-
-}
 
 function weeklyDataMessage(array, neededData, user) {
   if (neededData === 'hoursSlept') {
@@ -244,6 +207,42 @@ function weeklyDataMessage(array, neededData, user) {
     };
   };
 
+//DISPLAY HELPER FUNCTIONS:
+function clearContainerBackgrounds() {
+  const backgrounds = ['sleep-background', 'step-background', 'hydration-background'];
+  backgrounds.forEach(background => {
+    myDayInfoContainer.classList.remove(background);
+    myAverageInfoContainer.classList.remove(background);
+  })
+};
+
+function fillContainerBackgrounds(icon) {
+  myDayInfoContainer.classList.add(icon);
+  myAverageInfoContainer.classList.add(icon);
+};
+
+function showUserDataArea() {
+  hide(welcomeMessage);
+  unhide(userDataContainer);
+  unhide(myAverageInfo);
+  unhide(myWeekInfo);
+};
+
+function hide(element) {
+  element.classList.add('hide');
+};
+
+function unhide(element) {
+  element.classList.remove('hide');
+};
+
+function resetChart() {
+  myChart.destroy();
+};
+
+
+
+//CHART FUNCTIONS:
 function renderSleepChart(data, dates) {
   const chartLayout = document.getElementById('myChart');
   const dataSet1 = data[0];
