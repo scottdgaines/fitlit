@@ -1,9 +1,12 @@
 import { expect } from 'chai';
 import Activity from '../src/Activity';
+import User from '../src/User';
 
 describe('Activity', () => {
     let activity1;
     let activity2;
+    let activity3;
+    let user1;
 
     beforeEach(() => {
         activity1 = new Activity({
@@ -21,6 +24,28 @@ describe('Activity', () => {
             minutesActive: 138,
             flightsOfStairs: 10
         });
+
+        activity3 = new Activity({
+            userID: 1,
+            date: "2019/06/14",
+            numSteps: 10001,
+            minutesActive: 238,
+            flightsOfStairs: 70
+        })
+
+        user1 = new User({
+            'id': 1,
+            'name': 'Luisa Hane',
+            'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
+            'email': 'Diana.Hayes1@hotmail.com',
+            'strideLength': 4.3,
+            'dailyStepGoal': 10000,
+            'friends': [
+              16,
+              4,
+              8
+            ]
+          });
     });
 
     it('Should be a function', () => {
@@ -55,5 +80,14 @@ describe('Activity', () => {
     it('Should have the flights of stairs climbed by a user', () => {
         expect(activity1.flightsOfStairs).to.equal(16);
         expect(activity2.flightsOfStairs).to.equal(10);
+    });
+
+    it('Should return the number of miles walked for a user', () => {
+        expect(activity1.returnMilesWalked(user1)).to.equal('2.91');
+    });
+
+    it('Should log if the user reached their step goal on a given day', () => {
+        expect(activity1.achieveStepGoal(user1)).to.equal(false);
+        expect(activity3.achieveStepGoal(user1)).to.equal(true);
     });
 });

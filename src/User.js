@@ -38,10 +38,10 @@ class User {
     return userAverage
   };
 
-  returnUserOuncesByDay(array, date) {
+  returnUserDataByDay(array, date, neededData) {
     const newArray = this.findUser(array);
-    const dailyOunces = newArray.find(element => element.date === date)
-    return dailyOunces.numOunces;
+    const dailyData = newArray.find(element => element.date === date)
+    return dailyData[neededData];
   };
 
   returnUserWeekData(array, neededData) {
@@ -60,7 +60,7 @@ class User {
         totalHours += day.hoursSlept;
         return totalHours
     }, 0)
-      return parseFloat(averageHours / newArray.length).toFixed(2);
+      return (averageHours / newArray.length).toFixed(2);
   };
 
   returnOverallAverageQuality(array) {
@@ -69,7 +69,7 @@ class User {
       totalQuality += day.sleepQuality;
       return totalQuality
     }, 0)
-    return parseFloat(averageQuality / newArray.length).toFixed(2);
+    return (averageQuality / newArray.length).toFixed(2);
   };
 
   returnSleepHoursByDay(array, date) {
@@ -83,6 +83,28 @@ class User {
     const dailyQuality = newArray.find(element => element.date === date)
     return dailyQuality.sleepQuality;
   };
+
+  returnWeeksActivity(array, date) {
+    const newArray = this.findUser(array);
+    const index = newArray.indexOf(newArray.find(dataSet => dataSet.date === date));
+    const userDatesArray = newArray
+      .reverse()
+      .splice(index,7);
+    const totalMinutes = userDatesArray.reduce((totalActivity, day) => {
+      totalActivity += day.minutesActive;
+      return totalActivity;
+      }, 0);
+
+      return totalMinutes / userDatesArray.length;
+  };
+
+    returnExceededStepGoals(array) {
+      const newArray = this.findUser(array);
+      return newArray.filter(dataSet => {return dataSet.achieveStepGoal(this) === true})
+        .map(dataSet => dataSet.date)
+    };
+
+    
 };
 
 export default User;
