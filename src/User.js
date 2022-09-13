@@ -28,16 +28,6 @@ class User {
     return datesArray[0];
   };
 
-  returnAllTimeHydration(array) {
-    const newArray = this.findUser(array);
-    const userTotal = newArray.reduce((totalOunces, day) => {
-          totalOunces += day.numOunces;
-          return totalOunces
-      }, 0)
-    let userAverage = parseFloat(userTotal / newArray.length).toFixed(2);
-    return userAverage
-  };
-
   returnUserDataByDay(array, date, neededData) {
     const newArray = this.findUser(array);
     const dailyData = newArray.find(element => element.date === date)
@@ -54,34 +44,13 @@ class User {
     return userDatesArray;
   };
 
-  returnOverallAverageHours(array) {
+  returnOverallAverage(array, neededData) {
     const newArray = this.findUser(array);
-    const averageHours = newArray.reduce((totalHours, day) => {
-        totalHours += day.hoursSlept;
-        return totalHours
+    const averageData = newArray.reduce((total, day) => {
+        total += day[neededData];
+        return total
     }, 0)
-      return (averageHours / newArray.length).toFixed(2);
-  };
-
-  returnOverallAverageQuality(array) {
-    const newArray = this.findUser(array);
-    const averageQuality = newArray.reduce((totalQuality, day) => {
-      totalQuality += day.sleepQuality;
-      return totalQuality
-    }, 0)
-    return (averageQuality / newArray.length).toFixed(2);
-  };
-
-  returnSleepHoursByDay(array, date) {
-    const newArray = this.findUser(array);
-    const dailyHours = newArray.find(element => element.date === date)
-    return dailyHours.hoursSlept;
-  };
-
-  returnSleepQualityByDay(array, date) {
-    const newArray = this.findUser(array);
-    const dailyQuality = newArray.find(element => element.date === date)
-    return dailyQuality.sleepQuality;
+      return (averageData / newArray.length).toFixed(2);
   };
 
   returnWeeksActivity(array, date) {
@@ -104,7 +73,14 @@ class User {
         .map(dataSet => dataSet.date)
     };
 
-    
+    returnStairRecord(array) {
+      const newArray = this.findUser(array);
+      return newArray.sort((a, b) => {
+        return b.flightsOfStairs - a.flightsOfStairs
+      })[0].flightsOfStairs;
+    }
+
+
 };
 
 export default User;
