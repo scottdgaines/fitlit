@@ -136,7 +136,7 @@ function renderMyStepGoal(user) {
 };
 
 function renderAvgStepGoal(dataSet) {
-  averageStepGoalText.innerText = dataSet.returnAverageUserData('steps');
+  averageStepGoalText.innerText = dataSet.returnAverageUserData(allUserData.userData, 'dailyStepGoal');
 };
 
 function renderHydration(user) {
