@@ -48,7 +48,7 @@ let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
 let averageInfoText = document.getElementById('averageInfoText');
-let myaverageInfoContainer = document.getElementById('myAverageInfoContainer');
+let myAverageInfoContainer = document.getElementById('myAverageInfoContainer');
 let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon];
@@ -100,14 +100,6 @@ function changeDisplay(currentUser) {
   moveWelcomeMessage();
 };
 
-function hide(element) {
-  element.classList.add('hide');
-};
-
-function unhide(element) {
-  element.classList.remove('hide');
-};
-
 function renderMyInfo(currentUser) {
   var userAvatar = document.createElement('img');
   userAvatar.classList.add('medium');
@@ -147,54 +139,48 @@ function renderAvgStepGoal(dataSet) {
   averageStepGoalText.innerText = dataSet.returnAverageUserData('steps');
 };
 
-function resetChart() {
-  myChart.destroy();
+function renderHydration(user) {
+  dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
+  averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
+  weekInfoText.innerText = `Here is the water you consumed in the last week: `
+  clearContainerBackgrounds();
+  fillContainerBackgrounds('hydration-background');
+  weeklyDataMessage(allHydrationData, 'numOunces', user);
+};
+
+function renderSleep(user) {
+  dayInfoText.innerText = `Today, you slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} hours and your quality of sleep was ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} / 5!`
+  averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} / 5! `
+  weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
+  clearContainerBackgrounds();
+  fillContainerBackgrounds('sleep-background');
+  weeklyDataMessage(allSleepData, 'hoursSlept', user)
+};
+
+function renderActivity(user) {
+  dayInfoText.innerText = `Go take a walk!`
+  clearContainerBackgrounds();
+  fillContainerBackgrounds('step-background');
 };
 
 function renderUserData(dataType, user) {
-  hide(welcomeMessage);
-  unhide(userDataContainer);
-
   if (dataType === 'water') {
-    unhide(myAverageInfo);
-    unhide(myWeekInfo);
-    dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
-    averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
-    weekInfoText.innerText = `Here is the water you consumed in the last week: `
-    myDayInfoContainer.classList.remove('sleep-background');
-    myDayInfoContainer.classList.remove('step-background');
-    myDayInfoContainer.classList.add('hydration-background');
-    myaverageInfoContainer.classList.remove('sleep-background');
-    myaverageInfoContainer.classList.remove('step-background');
-    myaverageInfoContainer.classList.add('hydration-background');
-    weeklyDataMessage(allHydrationData, 'numOunces', user);
+    showUserDataArea();
+    renderHydration(user);
   } else if (dataType === 'sleep') {
-    unhide(myAverageInfo);
-    unhide(myWeekInfo);
-    dayInfoText.innerText = `Today, you slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} hours and your quality of sleep was ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} / 5!`
-    averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} / 5! `
-    weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
-    myDayInfoContainer.classList.remove('hydration-background');
-    myDayInfoContainer.classList.remove('step-background');
-    myDayInfoContainer.classList.add('sleep-background');
-    myaverageInfoContainer.classList.remove('hydration-background');
-    myaverageInfoContainer.classList.remove('step-background');
-    myaverageInfoContainer.classList.add('sleep-background');
-    weeklyDataMessage(allSleepData, 'hoursSlept', user)
+    showUserDataArea();
+    renderSleep(user);
   } else {
-    hide(myWeekInfo);
+    hide(myWeekInfo); //these will go once we have the activity functions running
     hide(myAverageInfo);
-    dayInfoText.innerText = `Go take a walk!`
-    myDayInfoContainer.classList.remove('hydration-background');
-    myDayInfoContainer.classList.remove('sleep-background');
-    myDayInfoContainer.classList.add('step-background');
+    renderActivity(user);
   }
-}
+};
 
 function weeklyDataMessage(array, neededData, user) {
   if (neededData === 'hoursSlept') {
     let userWeekData = user.returnUserWeekData(array, neededData);
-    let otherWeekData = user.returnUserWeekData(array, 'sleepQuality');
+    let sleepQualData = user.returnUserWeekData(array, 'sleepQuality');
     let data = [[],[]];
     let dates = userWeekData.map(date => {
       let splits = date.split(": ");
@@ -202,16 +188,16 @@ function weeklyDataMessage(array, neededData, user) {
       return splits[0];
       });
 
-    otherWeekData.forEach(dataPoint => {
-      let newSplits = dataPoint.split(": ");
-      data[1].push(newSplits[1]);
+    sleepQualData.forEach(sleepQualDataPoint => {
+      let splitDates = sleepQualDataPoint.split(": ");
+      data[1].push(splitDates[1]);
       });
 
     renderSleepChart(data, dates)
 
   } else {
     const userWeekData = user.returnUserWeekData(array, neededData)
-    const data = [ ];
+    const data = [];
     const dates = userWeekData.map(date => {
       const splits = date.split(": ");
       data.push(splits[1]);
@@ -221,6 +207,42 @@ function weeklyDataMessage(array, neededData, user) {
     };
   };
 
+//DISPLAY HELPER FUNCTIONS:
+function clearContainerBackgrounds() {
+  const backgrounds = ['sleep-background', 'step-background', 'hydration-background'];
+  backgrounds.forEach(background => {
+    myDayInfoContainer.classList.remove(background);
+    myAverageInfoContainer.classList.remove(background);
+  })
+};
+
+function fillContainerBackgrounds(icon) {
+  myDayInfoContainer.classList.add(icon);
+  myAverageInfoContainer.classList.add(icon);
+};
+
+function showUserDataArea() {
+  hide(welcomeMessage);
+  unhide(userDataContainer);
+  unhide(myAverageInfo);
+  unhide(myWeekInfo);
+};
+
+function hide(element) {
+  element.classList.add('hide');
+};
+
+function unhide(element) {
+  element.classList.remove('hide');
+};
+
+function resetChart() {
+  myChart.destroy();
+};
+
+
+
+//CHART FUNCTIONS:
 function renderSleepChart(data, dates) {
   const chartLayout = document.getElementById('myChart');
   const dataSet1 = data[0];
