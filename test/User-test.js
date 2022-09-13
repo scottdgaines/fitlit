@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import User from '../src/User.js';
-import Hydration from '../src/Hydration.js'
-import Sleep from '../src/Sleep.js'
+import Hydration from '../src/Hydration.js';
+import Sleep from '../src/Sleep.js';
+import Activity from '../src/Activity.js';
 
 
 describe('User', () => {
@@ -9,7 +10,9 @@ describe('User', () => {
     let hydrationObject1, hydrationObject2, hydrationObject3, hydrationObject4, hydrationObject5, hydrationObject6, hydrationObject7, hydrationObject8, hydrationObject9, hydrationObject10;
     let hydrationArray, hydrationArray1;
     let sleepObject1, sleepObject2, sleepObject3;
-    let sleepArray, sleepArray1;
+    let sleepArray;
+    let activityObject1, activityObject2, activityObject3, activityObject4;
+    let activityArray;
 
     beforeEach(() => {
         user1 = new User({
@@ -96,6 +99,21 @@ describe('User', () => {
           sleepObject2,
           sleepObject3
         ];
+
+        activityObject1 = new Activity({'userID': 1, 'date': '2019/06/15', 'numSteps': 3577, 'minutesActive': 140, 'flightsOfStairs': 16});
+
+        activityObject2 = new Activity({'userID': 1, 'date': '2019/06/16', 'numSteps': 6637, 'minutesActive': 175, 'flightsOfStairs': 36});
+
+        activityObject3 = new Activity({'userID': 1, 'date': '2019/06/17', 'numSteps': 14329, 'minutesActive': 168, 'flightsOfStairs': 18});
+
+        activityObject4 = new Activity({'userID': 2, 'date': '2019/06/15', 'numSteps': 4294, 'minutesActive': 138, 'flightsOfStairs': 10});
+
+        activityArray = [
+          activityObject1, 
+          activityObject2,
+          activityObject3,
+          activityObject4
+        ]
     });
 
     it('Should be a function', () => {
@@ -159,8 +177,9 @@ describe('User', () => {
         expect(user1.returnAllTimeHydration(hydrationArray)).to.equal('33.00');
     });
 
-    it('Should return the total number of ounces a user consumed on a specific date', () => {
-      expect(user1.returnUserOuncesByDay(hydrationArray, '2022/08/29')).to.equal(36);
+    it('Should return user\'s data for a specific day', () => {
+      expect(user1.returnUserDataByDay(hydrationArray, '2022/08/29', 'numOunces')).to.equal(36);
+      expect(user1.returnUserDataByDay(activityArray, '2019/06/15', 'minutesActive')).to.equal(140)
     });
 
     it('Should return a week\'s data for a user', () => {
@@ -184,4 +203,13 @@ describe('User', () => {
     it('Should return the sleep quality amount a user slept on a specific day', () => {
       expect(user2.returnSleepQualityByDay(sleepArray, '2019/06/15')).to.equal(4.7);
     });
+
+    it('Should return the average active minutes for a user in a given week', () => {
+      expect(user1.returnWeeksActivity(activityArray, '2019/06/15')).to.equal(161);
+    });
+
+    it('Should return all the days a user exceeds their step goal', () => {
+      expect(user1.returnExceededStepGoals(activityArray)).to.deep.equal(['2019/06/17'])
+    });
+
 });
