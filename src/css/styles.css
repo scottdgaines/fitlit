@@ -122,12 +122,13 @@ body, html { /* line 10 */
   margin: 5px 0px 10px 50px;
 }
 
-.my-user-info-text-container { /* line 46 */
-  overflow-x: scroll;
-}
+/* .my-user-info-text-container { line 46 */
+  /* overflow-x: scroll;
+} */
 
 .my-user-info { /* line 46 */
   margin-left: 10px;
+  overflow-x: scroll;
 }
 
 .steps-box-container { /* line 48 */
