@@ -109,7 +109,7 @@ describe('User', () => {
         activityObject4 = new Activity({'userID': 2, 'date': '2019/06/15', 'numSteps': 4294, 'minutesActive': 138, 'flightsOfStairs': 10});
 
         activityArray = [
-          activityObject1, 
+          activityObject1,
           activityObject2,
           activityObject3,
           activityObject4
@@ -174,7 +174,7 @@ describe('User', () => {
     });
 
     it('Should return the total average ounces consumed for a user', () => {
-        expect(user1.returnAllTimeHydration(hydrationArray)).to.equal('33.00');
+        expect(user1.returnOverallAverage(hydrationArray, 'numOunces')).to.equal('33.00');
     });
 
     it('Should return user\'s data for a specific day', () => {
@@ -189,19 +189,19 @@ describe('User', () => {
     });
 
     it('Should return the user\'s average hours of sleep per day', () => {
-      expect(user2.returnOverallAverageHours(sleepArray)).to.equal('7.25');
+      expect(user2.returnOverallAverage(sleepArray, 'hoursSlept')).to.equal('7.25');
     });
 
     it('Should return the user\'s average sleep quality per day', () => {
-      expect(user2.returnOverallAverageQuality(sleepArray)).to.equal('4.25');
+      expect(user2.returnOverallAverage(sleepArray, 'sleepQuality')).to.equal('4.25');
     });
 
     it('Should return the hours a user slept on a specific day', () => {
-      expect(user2.returnSleepHoursByDay(sleepArray, '2019/06/15')).to.equal(7);
+      expect(user2.returnUserDataByDay(sleepArray, '2019/06/15', 'hoursSlept')).to.equal(7);
     });
 
     it('Should return the sleep quality amount a user slept on a specific day', () => {
-      expect(user2.returnSleepQualityByDay(sleepArray, '2019/06/15')).to.equal(4.7);
+      expect(user2.returnUserDataByDay(sleepArray, '2019/06/15', 'sleepQuality')).to.equal(4.7);
     });
 
     it('Should return the average active minutes for a user in a given week', () => {
@@ -210,6 +210,10 @@ describe('User', () => {
 
     it('Should return all the days a user exceeds their step goal', () => {
       expect(user1.returnExceededStepGoals(activityArray)).to.deep.equal(['2019/06/17'])
+    });
+
+    it('Should return the user\'s all-time stair-climbing record', () => {
+      expect(user1.returnStairRecord(activityArray)).to.equal(36);
     });
 
 });

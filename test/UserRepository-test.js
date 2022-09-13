@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 import Sleep from '../src/Sleep';
+import Activity from '../src/Activity';
 
 describe('User Repository', () => {
     let user1;
@@ -10,6 +11,8 @@ describe('User Repository', () => {
     let userRepository;
     let sleepObject1, sleepObject2, sleepObject3;
     let sleepArray;
+    let activityObject1, activityObject2, activityObject3, activityObject4;
+    let activityArray;
 
     beforeEach(() => {
         user1 = new User({
@@ -56,6 +59,21 @@ describe('User Repository', () => {
           sleepObject2,
           sleepObject3
         ];
+
+        activityObject1 = new Activity({'userID': 1, 'date': '2019/06/15', 'numSteps': 3577, 'minutesActive': 140, 'flightsOfStairs': 16});
+
+        activityObject2 = new Activity({'userID': 1, 'date': '2019/06/16', 'numSteps': 6637, 'minutesActive': 175, 'flightsOfStairs': 36});
+
+        activityObject3 = new Activity({'userID': 1, 'date': '2019/06/17', 'numSteps': 14329, 'minutesActive': 168, 'flightsOfStairs': 18});
+
+        activityObject4 = new Activity({'userID': 2, 'date': '2019/06/15', 'numSteps': 4294, 'minutesActive': 138, 'flightsOfStairs': 10});
+
+        activityArray = [
+          activityObject1,
+          activityObject2,
+          activityObject3,
+          activityObject4
+        ];
     });
 
     it('Should be a function', () => {
@@ -75,6 +93,10 @@ describe('User Repository', () => {
     });
 
     it('Should be able to calculate the average of all user data', () =>  {
-      expect(userRepository.returnAverageUserData(sleepArray)).to.equal('3.57');
+      expect(userRepository.returnAverageUserData(sleepArray, 'sleepQuality')).to.equal(3);
+      expect(userRepository.returnAverageUserData(activityArray, 'flightsOfStairs')).to.equal(20);
+      expect(userRepository.returnAverageUserData(activityArray, 'numSteps')).to.equal(7209);
+      expect(userRepository.returnAverageUserData(activityArray, 'minutesActive')).to.equal(155);
     });
+
 });

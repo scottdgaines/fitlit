@@ -8,21 +8,14 @@ class UserRepository {
     return userInfo
   };
 
-  returnAverageUserData(dataArray) {
-    if (dataArray === 'steps') {
-        let average = this.userData.reduce((total, user) => {
-            total += user.dailyStepGoal
-            return total;
-          }, 0)
-          return parseInt(average / this.userData.length)
-    } else {
-        let average = dataArray.reduce((total, id) => {
-            total += id.sleepQuality
-            return total;
-          }, 0)
-          return parseFloat(average / dataArray.length).toFixed(2)
-        };
+  returnAverageUserData(array, dataNeeded) {
+      let average = array.reduce((total, current) => {
+        total += current[dataNeeded]
+        return total;
+      }, 0)
+      return parseInt(average / array.length)
     }
+
 };
 
 export default UserRepository;
