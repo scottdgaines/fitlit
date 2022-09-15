@@ -10,7 +10,8 @@ import './images/fitlit_water_icon.svg';
 import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
-import './images/logo.svg'
+import './images/logo.svg';
+// import Hydration from './Hydration';
 
 //GLOBAL VARIABLES:
 let userRepository;
@@ -58,6 +59,7 @@ let logoContainer = document.getElementById('logoContainer');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
+// logoContainer.addEventListener('click', tryPost)
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -333,3 +335,12 @@ function renderHydrationChart(data, dates) {
       }
   });
 };
+
+// function tryPost() {
+//   console.log(currentUser)
+//   const id = currentUser.id
+//   const newHydration = new Hydration({userID:id, date:'2022/09/14', numOunces:4.2})
+//   console.log(allHydrationData)
+//   fetchPost('hydration', newHydration)
+//   fetchData('hydration', 'hydrationData')
+// }
