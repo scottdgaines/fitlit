@@ -1,7 +1,15 @@
 const fetchData = (dataFileName, dataKey) => {
-return fetch(`https://fitlit-api.herokuapp.com/api/v1/${dataFileName}`)
+return fetch(`http://localhost:3001/api/v1/${dataFileName}`)
   .then(response => response.json())
   .then(data => data[dataKey])
+  .catch(err => showErrorMessage())
 };
 
-export default fetchData
+const fetchPost = (url, initObject) => {
+  return fetch(`http://localhost:3001/api/v1/${url}`, initObject)
+    .then(response => response.json())
+    .then(data => confirmationMessage())
+    .catch(err => showErrorMessage())
+};
+
+export { fetchData, fetchPost }

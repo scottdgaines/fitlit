@@ -1,7 +1,7 @@
 //IMPORTS:
 import UserRepository from './UserRepository';
 import User from './User';
-import fetchData from './apiCalls.js';
+import { fetchData, fetchPost } from './apiCalls.js';
 import Chart from 'chart.js/auto';
 import './css/styles.css';
 import './images/turing-logo.png';
@@ -18,16 +18,18 @@ let currentUser;
 let allUserData;
 let allSleepData;
 let allHydrationData;
+let allActivityData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
 
 //FETCH PROMISE:
 function startData() {
-    Promise.all([fetchData('users', 'userData'), fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData')])
+    Promise.all([fetchData('users', 'userData'), fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData'), fetchData('activity', 'activityData')])
       .then((dataSet) => {
         allUserData = new UserRepository(dataSet[0]);
         allSleepData = dataSet[1];
         allHydrationData = dataSet[2];
+        allActivityData = dataSet[3];
         generatePageLoad(allUserData);
   })
 };
