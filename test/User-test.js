@@ -216,4 +216,8 @@ describe('User', () => {
       expect(user1.returnStairRecord(activityArray)).to.equal(36);
     });
 
+    it('Should return the number of miles walked for a user', () => {
+        expect(user1.returnMilesWalked(activityArray, '2019/06/15')).to.equal('2.91');
+    });
+
 });

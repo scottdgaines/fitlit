@@ -158,10 +158,20 @@ function renderSleep(user) {
 };
 
 function renderActivity(user) {
-  dayInfoText.innerText = `Go take a walk!`
+  dayInfoText.innerText = `Your most recent stats:\n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps /n
+    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked/n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed/n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
 };
+
+function renderAllUserActivity() {
+  averageInfoText.innerText = `Compared to other FitLit users:\n
+    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps /n
+    ${allUserData.returnMilesWalked(allActivityData, )')}`
+}
 
 function renderUserData(dataType, user) {
   if (dataType === 'water') {
@@ -171,8 +181,7 @@ function renderUserData(dataType, user) {
     showUserDataArea();
     renderSleep(user);
   } else {
-    hide(myWeekInfo); //these will go once we have the activity functions running
-    hide(myAverageInfo);
+    showUserDataArea();
     renderActivity(user);
   }
 };

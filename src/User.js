@@ -73,6 +73,10 @@ class User {
         .map(dataSet => dataSet.date)
     };
 
+    returnMilesWalked(array, date) { //need to update test!
+      return (this.returnUserDataByDay(array, date, 'numSteps') * this.strideLength / 5280).toFixed(2)
+    };
+
     returnStairRecord(array) {
       const newArray = this.findUser(array);
       return newArray.sort((a, b) => {

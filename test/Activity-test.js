@@ -10,7 +10,7 @@ describe('Activity', () => {
 
     beforeEach(() => {
         activity1 = new Activity({
-            userID: 1,  
+            userID: 1,
             date: "2019/06/15",
             numSteps: 3577,
             minutesActive: 140,
@@ -61,7 +61,7 @@ describe('Activity', () => {
         expect(activity1.userID).to.equal(1);
         expect(activity2.userID).to.equal(2);
         });
-    
+
     it('Should have a date', () => {
         expect(activity1.date).to.equal('2019/06/15');
         expect(activity2.date).to.equal('2019/06/15');
@@ -80,10 +80,6 @@ describe('Activity', () => {
     it('Should have the flights of stairs climbed by a user', () => {
         expect(activity1.flightsOfStairs).to.equal(16);
         expect(activity2.flightsOfStairs).to.equal(10);
-    });
-
-    it('Should return the number of miles walked for a user', () => {
-        expect(activity1.returnMilesWalked(user1)).to.equal('2.91');
     });
 
     it('Should log if the user reached their step goal on a given day', () => {
