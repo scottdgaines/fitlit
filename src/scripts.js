@@ -159,18 +159,20 @@ function renderSleep(user) {
 
 function renderActivity(user) {
   dayInfoText.innerText = `Your most recent stats:\n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps /n
-    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked/n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed/n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps \n
+    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed\n
     ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
 };
 
-function renderAllUserActivity() {
+function renderAllUserActivity(user) {
   averageInfoText.innerText = `Compared to other FitLit users:\n
-    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps /n
-    ${allUserData.returnMilesWalked(allActivityData, )')}`
+    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps \n
+    ${allUserData.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
+    ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed\n
+    ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active`
 }
 
 function renderUserData(dataType, user) {
@@ -183,6 +185,7 @@ function renderUserData(dataType, user) {
   } else {
     showUserDataArea();
     renderActivity(user);
+    renderAllUserActivity(user);
   }
 };
 

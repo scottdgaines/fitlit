@@ -17,7 +17,6 @@ class UserRepository {
     }
 
     returnAverageMilesWalked(array1, date) {
-      //average number of miles each user walked on that given day
         return array1
         .filter(activityObj => activityObj.date === date)
         .map(activityObj => {
