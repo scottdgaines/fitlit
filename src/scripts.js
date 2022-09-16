@@ -1,7 +1,7 @@
 //IMPORTS:
 import UserRepository from './UserRepository';
 import User from './User';
-import fetchData from './apiCalls.js';
+import { fetchData, fetchPost } from './apiCalls.js';
 import Chart from 'chart.js/auto';
 import './css/styles.css';
 import './images/turing-logo.png';
@@ -10,7 +10,8 @@ import './images/fitlit_water_icon.svg';
 import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
-import './images/logo.svg'
+import './images/logo.svg';
+// import Hydration from './Hydration';
 
 //GLOBAL VARIABLES:
 let userRepository;
@@ -18,16 +19,18 @@ let currentUser;
 let allUserData;
 let allSleepData;
 let allHydrationData;
+let allActivityData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
 
 //FETCH PROMISE:
 function startData() {
-    Promise.all([fetchData('users', 'userData'), fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData')])
+    Promise.all([fetchData('users', 'userData'), fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData'), fetchData('activity', 'activityData')])
       .then((dataSet) => {
         allUserData = new UserRepository(dataSet[0]);
         allSleepData = dataSet[1];
         allHydrationData = dataSet[2];
+        allActivityData = dataSet[3];
         generatePageLoad(allUserData);
   })
 };
@@ -56,6 +59,7 @@ let logoContainer = document.getElementById('logoContainer');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
+// logoContainer.addEventListener('click', tryPost)
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -158,10 +162,22 @@ function renderSleep(user) {
 };
 
 function renderActivity(user) {
-  dayInfoText.innerText = `Go take a walk!`
+  dayInfoText.innerText = `Your most recent stats:\n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps \n
+    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed\n
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
 };
+
+function renderAllUserActivity(user) {
+  averageInfoText.innerText = `Compared to other FitLit users:\n
+    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps \n
+    ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
+    ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed\n
+    ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active`
+}
 
 function renderUserData(dataType, user) {
   if (dataType === 'water') {
@@ -171,9 +187,9 @@ function renderUserData(dataType, user) {
     showUserDataArea();
     renderSleep(user);
   } else {
-    hide(myWeekInfo); //these will go once we have the activity functions running
-    hide(myAverageInfo);
+    showUserDataArea();
     renderActivity(user);
+    renderAllUserActivity(user);
   }
 };
 
@@ -331,3 +347,12 @@ function renderHydrationChart(data, dates) {
       }
   });
 };
+
+// function tryPost() {
+//   console.log(currentUser)
+//   const id = currentUser.id
+//   const newHydration = new Hydration({userID:id, date:'2022/09/14', numOunces:4.2})
+//   console.log(allHydrationData)
+//   fetchPost('hydration', newHydration)
+//   fetchData('hydration', 'hydrationData')
+// }
