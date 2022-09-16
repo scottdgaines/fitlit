@@ -99,4 +99,8 @@ describe('User Repository', () => {
       expect(userRepository.returnAverageUserData(activityArray, 'minutesActive')).to.equal(155);
     });
 
+    it('Should be able to calculate the average number of miles all users walked on a given day', () => {
+      expect(userRepository.returnAverageMilesWalked(activityArray, '2019/06/15')).to.equal('3.29');
+    })
+
 });
