@@ -174,7 +174,7 @@ function renderActivity(user) {
 function renderAllUserActivity(user) {
   averageInfoText.innerText = `Compared to other FitLit users:\n
     ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps \n
-    ${allUserData.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
+    ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
     ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed\n
     ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active`
 }

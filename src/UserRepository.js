@@ -17,14 +17,17 @@ class UserRepository {
     }
 
     returnAverageMilesWalked(array1, date) {
-        return array1
-        .filter(activityObj => activityObj.date === date)
+        const filteredArray = array1
+        .filter(activityObj => {
+          return activityObj.date === date})
         .map(activityObj => {
-          (activityObj.numSteps * this.userData.find(userObj => userObj.id === activityObj.userID).strideLength) / 5280
+          return parseFloat((activityObj.numSteps * this.userData.find(userObj => userObj.id === activityObj.userID).strideLength) / 5280);
         })
-        .reduce((totalMilesWalked, curr) => {
+
+        const array = filteredArray.reduce((totalMilesWalked, curr) => {
           return totalMilesWalked += curr;
         }, 0)
+        return (array / filteredArray.length).toFixed(2);
     }
 
 };
