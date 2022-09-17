@@ -165,8 +165,10 @@ function submitForm() {
   const id = currentUser.id
   if (event.target.id === "hydrationSubmitButton") {
   const newHydrationData = new Hydration({userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)});
-    fetchPost('hydration', newHydrationData);
-    fetchData('hydration', 'hydrationData');
+    fetchPost('hydration', newHydrationData)
+      .then(data => confirmationMessage());
+    startData()
+    renderHydration()
   } else if (event.target.id === "sleepSubmitButton") {
     const newSleepData = new Sleep({userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)});
     fetchPost('sleep', newSleepData);

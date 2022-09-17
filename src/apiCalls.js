@@ -12,7 +12,6 @@ const fetchPost = (url, initObject) => {
     body: JSON.stringify(initObject)
   })
     .then(response => response.json())
-    .then(data => confirmationMessage())
     // .catch(err => showErrorMessage())
 };
 
