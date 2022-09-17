@@ -26,6 +26,10 @@
   transition: 0.2s ease;
   }
 
+.form-icon {
+  height: 105px;
+}
+
 .data-display {
   background-size: cover;
   background-position: center;
