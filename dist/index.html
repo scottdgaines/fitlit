@@ -26,20 +26,20 @@
       </section>
       <section class="welcome-message text" id="welcomeMessage"><span id="welcomeUserName"></span> Welcome to your fitlit page! <p>&#8598; Click on the icons to the left to navigate through your dashboard.</p></section>
       <section class="form-display hide" id="formDisplay">
-        <form class="category-form" id="categoryForm">
-          <p>Enter your information!</p>
+        <form class="category-form text" id="categoryForm">
+          <p class="header text">Enter your information!</p>
           <input type="radio" name="data-set" id="hydrationRadio" />Hydration
           <input type="radio" name="data-set" id="sleepRadio" />Sleep
           <input type="radio" name="data-set" id="activityRadio" />Activity 
         </form>
-        <form class="hydration-form hide" id="hydrationForm"> 
+        <form class="hydration-form hide text" id="hydrationForm"> 
           <label for="date">Date</label>
           <input type="date" name="date" required/>
           <br><label for="numOunces">How many ounces did you drink?</label>
           <input type="text" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" required/>
           <button>Submit</button>
         </form> 
-        <form class="sleep-form hide" id="sleepForm">
+        <form class="sleep-form hide text" id="sleepForm">
           <label for="date">Date</label>
           <input type="date" name="date" required/>
           <br><label for="hoursSlept">How many hours did you sleep? </label>
@@ -48,7 +48,7 @@
           <input type="number" name="hoursSlept" min="0" max="5" required/>
           <button>Submit</button>
         </form>  
-        <form class="activity-form hide" id="activityForm">
+        <form class="activity-form hide text" id="activityForm">
           <label for="date">Date</label>
           <input type="date" name="date" required/>
           <br><label for="flightsOfStairs">How many flights of stairs did you climb?</label>
