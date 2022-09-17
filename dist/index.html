@@ -24,41 +24,43 @@
       <section class="logo-container display-box" id="logoContainer">
         <img src= "./images/logo.svg" class="logo-icon" id="logo" alt="project logo">
       </section>
-      <section class="welcome-message text" id="welcomeMessage"><span id="welcomeUserName"></span> Welcome to your fitlit page! <p>&#8598; Click on the icons to the left to navigate through your dashboard.</p></section>
+      <section class="welcome-message text" id="welcomeMessage"><span id="welcomeUserName"></span> Welcome to your fitlit page! <p>&#8598; Click on the icons to navigate through your dashboard.</p></section>
       <section class="form-display hide" id="formDisplay">
+        <h2 class="header text">Enter your information!</h2>
         <form class="category-form text" id="categoryForm">
-          <p class="header text">Enter your information!</p>
           <input type="radio" name="data-set" id="hydrationRadio" />Hydration
           <input type="radio" name="data-set" id="sleepRadio" />Sleep
           <input type="radio" name="data-set" id="activityRadio" />Activity 
         </form>
-        <form class="hydration-form hide text" id="hydrationForm"> 
-          <label for="date">Date</label>
-          <input type="date" name="date" required/>
-          <br><label for="numOunces">How many ounces did you drink?</label>
-          <input type="text" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" required/>
-          <button>Submit</button>
-        </form> 
-        <form class="sleep-form hide text" id="sleepForm">
-          <label for="date">Date</label>
-          <input type="date" name="date" required/>
-          <br><label for="hoursSlept">How many hours did you sleep? </label>
-          <input type="text" name="hoursSlept" pattern="[0-9]+" title="Please enter numbers only" required />
-          <br><label for="sleepQuality">On a scale of 1 to 5, how well did you sleep? </label>
-          <input type="number" name="hoursSlept" min="0" max="5" required/>
-          <button>Submit</button>
-        </form>  
-        <form class="activity-form hide text" id="activityForm">
-          <label for="date">Date</label>
-          <input type="date" name="date" required/>
-          <br><label for="flightsOfStairs">How many flights of stairs did you climb?</label>
-          <input type="text" name="flightsOfStairs" pattern="[0-9]+" title="Please enter numbers only" required/>
-          <br><label for="minutesActive">How many minutes were you active?</label>
-          <input type="text" name="minutesActive" pattern="[0-9]+" title="Please enter numbers only" required/>
-          <br><label for="numSteps">How many steps did you take? (we know you were counting)</label>
-          <input type="text" name="numSteps" pattern="[0-9]+" title="Please enter numbers only" required/>
-          <button>Submit</button>
-        </form>
+        <div class="form-container">
+          <form class="hydration-form hide text" id="hydrationForm"> 
+            <label for="date">Date</label>
+            <input type="date" name="date" required/>
+            <br><label for="numOunces">How many ounces did you drink?</label>
+            <input type="text" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" required/>
+            <br><button>Submit</button>
+          </form> 
+          <form class="sleep-form hide text" id="sleepForm">
+            <label for="date">Date</label>
+            <input type="date" name="date" required/>
+            <br><label for="hoursSlept">How many hours did you sleep? </label>
+            <input type="text" name="hoursSlept" pattern="[0-9]+" title="Please enter numbers only" required />
+            <br><label for="sleepQuality">On a scale of 1 to 5, how well did you sleep? </label>
+            <input type="number" name="hoursSlept" min="0" max="5" required/>
+            <br><button>Submit</button>
+          </form>  
+          <form class="activity-form hide text" id="activityForm">
+            <label for="date">Date</label>
+            <input type="date" name="date" required/>
+            <br><label for="flightsOfStairs">How many flights of stairs did you climb?</label>
+            <input type="text" name="flightsOfStairs" pattern="[0-9]+" title="Please enter numbers only" required/>
+            <br><label for="minutesActive">How many minutes were you active?</label>
+            <input type="text" name="minutesActive" pattern="[0-9]+" title="Please enter numbers only" required/>
+            <br><label for="numSteps">How many steps did you take?</label>
+            <input type="text" name="numSteps" pattern="[0-9]+" title="Please enter numbers only" required/>
+            <br><button>Submit</button>
+          </form>
+      </div>
       </section>
       <section class="user-data-container text hide display-box" id="userDataContainer">
         <div class="data-display" id="myDayInfoContainer">
