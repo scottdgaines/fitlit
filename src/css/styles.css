@@ -26,6 +26,15 @@
   transition: 0.2s ease;
   }
 
+.form-display {
+  height: 200px;
+  background-color: #FFFFFF;
+  border: 2px solid #8892B3;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px #8892B3;
+  width: 400px;
+}
+
 .form-icon {
   height: 105px;
 }
