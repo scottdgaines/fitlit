@@ -73,7 +73,7 @@ class User {
         .map(dataSet => dataSet.date)
     };
 
-    returnMilesWalked(array, date) { //need to update test!
+    returnMilesWalked(array, date) {
       return (this.returnUserDataByDay(array, date, 'numSteps') * this.strideLength / 5280).toFixed(2)
     };
 
