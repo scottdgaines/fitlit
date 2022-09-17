@@ -2,7 +2,6 @@
 import UserRepository from './UserRepository';
 import User from './User';
 import { fetchData, fetchPost } from './apiCalls.js';
-import {renderHydrationChart, renderSleepChart, renderActivityChart } from './chartFunctions.js';
 import Chart from 'chart.js/auto';
 import './css/styles.css';
 import './images/turing-logo.png';
@@ -201,11 +200,12 @@ function weeklyDataMessage(array, neededData, user) {
     let userWeekData = user.returnUserWeekData(array, neededData);
     let sleepQualData = user.returnUserWeekData(array, 'sleepQuality');
     let data = [[],[]];
-    let dates = userWeekData.map(date => {
-      let splits = date.split(": ");
-      data[0].push(splits[1]);
-      return splits[0];
-      });
+    let dates = userWeekData
+      .map(date => {
+        let splits = date.split(": ");
+        data[0].push(splits[1]);
+        return splits[0];
+        });
 
     sleepQualData.forEach(sleepQualDataPoint => {
       let splitDates = sleepQualDataPoint.split(": ");
@@ -222,12 +222,27 @@ function weeklyDataMessage(array, neededData, user) {
       data.push(splits[1]);
       return splits[0];
     });
+
     renderHydrationChart(data, dates);
 
   } else {
-    const userWeekData = user.return
+    const userWeekSteps = user.returnUserWeekData(array, 'numSteps');
+    const userWeekStairs = user.returnUserWeekData(array, 'flightsOfStairs');
+    const userWeekActiveMin = user.returnUserWeekData(array, 'minutesActive');
+    const data = { dates: [], steps: [], stairs: [], minutes: [] };
+    pushIntoObj(userWeekSteps, 'dates', 0, data);
+    pushIntoObj(userWeekSteps, 'steps', 1, data);
+    pushIntoObj(userWeekStairs, 'stairs', 1, data);
+    pushIntoObj(userWeekActiveMin, 'minutes', 1, data);
+    renderActivityChart(data);
   }
 };
+
+function pushIntoObj(array, key, index, objName) {
+  objName[key] = (array.map(date => {
+    return date.split(": ")[index]}));
+};
+
 
 //DISPLAY HELPER FUNCTIONS:
 function clearContainerBackgrounds() {
@@ -262,7 +277,157 @@ function resetChart() {
   myChart.destroy();
 };
 
-//CHART FUNCTIONS:
+function renderSleepChart(data, dates) {
+  const chartLayout = document.getElementById('myChart');
+  const dataSet1 = data[0];
+  const dataSet2 = data[1];
+
+  if(myChart) {
+    resetChart(myChart)
+  };
+
+  myChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: dates,
+          datasets: [{
+              label: 'Hours slept',
+              data: dataSet1,
+              backgroundColor: [
+                '#8892B3',
+              ],
+            borderColor: [
+                '#88B3B3',
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'Sleep quality (out of 5)',
+              data: dataSet2,
+              backgroundColor: [
+                  '#D6C2FF'
+              ],
+              borderColor: [
+                  '#5F6E7D'
+              ],
+              borderWidth: 1
+          }
+        ]
+      },
+      options: {
+          interaction: {
+            mode: 'index'
+          },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          },
+          maintainAspectRatio: false,
+      }
+  });
+}
+
+function renderHydrationChart(data, dates) {
+  const chartLayout = document.getElementById('myChart');
+
+  if(myChart) {
+    resetChart(myChart)
+  };
+
+  myChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: dates,
+          datasets: [{
+              label: 'Ounces of water consumed',
+              data: data,
+              backgroundColor: [
+                  '#8892B3',
+              ],
+              borderColor: [
+                  '#88B3B3',
+              ],
+              borderWidth: 1
+          }
+        ]
+      },
+      options: {
+          interaction: {
+            mode: 'index'
+          },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          },
+          maintainAspectRatio: false,
+      }
+  });
+};
+
+function renderActivityChart(data) {
+  const chartLayout = document.getElementById('myChart');
+  // console.log(data["dates"]);
+  if(myChart) {
+    resetChart(myChart)
+  };
+
+  myChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: data['dates'],
+          datasets: [{
+              label: 'Step count',
+              data: data['steps'],
+              backgroundColor: [
+                  '#8892B3',
+              ],
+              borderColor: [
+                  '#88B3B3',
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'Flights of stairs climbed',
+              data: data['stairs'],
+              backgroundColor: [
+                  '#D6C2FF'
+              ],
+              borderColor: [
+                  '#5F6E7D'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'Minutes active',
+              data: data['minutes'],
+              backgroundColor: [
+                  'black'
+              ],
+              borderColor: [
+                  'black'
+              ],
+              borderWidth: 1
+          }
+        ]
+      },
+      options: {
+          interaction: {
+            mode: 'index'
+          },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          },
+          maintainAspectRatio: false,
+      }
+  });
+};
+
+
+
 
 
 // function tryPost() {
