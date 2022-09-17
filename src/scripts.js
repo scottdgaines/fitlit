@@ -2,6 +2,7 @@
 import UserRepository from './UserRepository';
 import User from './User';
 import { fetchData, fetchPost } from './apiCalls.js';
+import {renderHydrationChart, renderSleepChart, renderActivityChart } from './chartFunctions.js';
 import Chart from 'chart.js/auto';
 import './css/styles.css';
 import './images/turing-logo.png';
@@ -169,6 +170,8 @@ function renderActivity(user) {
     ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
+  weeklyDataMessage(allActivityData, 'activity', user)
+
 };
 
 function renderAllUserActivity(user) {
@@ -211,7 +214,7 @@ function weeklyDataMessage(array, neededData, user) {
 
     renderSleepChart(data, dates)
 
-  } else {
+  } else if (neededData === 'numOunces'){
     const userWeekData = user.returnUserWeekData(array, neededData)
     const data = [];
     const dates = userWeekData.map(date => {
@@ -220,8 +223,11 @@ function weeklyDataMessage(array, neededData, user) {
       return splits[0];
     });
     renderHydrationChart(data, dates);
-    };
-  };
+
+  } else {
+    const userWeekData = user.return
+  }
+};
 
 //DISPLAY HELPER FUNCTIONS:
 function clearContainerBackgrounds() {
@@ -256,97 +262,8 @@ function resetChart() {
   myChart.destroy();
 };
 
-
-
 //CHART FUNCTIONS:
-function renderSleepChart(data, dates) {
-  const chartLayout = document.getElementById('myChart');
-  const dataSet1 = data[0];
-  const dataSet2 = data[1];
 
-  if(myChart) {
-    resetChart(myChart)
-  };
-
-  myChart = new Chart(chartLayout, {
-      type: 'line',
-      data: {
-          labels: dates,
-          datasets: [{
-              label: 'Hours slept',
-              data: dataSet1,
-              backgroundColor: [
-                '#8892B3',
-              ],
-            borderColor: [
-                '#88B3B3',
-              ],
-              borderWidth: 1
-          },
-          {
-              label: 'Sleep quality (out of 5)',
-              data: dataSet2,
-              backgroundColor: [
-                  '#D6C2FF'
-              ],
-              borderColor: [
-                  '#5F6E7D'
-              ],
-              borderWidth: 1
-          }
-        ]
-      },
-      options: {
-          interaction: {
-            mode: 'index'
-          },
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          },
-          maintainAspectRatio: false,
-      }
-  });
-}
-
-function renderHydrationChart(data, dates) {
-  const chartLayout = document.getElementById('myChart');
-
-  if(myChart) {
-    resetChart(myChart)
-  };
-
-  myChart = new Chart(chartLayout, {
-      type: 'line',
-      data: {
-          labels: dates,
-          datasets: [{
-              label: 'Ounces of water consumed',
-              data: data,
-              backgroundColor: [
-                  '#8892B3',
-              ],
-              borderColor: [
-                  '#88B3B3',
-              ],
-              borderWidth: 1
-          }
-        ]
-      },
-      options: {
-          interaction: {
-            mode: 'index'
-          },
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          },
-          maintainAspectRatio: false,
-      }
-  });
-};
 
 // function tryPost() {
 //   console.log(currentUser)
