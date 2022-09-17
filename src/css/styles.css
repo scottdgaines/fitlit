@@ -10,14 +10,21 @@
   width: 200px;
 }
 
+button {
+  background-color: #E1E8FF;
+  border-radius: 10px;
+}
+
 .header {
   text-align: center;
   font-size: 25px;
+  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
 .icon {
   cursor: pointer;
-  height: 85px;
+  height: 80px;
   width: 130px;
 }
 
@@ -26,21 +33,20 @@
   transition: 0.2s ease;
   }
 
+form {
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
 .form-display {
-  background-position: center;
+  margin-top: 100px;
+  margin-left: 160px;
   height: 250px;
   background-color: #FFFFFF;
   border: 2px solid #8892B3;
   border-radius: 20px;
   box-shadow: 3px 3px 3px #8892b3;
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  justify-content: center;
-}
-
-.form-icon {
-  height: 105px;
+  width: 450px;
 }
 
 .data-display {
@@ -82,12 +88,19 @@ body, html { /* line 10 */
   flex-direction: column;
   justify-content: space-evenly;
   text-align: center;
+  height: 500px;
+}
+
+.form-icon { /* line 16*/
+  height: 80px;
+  margin-bottom: 15px;
 }
 
 .my-friend-box-container { /* line 17 */
   display: flex;
   flex-direction: column;
   text-align: center;
+  height: 300px;
 }
 
 .scroll { /* line 19 */
@@ -97,7 +110,7 @@ body, html { /* line 10 */
 .main-display { /* line 21 */
   height: 750px;
   margin: 10px 20px;
-  width: 950px;
+  width: 800px;
 }
 
 .logo-container { /* line 22 */
@@ -105,11 +118,11 @@ body, html { /* line 10 */
   display: flex;
   height: 100px;
   justify-content: space-between;
-  width: 950px;
+  width: 800px;
 }
 
 .logo-icon { /* line 23 */
-  height: 100px;
+  height: 130px;
 }
 
 .welcome-header {
@@ -128,11 +141,17 @@ body, html { /* line 10 */
   justify-content: space-around;
   height: 605px;
   margin-top: 25px;
-  width: 950px;
+  width: 800px;
 }
 
-.category-form { /* line 29 */
+.category-form { /* line 30 */
+  text-align: center;
+}
 
+.form-container { /* line 35 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .my-week-info-container { /* line 36 */
@@ -153,6 +172,7 @@ body, html { /* line 10 */
 .my-user-info { /* line 46 */
   margin-left: 10px;
   overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 .steps-box-container { /* line 48 */
@@ -192,3 +212,5 @@ body, html { /* line 10 */
 .step-background {
   background-image: url('../images/step-background.svg');
 }
+
+
