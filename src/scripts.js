@@ -182,7 +182,7 @@ function renderHydration(user) {
   weekInfoText.innerText = `Here is the water you consumed in the last week: `
   clearContainerBackgrounds();
   fillContainerBackgrounds('hydration-background');
-  weeklyDataMessage(allHydrationData, 'numOunces', user);
+  displayWeeklyData(allHydrationData, 'numOunces', user);
 };
 
 function renderSleep(user) {
@@ -191,7 +191,7 @@ function renderSleep(user) {
   weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
   clearContainerBackgrounds();
   fillContainerBackgrounds('sleep-background');
-  weeklyDataMessage(allSleepData, 'hoursSlept', user)
+  displayWeeklyData(allSleepData, 'hoursSlept', user)
 };
 
 function renderActivity(user) {
@@ -202,6 +202,8 @@ function renderActivity(user) {
     ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
+  displayWeeklyData(allActivityData, 'activity', user)
+
 };
 
 function renderAllUserActivity(user) {
@@ -226,35 +228,43 @@ function renderUserData(dataType, user) {
   }
 };
 
-function weeklyDataMessage(array, neededData, user) {
+function displayWeeklyData(array, neededData, user) {
   if (neededData === 'hoursSlept') {
     let userWeekData = user.returnUserWeekData(array, neededData);
     let sleepQualData = user.returnUserWeekData(array, 'sleepQuality');
-    let data = [[],[]];
-    let dates = userWeekData.map(date => {
-      let splits = date.split(": ");
-      data[0].push(splits[1]);
-      return splits[0];
-      });
+    let data = {dates: [], sleepQuality: [], hoursSlept: [] };
+    pushIntoObj(userWeekData, 'dates', 0, data);
+    pushIntoObj(userWeekData, 'hoursSlept', 1, data);
+    pushIntoObj(sleepQualData, 'sleepQuality', 1, data);
 
-    sleepQualData.forEach(sleepQualDataPoint => {
-      let splitDates = sleepQualDataPoint.split(": ");
-      data[1].push(splitDates[1]);
-      });
+    renderSleepChart(data);
 
-    renderSleepChart(data, dates)
+  } else if (neededData === 'numOunces'){
+    const userWeekData = user.returnUserWeekData(array, neededData)
+    const data = { dates: [], numOunces: []};
+    pushIntoObj(userWeekData, 'dates', 0, data);
+    pushIntoObj(userWeekData, 'numOunces', 1, data);
+
+    renderHydrationChart(data);
 
   } else {
-    const userWeekData = user.returnUserWeekData(array, neededData)
-    const data = [];
-    const dates = userWeekData.map(date => {
-      const splits = date.split(": ");
-      data.push(splits[1]);
-      return splits[0];
-    });
-    renderHydrationChart(data, dates);
-    };
-  };
+    const userWeekSteps = user.returnUserWeekData(array, 'numSteps');
+    const userWeekStairs = user.returnUserWeekData(array, 'flightsOfStairs');
+    const userWeekActiveMin = user.returnUserWeekData(array, 'minutesActive');
+    const data = { dates: [], steps: [], stairs: [], minutes: [] };
+    pushIntoObj(userWeekSteps, 'dates', 0, data);
+    pushIntoObj(userWeekSteps, 'steps', 1, data);
+    pushIntoObj(userWeekStairs, 'stairs', 1, data);
+    pushIntoObj(userWeekActiveMin, 'minutes', 1, data);
+    renderActivityChart(data);
+  }
+};
+
+function pushIntoObj(array, key, index, objName) {
+  objName[key] = (array.map(date => {
+    return date.split(": ")[index]}));
+};
+
 
 //DISPLAY HELPER FUNCTIONS:
 function clearContainerBackgrounds() {
@@ -290,13 +300,8 @@ function resetChart() {
   myChart.destroy();
 };
 
-
-
-//CHART FUNCTIONS:
-function renderSleepChart(data, dates) {
+function renderSleepChart(data) {
   const chartLayout = document.getElementById('myChart');
-  const dataSet1 = data[0];
-  const dataSet2 = data[1];
 
   if(myChart) {
     resetChart(myChart)
@@ -305,10 +310,10 @@ function renderSleepChart(data, dates) {
   myChart = new Chart(chartLayout, {
       type: 'line',
       data: {
-          labels: dates,
+          labels: data['dates'],
           datasets: [{
               label: 'Hours slept',
-              data: dataSet1,
+              data: data['hoursSlept'],
               backgroundColor: [
                 '#8892B3',
               ],
@@ -319,7 +324,7 @@ function renderSleepChart(data, dates) {
           },
           {
               label: 'Sleep quality (out of 5)',
-              data: dataSet2,
+              data: data['sleepQuality'],
               backgroundColor: [
                   '#D6C2FF'
               ],
@@ -342,9 +347,9 @@ function renderSleepChart(data, dates) {
           maintainAspectRatio: false,
       }
   });
-}
+};
 
-function renderHydrationChart(data, dates) {
+function renderHydrationChart(data) {
   const chartLayout = document.getElementById('myChart');
 
   if(myChart) {
@@ -354,10 +359,10 @@ function renderHydrationChart(data, dates) {
   myChart = new Chart(chartLayout, {
       type: 'line',
       data: {
-          labels: dates,
+          labels: data['dates'],
           datasets: [{
               label: 'Ounces of water consumed',
-              data: data,
+              data: data['numOunces'],
               backgroundColor: [
                   '#8892B3',
               ],
@@ -381,6 +386,70 @@ function renderHydrationChart(data, dates) {
       }
   });
 };
+
+function renderActivityChart(data) {
+  const chartLayout = document.getElementById('myChart');
+
+  if(myChart) {
+    resetChart(myChart)
+  };
+
+  myChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: data['dates'],
+          datasets: [{
+              label: 'Step count',
+              data: data['steps'],
+              backgroundColor: [
+                  '#8892B3',
+              ],
+              borderColor: [
+                  '#88B3B3',
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'Flights of stairs climbed',
+              data: data['stairs'],
+              backgroundColor: [
+                  '#D6C2FF'
+              ],
+              borderColor: [
+                  '#5F6E7D'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'Minutes active',
+              data: data['minutes'],
+              backgroundColor: [
+                  'black'
+              ],
+              borderColor: [
+                  'black'
+              ],
+              borderWidth: 1
+          }
+        ]
+      },
+      options: {
+          interaction: {
+            mode: 'index'
+          },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          },
+          maintainAspectRatio: false,
+      }
+  });
+};
+
+
+
+
 
 // function tryPost() {
 //   console.log(currentUser)
