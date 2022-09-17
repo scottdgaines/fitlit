@@ -2,9 +2,9 @@ class Activity {
     constructor(activityObj) {
       this.userID = activityObj.userID;
       this.date = activityObj.date;
-      this.numSteps = activityObj.numSteps;
-      this.minutesActive = activityObj.minutesActive;
       this.flightsOfStairs = activityObj.flightsOfStairs;
+      this.minutesActive = activityObj.minutesActive;
+      this.numSteps = activityObj.numSteps;
     };
 
     returnMilesWalked(user) {
@@ -20,5 +20,5 @@ class Activity {
     };
 
   };
-  
+
   export default Activity;

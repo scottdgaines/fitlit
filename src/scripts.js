@@ -11,7 +11,9 @@ import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
 import './images/logo.svg';
-// import Hydration from './Hydration';
+import Hydration from './Hydration';
+import Sleep from './Sleep';
+import Activity from './Activity';
 
 //GLOBAL VARIABLES:
 let userRepository;
@@ -66,6 +68,21 @@ let hydrationRadio = document.getElementById('hydrationRadio');
 let sleepRadio = document.getElementById('sleepRadio');
 let activityRadio = document.getElementById('activityRadio');
 let radioButtons = [hydrationRadio, sleepRadio, activityRadio];
+let hydrationSubmitButton = document.getElementById('hydrationSubmitButton');
+let sleepSubmitButton = document.getElementById('sleepSubmitButton');
+let activitySubmitButton = document.getElementById('activitySubmitButton');
+let submitButtons = [hydrationSubmitButton, sleepSubmitButton, activitySubmitButton];
+let numOuncesInput = document.getElementById('numOunces');
+let hoursSleptInput = document.getElementById('hoursSlept');
+let sleepQualityInput = document.getElementById('sleepQuality');
+let flightsOfStairsInput = document.getElementById('flightsOfStairs');
+let minutesActiveInput = document.getElementById('minutesActive');
+let numStepsInput = document.getElementById('numSteps');
+let hydrationDateInput = document.getElementById('hydrationDate');
+let sleepDateInput = document.getElementById('sleepDate');
+let activityDateInput = document.getElementById('activityDate');
+
+
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
@@ -87,6 +104,12 @@ function generatePageLoad(userData) {
     button.addEventListener('click', function() {selectForm()
     })
   });
+  submitButtons.forEach(button => {
+    button.addEventListener('click', function() {submitForm()
+    })
+  });
+
+
 
 function generateRandomUser(userData) {
   let currentUserObj = userData[Math.floor(Math.random() * userData.length)];
@@ -136,6 +159,36 @@ function selectForm() {
     hide(sleepForm)
   }
 }
+
+function submitForm() {
+  event.preventDefault();
+  const id = currentUser.id
+  if (event.target.id === "hydrationSubmitButton") {
+  const newHydrationData = new Hydration({userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)});
+    fetchPost('hydration', newHydrationData);
+    fetchData('hydration', 'hydrationData');
+  } else if (event.target.id === "sleepSubmitButton") {
+    const newSleepData = new Sleep({userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)});
+    fetchPost('sleep', newSleepData);
+    fetchData('sleep', 'sleepData');
+  } else if (event.target.id === "activitySubmitButton") {
+    const newActivityData = new Activity({userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)});
+    fetchPost('activity', newActivityData);
+    fetchData('activity', 'activityData');
+  }
+
+}
+
+function confirmationMessage(){
+  console.log('jello')
+}
+
+// function tryPost() {
+//   const newHydration = new Hydration({userID:id, date:'2022/09/14', numOunces:4.2})
+//   console.log(allHydrationData)
+//   fetchPost('hydration', newHydration)
+//   fetchData('hydration', 'hydrationData')
+// }
 
 function renderMyInfo(currentUser) {
   var userAvatar = document.createElement('img');
