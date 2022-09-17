@@ -26,6 +26,23 @@
   transition: 0.2s ease;
   }
 
+.form-display {
+  background-position: center;
+  height: 250px;
+  background-color: #FFFFFF;
+  border: 2px solid #8892B3;
+  border-radius: 20px;
+  box-shadow: 3px 3px 3px #8892b3;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  justify-content: center;
+}
+
+.form-icon {
+  height: 105px;
+}
+
 .data-display {
   background-size: cover;
   background-position: center;
@@ -112,6 +129,10 @@ body, html { /* line 10 */
   height: 605px;
   margin-top: 25px;
   width: 950px;
+}
+
+.category-form { /* line 29 */
+
 }
 
 .my-week-info-container { /* line 36 */

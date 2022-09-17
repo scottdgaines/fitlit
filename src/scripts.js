@@ -39,6 +39,7 @@ function startData() {
 let waterIcon = document.getElementById('water-icon');
 let sleepIcon = document.getElementById('sleep-icon');
 let activityIcon = document.getElementById('activity-icon');
+let formIcon = document.getElementById('form-icon');
 let welcomeUserName = document.getElementById('welcomeUserName')
 let welcomeMessage = document.getElementById('welcomeMessage');
 let userInfoContainer = document.getElementById('myUserInfo');
@@ -54,8 +55,17 @@ let averageInfoText = document.getElementById('averageInfoText');
 let myAverageInfoContainer = document.getElementById('myAverageInfoContainer');
 let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
-let navIcons = [waterIcon, sleepIcon, activityIcon];
+let navIcons = [waterIcon, sleepIcon, activityIcon, formIcon];
 let logoContainer = document.getElementById('logoContainer');
+let categoryForm = document.getElementById('categoryForm');
+let formDisplay = document.getElementById('formDisplay');
+let hydrationForm = document.getElementById('hydrationForm');
+let sleepForm = document.getElementById('sleepForm');
+let activityForm = document.getElementById('activityForm');
+let hydrationRadio = document.getElementById('hydrationRadio');
+let sleepRadio = document.getElementById('sleepRadio');
+let activityRadio = document.getElementById('activityRadio');
+let radioButtons = [hydrationRadio, sleepRadio, activityRadio];
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
@@ -72,8 +82,11 @@ function generatePageLoad(userData) {
   navIcons.forEach(icon => {
     icon.addEventListener('click', function() {changeDisplay(currentUser)
     })
-  })
-};
+  });
+  radioButtons.forEach(button => {
+    button.addEventListener('click', function() {selectForm()
+    })
+  });
 
 function generateRandomUser(userData) {
   let currentUserObj = userData[Math.floor(Math.random() * userData.length)];
@@ -93,16 +106,36 @@ function moveWelcomeMessage() {
 function changeDisplay(currentUser) {
   if (event.target.id === 'water-icon') {
     renderUserData('water', currentUser);
+    unhide(userDataContainer);
   } else if (event.target.id === 'sleep-icon') {
     renderUserData('sleep', currentUser);
+    unhide(userDataContainer);
   } else if (event.target.id === 'activity-icon') {
     renderUserData('activity', currentUser);
+    unhide(userDataContainer);
+  } else if (event.target.id === 'form-icon') {
+    unhide(formDisplay);
+    hide(userDataContainer)
   }
   hide(welcomeMessage);
-  unhide(userDataContainer);
-  unhide(logoContainer);
   moveWelcomeMessage();
 };
+
+function selectForm() {
+  if (event.target.id === "hydrationRadio") {
+    unhide(hydrationForm)
+    hide(sleepForm)
+    hide(activityForm)
+  } else if (event.target.id === "sleepRadio") {
+    unhide(sleepForm)
+    hide(hydrationForm)
+    hide(activityForm)
+  } else if (event.target.id === "activityRadio") {
+    unhide(activityForm)
+    hide(hydrationForm)
+    hide(sleepForm)
+  }
+}
 
 function renderMyInfo(currentUser) {
   var userAvatar = document.createElement('img');
@@ -177,7 +210,7 @@ function renderAllUserActivity(user) {
     ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
     ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed\n
     ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active`
-}
+};
 
 function renderUserData(dataType, user) {
   if (dataType === 'water') {
@@ -239,6 +272,7 @@ function fillContainerBackgrounds(icon) {
 
 function showUserDataArea() {
   hide(welcomeMessage);
+  hide(formDisplay);
   unhide(userDataContainer);
   unhide(myAverageInfo);
   unhide(myWeekInfo);
@@ -356,3 +390,4 @@ function renderHydrationChart(data, dates) {
 //   fetchPost('hydration', newHydration)
 //   fetchData('hydration', 'hydrationData')
 // }
+}
