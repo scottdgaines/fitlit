@@ -24,6 +24,7 @@ let allHydrationData;
 let allActivityData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
+let stepChart;
 
 //FETCH PROMISE:
 function startData() {
@@ -75,6 +76,8 @@ let hydrationRadio = document.getElementById('hydrationRadio');
 let sleepRadio = document.getElementById('sleepRadio');
 let activityRadio = document.getElementById('activityRadio');
 let radioButtons = [hydrationRadio, sleepRadio, activityRadio];
+let bubbleHeaders = document.querySelectorAll('#infoContainerHeader');
+let stepChartDisplay = document.getElementById('stepChart');
 let hydrationSubmitButton = document.getElementById('hydrationSubmitButton');
 let sleepSubmitButton = document.getElementById('sleepSubmitButton');
 let activitySubmitButton = document.getElementById('activitySubmitButton');
@@ -249,41 +252,47 @@ function renderAvgStepGoal(dataSet) {
 };
 
 function renderHydration(user) {
+  unhideHeaders();
   dayInfoText.innerText = `You have consumed ${user.returnUserDataByDay(allHydrationData, user.findMostRecentDate(allHydrationData), 'numOunces')} ounces of water!`
   averageInfoText.innerText = ` ${user.returnOverallAverage(allHydrationData, 'numOunces')} fluid ounces per day!`
   weekInfoText.innerText = `Here is the water you consumed in the last week: `
   clearContainerBackgrounds();
   fillContainerBackgrounds('hydration-background');
+  userDataContainer.classList.remove('activity-data-display');
   displayWeeklyData(allHydrationData, 'numOunces', user);
 };
 
 function renderSleep(user) {
+  unhideHeaders();
   dayInfoText.innerText = `Today, you slept ${user.returnUserDataByDay(allSleepData, user.findMostRecentDate(allSleepData), 'hoursSlept')} hours and your quality of sleep was ${user.returnUserDataByDay(allSleepData, user.findMostRecentDate(allSleepData), 'sleepQuality')} / 5!`
   averageInfoText.innerText = ` ${user.returnOverallAverage(allSleepData, 'hoursSlept')} hours of sleep per night and your average sleep quality is ${user.returnOverallAverage(allSleepData, 'sleepQuality')} / 5! `
   weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
   clearContainerBackgrounds();
   fillContainerBackgrounds('sleep-background');
+  userDataContainer.classList.remove('activity-data-display');
   displayWeeklyData(allSleepData, 'hoursSlept', user)
 };
 
 function renderActivity(user) {
-  dayInfoText.innerText = `Your most recent stats:\n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps \n
-    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed\n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active`
+  hideHeaders();
+  weekInfoText.innerHTML = "Here's how you did this week:"
+  dayInfoText.innerHTML = `<h3 class="header">Your most recent stats: </h3><p>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps <br>
+    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked<br>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed<br>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active</p>`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
+  userDataContainer.classList.add('activity-data-display');
   displayWeeklyData(allActivityData, 'activity', user)
-
 };
 
 function renderAllUserActivity(user) {
-  averageInfoText.innerText = `Compared to other FitLit users:\n
-    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps \n
-    ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
-    ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed\n
-    ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active`
+  averageInfoText.innerHTML = `<h3 class="header">Compared to other FitLit users:</h3><p>
+    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps <br>
+    ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked<br>
+    ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed<br>
+    ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active</p>`
 };
 
 function renderUserData(dataType, user) {
@@ -329,6 +338,7 @@ function displayWeeklyData(array, neededData, user) {
     pushIntoObj(userWeekStairs, 'stairs', 1, data);
     pushIntoObj(userWeekActiveMin, 'minutes', 1, data);
     renderActivityChart(data);
+    renderStepChart(data);
   }
 };
 
@@ -346,6 +356,18 @@ function clearContainerBackgrounds() {
     myAverageInfoContainer.classList.remove(background);
   })
 };
+
+function hideHeaders() {
+  bubbleHeaders.forEach(header => {
+    hide(header);
+  });
+};
+
+function unhideHeaders() {
+  bubbleHeaders.forEach(header => {
+    unhide(header);
+  });
+}
 
 function fillContainerBackgrounds(icon) {
   myDayInfoContainer.classList.add(icon);
@@ -372,11 +394,16 @@ function resetChart() {
   myChart.destroy();
 };
 
+function resetStepChart() {
+  stepChart.destroy();
+}
+
 function renderSleepChart(data) {
   const chartLayout = document.getElementById('myChart');
+  hide(stepChartDisplay);
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new Chart(chartLayout, {
@@ -423,9 +450,10 @@ function renderSleepChart(data) {
 
 function renderHydrationChart(data) {
   const chartLayout = document.getElementById('myChart');
+  hide(stepChartDisplay);
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new Chart(chartLayout, {
@@ -463,7 +491,7 @@ function renderActivityChart(data) {
   const chartLayout = document.getElementById('myChart');
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new Chart(chartLayout, {
@@ -471,17 +499,6 @@ function renderActivityChart(data) {
       data: {
           labels: data['dates'],
           datasets: [{
-              label: 'Step count',
-              data: data['steps'],
-              backgroundColor: [
-                  '#8892B3',
-              ],
-              borderColor: [
-                  '#88B3B3',
-              ],
-              borderWidth: 1
-          },
-          {
               label: 'Flights of stairs climbed',
               data: data['stairs'],
               backgroundColor: [
@@ -517,4 +534,33 @@ function renderActivityChart(data) {
           maintainAspectRatio: false,
       }
   });
+}
+
+function renderStepChart(data) {
+  const chartLayout = stepChartDisplay;
+
+  unhide(stepChartDisplay);
+
+  if(stepChart) {
+    resetStepChart();
+  };
+
+  stepChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: data['dates'],
+          datasets: [{
+              label: 'Step count',
+              data: data['steps'],
+              backgroundColor: [
+                  '#8892B3',
+              ],
+              borderColor: [
+                  '#88B3B3',
+              ],
+              borderWidth: 1
+          }]
+        }
+      });
 };
+
