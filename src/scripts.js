@@ -121,6 +121,7 @@ function generatePageLoad(userData) {
     button.addEventListener('click', function() {submitForm()
     })
   });
+}
 
 function generateRandomUser(userData) {
   let currentUserObj = userData[Math.floor(Math.random() * userData.length)];
@@ -525,17 +526,3 @@ function renderActivityChart(data) {
       }
   });
 };
-
-
-
-
-
-// function tryPost() {
-//   console.log(currentUser)
-//   const id = currentUser.id
-//   const newHydration = new Hydration({userID:id, date:'2022/09/14', numOunces:4.2})
-//   console.log(allHydrationData)
-//   fetchPost('hydration', newHydration)
-//   fetchData('hydration', 'hydrationData')
-// }
-}
