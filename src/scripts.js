@@ -263,6 +263,7 @@ function displayWeeklyData(array, neededData, user) {
     pushIntoObj(userWeekStairs, 'stairs', 1, data);
     pushIntoObj(userWeekActiveMin, 'minutes', 1, data);
     renderActivityChart(data);
+    renderStepChart(data);
   }
 };
 
@@ -405,17 +406,6 @@ function renderActivityChart(data) {
       data: {
           labels: data['dates'],
           datasets: [{
-              label: 'Step count',
-              data: data['steps'],
-              backgroundColor: [
-                  '#8892B3',
-              ],
-              borderColor: [
-                  '#88B3B3',
-              ],
-              borderWidth: 1
-          },
-          {
               label: 'Flights of stairs climbed',
               data: data['stairs'],
               backgroundColor: [
@@ -451,11 +441,34 @@ function renderActivityChart(data) {
           maintainAspectRatio: false,
       }
   });
-};
+}
 
 function renderStepChart(data) {
   const chartLayout = document.getElementById('stepChart');
+
+  if(stepChart) {
+    resetChart(stepChart);
+  };
+
+  stepChart = new Chart(chartLayout, {
+      type: 'line',
+      data: {
+          labels: data['dates'],
+          datasets: [{
+              label: 'Step count',
+              data: data['steps'],
+              backgroundColor: [
+                  '#8892B3',
+              ],
+              borderColor: [
+                  '#88B3B3',
+              ],
+              borderWidth: 1
+          }]
+        }
+      });
 }
+
 
 
 
