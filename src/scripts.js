@@ -68,6 +68,7 @@ let sleepRadio = document.getElementById('sleepRadio');
 let activityRadio = document.getElementById('activityRadio');
 let radioButtons = [hydrationRadio, sleepRadio, activityRadio];
 let bubbleHeaders = document.querySelectorAll('#infoContainerHeader');
+let stepChartDisplay = document.getElementById('stepChart');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
@@ -179,27 +180,29 @@ function renderAvgStepGoal(dataSet) {
 };
 
 function renderHydration(user) {
+  unhideHeaders();
   dayInfoText.innerText = `You have consumed ${user.returnUserDataByDay(allHydrationData, user.findMostRecentDate(allHydrationData), 'numOunces')} ounces of water!`
   averageInfoText.innerText = ` ${user.returnOverallAverage(allHydrationData, 'numOunces')} fluid ounces per day!`
   weekInfoText.innerText = `Here is the water you consumed in the last week: `
   clearContainerBackgrounds();
   fillContainerBackgrounds('hydration-background');
+  userDataContainer.classList.remove('activity-data-display');
   displayWeeklyData(allHydrationData, 'numOunces', user);
 };
 
 function renderSleep(user) {
+  unhideHeaders();
   dayInfoText.innerText = `Today, you slept ${user.returnUserDataByDay(allSleepData, user.findMostRecentDate(allSleepData), 'hoursSlept')} hours and your quality of sleep was ${user.returnUserDataByDay(allSleepData, user.findMostRecentDate(allSleepData), 'sleepQuality')} / 5!`
   averageInfoText.innerText = ` ${user.returnOverallAverage(allSleepData, 'hoursSlept')} hours of sleep per night and your average sleep quality is ${user.returnOverallAverage(allSleepData, 'sleepQuality')} / 5! `
   weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
   clearContainerBackgrounds();
   fillContainerBackgrounds('sleep-background');
+  userDataContainer.classList.remove('activity-data-display');
   displayWeeklyData(allSleepData, 'hoursSlept', user)
 };
 
 function renderActivity(user) {
-  bubbleHeaders.forEach(header => {
-    hide(header);
-  });
+  hideHeaders();
   weekInfoText.innerHTML = "Here's how you did this week:"
   dayInfoText.innerHTML = `<h3 class="header">Your most recent stats: </h3><p>
     ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps <br>
@@ -208,8 +211,8 @@ function renderActivity(user) {
     ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active</p>`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
+  userDataContainer.classList.add('activity-data-display');
   displayWeeklyData(allActivityData, 'activity', user)
-
 };
 
 function renderAllUserActivity(user) {
@@ -282,6 +285,18 @@ function clearContainerBackgrounds() {
   })
 };
 
+function hideHeaders() {
+  bubbleHeaders.forEach(header => {
+    hide(header);
+  });
+};
+
+function unhideHeaders() {
+  bubbleHeaders.forEach(header => {
+    unhide(header);
+  });
+}
+
 function fillContainerBackgrounds(icon) {
   myDayInfoContainer.classList.add(icon);
   myAverageInfoContainer.classList.add(icon);
@@ -307,11 +322,16 @@ function resetChart() {
   myChart.destroy();
 };
 
+function resetStepChart() {
+  stepChart.destroy();
+}
+
 function renderSleepChart(data) {
   const chartLayout = document.getElementById('myChart');
+  hide(stepChartDisplay);
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new Chart(chartLayout, {
@@ -358,9 +378,10 @@ function renderSleepChart(data) {
 
 function renderHydrationChart(data) {
   const chartLayout = document.getElementById('myChart');
+  hide(stepChartDisplay);
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new Chart(chartLayout, {
@@ -398,7 +419,7 @@ function renderActivityChart(data) {
   const chartLayout = document.getElementById('myChart');
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new Chart(chartLayout, {
@@ -444,10 +465,12 @@ function renderActivityChart(data) {
 }
 
 function renderStepChart(data) {
-  const chartLayout = document.getElementById('stepChart');
+  const chartLayout = stepChartDisplay;
+
+  unhide(stepChartDisplay);
 
   if(stepChart) {
-    resetChart(stepChart);
+    resetStepChart();
   };
 
   stepChart = new Chart(chartLayout, {
