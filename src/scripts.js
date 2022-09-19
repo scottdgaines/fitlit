@@ -22,6 +22,7 @@ let allHydrationData;
 let allActivityData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
+let stepChart;
 
 //FETCH PROMISE:
 function startData() {
@@ -66,6 +67,7 @@ let hydrationRadio = document.getElementById('hydrationRadio');
 let sleepRadio = document.getElementById('sleepRadio');
 let activityRadio = document.getElementById('activityRadio');
 let radioButtons = [hydrationRadio, sleepRadio, activityRadio];
+let bubbleHeaders = document.querySelectorAll('#infoContainerHeader');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
@@ -195,11 +197,15 @@ function renderSleep(user) {
 };
 
 function renderActivity(user) {
-  dayInfoText.innerText = `Your most recent stats:\n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps \n
-    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed\n
-    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active`
+  bubbleHeaders.forEach(header => {
+    hide(header);
+  });
+  weekInfoText.innerHTML = "Here's how you did this week:"
+  dayInfoText.innerHTML = `<h3 class="header">Your most recent stats: </h3><p>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps <br>
+    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked<br>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed<br>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active</p>`
   clearContainerBackgrounds();
   fillContainerBackgrounds('step-background');
   displayWeeklyData(allActivityData, 'activity', user)
@@ -207,11 +213,11 @@ function renderActivity(user) {
 };
 
 function renderAllUserActivity(user) {
-  averageInfoText.innerText = `Compared to other FitLit users:\n
-    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps \n
-    ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked\n
-    ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed\n
-    ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active`
+  averageInfoText.innerHTML = `<h3 class="header">Compared to other FitLit users:</h3><p>
+    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps <br>
+    ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked<br>
+    ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed<br>
+    ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active</p>`
 };
 
 function renderUserData(dataType, user) {
@@ -446,6 +452,10 @@ function renderActivityChart(data) {
       }
   });
 };
+
+function renderStepChart(data) {
+  const chartLayout = document.getElementById('stepChart');
+}
 
 
 
