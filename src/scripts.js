@@ -40,13 +40,11 @@ function startData() {
 function updateData() {
   Promise.all([fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData'), fetchData('activity', 'activityData')])
     .then((dataSet) => {
-      // allUserData = new UserRepository(dataSet[0]);
       allSleepData = dataSet[0];
       allHydrationData = dataSet[1];
       allActivityData = dataSet[2];
   })
 };
-
 
 //QUERY SELECTORS:
 let waterIcon = document.getElementById('water-icon');
@@ -56,9 +54,7 @@ let formIcon = document.getElementById('form-icon');
 let welcomeUserName = document.getElementById('welcomeUserName')
 let welcomeMessage = document.getElementById('welcomeMessage');
 let userInfoContainer = document.getElementById('myUserInfo');
-let infoContainerHeader = document.getElementById('infoContainerHeader')
 let userStepGoalText = document.getElementById('userStepGoalText');
-let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
 let averageStepGoalText = document.getElementById('avgStepGoal');
 let userDataContainer = document.getElementById('userDataContainer')
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
@@ -70,7 +66,6 @@ let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
 let navIcons = [waterIcon, sleepIcon, activityIcon, formIcon];
 let logoContainer = document.getElementById('logoContainer');
-let categoryForm = document.getElementById('categoryForm');
 let formDisplay = document.getElementById('formDisplay');
 let hydrationForm = document.getElementById('hydrationForm');
 let sleepForm = document.getElementById('sleepForm');
@@ -95,11 +90,20 @@ let sleepDateInput = document.getElementById('sleepDate');
 let activityDateInput = document.getElementById('activityDate');
 let confirmationMessage = document.getElementById('confirmationMessage');
 
-
-
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
-// logoContainer.addEventListener('click', tryPost)
+navIcons.forEach(icon => {
+  icon.addEventListener('click', function() {changeDisplay(currentUser)
+  })
+});
+radioButtons.forEach(button => {
+  button.addEventListener('click', function() {selectForm()
+  })
+});
+submitButtons.forEach(button => {
+  button.addEventListener('click', function() {submitForm()
+  })
+});
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -109,18 +113,6 @@ function generatePageLoad(userData) {
   renderMyFriends(currentUser, userData.userData);
   renderMyStepGoal(currentUser);
   renderAvgStepGoal(userData);
-  navIcons.forEach(icon => {
-    icon.addEventListener('click', function() {changeDisplay(currentUser)
-    })
-  });
-  radioButtons.forEach(button => {
-    button.addEventListener('click', function() {selectForm()
-    })
-  });
-  submitButtons.forEach(button => {
-    button.addEventListener('click', function() {submitForm()
-    })
-  });
 }
 
 function generateRandomUser(userData) {

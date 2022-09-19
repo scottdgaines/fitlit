@@ -17,10 +17,8 @@ const fetchPost = (url, initObject) => {
 
 function handleErrors(response) {
   if (!response.ok) {
-    console.log('hi', response.ok)
     throw Error(response.statusText);
   } else {
-    console.log('jello')
   return response;
   }
 }
