@@ -136,6 +136,7 @@ body, html { /* line 10 */
 }
 
 .user-data-container { /* line 27 */
+  align-content: flex-start;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -152,6 +153,10 @@ body, html { /* line 10 */
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.step-chart {
+  padding-bottom: 25px;
 }
 
 .my-week-info-container { /* line 36 */
@@ -183,7 +188,7 @@ body, html { /* line 10 */
 
 /* Styling Properties Added by Javascipt */
 .activity-data-display {
-  height: 1200px;
+  height: 1000px;
 }
 
 .hide {
