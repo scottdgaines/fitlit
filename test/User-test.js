@@ -1,9 +1,5 @@
 import { expect } from 'chai';
 import User from '../src/User.js';
-import Hydration from '../src/Hydration.js';
-import Sleep from '../src/Sleep.js';
-import Activity from '../src/Activity.js';
-
 
 describe('User', () => {
     let user1, user2;
@@ -44,25 +40,25 @@ describe('User', () => {
             ]
           });
 
-        hydrationObject1 = new Hydration({'userID': 1, 'date': '2022/08/29', 'numOunces': 36});
+        hydrationObject1 = {'userID': 1, 'date': '2022/08/29', 'numOunces': 36};
 
-        hydrationObject2 = new Hydration({'userID': 2, 'date': '2022/08/01', 'numOunces': 42});
+        hydrationObject2 = {'userID': 2, 'date': '2022/08/01', 'numOunces': 42};
 
-        hydrationObject3 = new Hydration({'userID': 2, 'date': '2022/08/02', 'numOunces': 2});
+        hydrationObject3 = {'userID': 2, 'date': '2022/08/02', 'numOunces': 2};
 
-        hydrationObject4 = new Hydration({'userID': 2, 'date': '2022/08/03', 'numOunces': 10});
+        hydrationObject4 = {'userID': 2, 'date': '2022/08/03', 'numOunces': 10};
 
-        hydrationObject5 = new Hydration({'userID': 2, 'date': '2022/08/04', 'numOunces': 23});
+        hydrationObject5 = {'userID': 2, 'date': '2022/08/04', 'numOunces': 23};
 
-        hydrationObject6 = new Hydration({'userID': 2, 'date': '2022/08/05', 'numOunces': 60});
+        hydrationObject6 = {'userID': 2, 'date': '2022/08/05', 'numOunces': 60};
 
-        hydrationObject7 = new Hydration({'userID': 2, 'date': '2022/08/06', 'numOunces': 19});
+        hydrationObject7 = {'userID': 2, 'date': '2022/08/06', 'numOunces': 19};
 
-        hydrationObject8 = new Hydration({'userID': 2, 'date': '2022/08/07', 'numOunces': 20});
+        hydrationObject8 = {'userID': 2, 'date': '2022/08/07', 'numOunces': 20};
 
-        hydrationObject9 = new Hydration({'userID': 2, 'date': '2022/08/08', 'numOunces': 40});
+        hydrationObject9 = {'userID': 2, 'date': '2022/08/08', 'numOunces': 40};
 
-        hydrationObject10 = new Hydration({'userID': 1, 'date': '2022/08/15', 'numOunces': 30});
+        hydrationObject10 = {'userID': 1, 'date': '2022/08/15', 'numOunces': 30};
 
         hydrationArray = [
             hydrationObject1,
@@ -88,11 +84,11 @@ describe('User', () => {
             hydrationObject9
         ];
 
-        sleepObject1 = new Sleep({'userID': 1, 'date': '2019/06/15', 'hoursSlept': 6.1, 'sleepQuality': 2.2});
+        sleepObject1 = {'userID': 1, 'date': '2019/06/15', 'hoursSlept': 6.1, 'sleepQuality': 2.2};
 
-        sleepObject2 = new Sleep ({'userID': 2, 'date': '2019/06/15', 'hoursSlept': 7, 'sleepQuality': 4.7});
+        sleepObject2 = {'userID': 2, 'date': '2019/06/15', 'hoursSlept': 7, 'sleepQuality': 4.7};
 
-        sleepObject3 = new Sleep({'userID': 2, 'date': '2019/06/16', 'hoursSlept': 7.5, 'sleepQuality': 3.8});
+        sleepObject3 = {'userID': 2, 'date': '2019/06/16', 'hoursSlept': 7.5, 'sleepQuality': 3.8};
 
         sleepArray = [
           sleepObject1,
@@ -100,13 +96,13 @@ describe('User', () => {
           sleepObject3
         ];
 
-        activityObject1 = new Activity({'userID': 1, 'date': '2019/06/15', 'numSteps': 3577, 'minutesActive': 140, 'flightsOfStairs': 16});
+        activityObject1 = {'userID': 1, 'date': '2019/06/15', 'numSteps': 3577, 'minutesActive': 140, 'flightsOfStairs': 16};
 
-        activityObject2 = new Activity({'userID': 1, 'date': '2019/06/16', 'numSteps': 6637, 'minutesActive': 175, 'flightsOfStairs': 36});
+        activityObject2 = {'userID': 1, 'date': '2019/06/16', 'numSteps': 6637, 'minutesActive': 175, 'flightsOfStairs': 36};
 
-        activityObject3 = new Activity({'userID': 1, 'date': '2019/06/17', 'numSteps': 14329, 'minutesActive': 168, 'flightsOfStairs': 18});
+        activityObject3 = {'userID': 1, 'date': '2019/06/17', 'numSteps': 14329, 'minutesActive': 168, 'flightsOfStairs': 18};
 
-        activityObject4 = new Activity({'userID': 2, 'date': '2019/06/15', 'numSteps': 4294, 'minutesActive': 138, 'flightsOfStairs': 10});
+        activityObject4 = {'userID': 2, 'date': '2019/06/15', 'numSteps': 4294, 'minutesActive': 138, 'flightsOfStairs': 10};
 
         activityArray = [
           activityObject1,
@@ -219,5 +215,10 @@ describe('User', () => {
     it('Should return the number of miles walked for a user', () => {
         expect(user1.returnMilesWalked(activityArray, '2019/06/15')).to.equal('2.91');
     });
+
+    it('Should log if the user reached their step goal on a given day', () => {
+      expect(user2.achieveStepGoal(activityArray, '2019/06/15')).to.equal(false);
+      expect(user1.achieveStepGoal(activityArray, '2019/06/17')).to.equal(true);
+  });
 
 });

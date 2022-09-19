@@ -11,9 +11,9 @@ import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
 import './images/logo.svg';
-import Hydration from './Hydration';
-import Sleep from './Sleep';
-import Activity from './Activity';
+// import Hydration from './Hydration';
+// import Sleep from './Sleep';
+// import Activity from './Activity';
 
 //GLOBAL VARIABLES:
 let userRepository;
@@ -169,18 +169,18 @@ function submitForm() {
   event.preventDefault();
   const id = currentUser.id
   if (event.target.id === "hydrationSubmitButton") {
-    const newHydrationData = new Hydration({userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)});
+    const newHydrationData = {userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)};
     fetchPost('hydration', newHydrationData)
       .then(data => showConfirmationMessage())
       .then(data => updateData())
   } else if (event.target.id === "sleepSubmitButton") {
-      const newSleepData = new Sleep({userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)});
+      const newSleepData = {userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)};
       console.log(newSleepData)
       fetchPost('sleep', newSleepData)
         .then(data => showConfirmationMessage())
         .then(data => updateData())
   } else if (event.target.id === "activitySubmitButton") {
-      const newActivityData = new Activity({userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)});
+      const newActivityData = {userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)};
       fetchPost('activity', newActivityData)
         .then(data => showConfirmationMessage())
         .then(data => updateData())

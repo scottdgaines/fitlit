@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
-import Sleep from '../src/Sleep';
-import Activity from '../src/Activity';
 
 describe('User Repository', () => {
     let user1;
@@ -48,11 +46,11 @@ describe('User Repository', () => {
 
         userRepository = new UserRepository(users);
 
-        sleepObject1 = new Sleep({'userID': 1, 'date': '2019/06/15', 'hoursSlept': 6.1, 'sleepQuality': 2.2});
+        sleepObject1 = {'userID': 1, 'date': '2019/06/15', 'hoursSlept': 6.1, 'sleepQuality': 2.2};
 
-        sleepObject2 = new Sleep ({'userID': 2, 'date': '2019/06/15', 'hoursSlept': 7, 'sleepQuality': 4.7});
+        sleepObject2 = {'userID': 2, 'date': '2019/06/15', 'hoursSlept': 7, 'sleepQuality': 4.7};
 
-        sleepObject3 = new Sleep({'userID': 2, 'date': '2019/06/16', 'hoursSlept': 7.5, 'sleepQuality': 3.8});
+        sleepObject3 = {'userID': 2, 'date': '2019/06/16', 'hoursSlept': 7.5, 'sleepQuality': 3.8};
 
         sleepArray = [
           sleepObject1,
@@ -60,13 +58,13 @@ describe('User Repository', () => {
           sleepObject3
         ];
 
-        activityObject1 = new Activity({'userID': 1, 'date': '2019/06/15', 'numSteps': 3577, 'minutesActive': 140, 'flightsOfStairs': 16});
+        activityObject1 = {'userID': 1, 'date': '2019/06/15', 'numSteps': 3577, 'minutesActive': 140, 'flightsOfStairs': 16};
 
-        activityObject2 = new Activity({'userID': 1, 'date': '2019/06/16', 'numSteps': 6637, 'minutesActive': 175, 'flightsOfStairs': 36});
+        activityObject2 = {'userID': 1, 'date': '2019/06/16', 'numSteps': 6637, 'minutesActive': 175, 'flightsOfStairs': 36};
 
-        activityObject3 = new Activity({'userID': 1, 'date': '2019/06/17', 'numSteps': 14329, 'minutesActive': 168, 'flightsOfStairs': 18});
+        activityObject3 = {'userID': 1, 'date': '2019/06/17', 'numSteps': 14329, 'minutesActive': 168, 'flightsOfStairs': 18};
 
-        activityObject4 = new Activity({'userID': 2, 'date': '2019/06/15', 'numSteps': 4294, 'minutesActive': 138, 'flightsOfStairs': 10});
+        activityObject4 = {'userID': 2, 'date': '2019/06/15', 'numSteps': 4294, 'minutesActive': 138, 'flightsOfStairs': 10};
 
         activityArray = [
           activityObject1,
