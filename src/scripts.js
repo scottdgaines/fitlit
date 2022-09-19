@@ -37,6 +37,17 @@ function startData() {
   })
 };
 
+function updateData() {
+  Promise.all([fetchData('sleep', 'sleepData'), fetchData('hydration', 'hydrationData'), fetchData('activity', 'activityData')])
+    .then((dataSet) => {
+      // allUserData = new UserRepository(dataSet[0]);
+      allSleepData = dataSet[0];
+      allHydrationData = dataSet[1];
+      allActivityData = dataSet[2];
+  })
+};
+
+
 //QUERY SELECTORS:
 let waterIcon = document.getElementById('water-icon');
 let sleepIcon = document.getElementById('sleep-icon');
@@ -164,19 +175,23 @@ function submitForm() {
   event.preventDefault();
   const id = currentUser.id
   if (event.target.id === "hydrationSubmitButton") {
-  const newHydrationData = new Hydration({userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)});
+    const newHydrationData = new Hydration({userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)});
     fetchPost('hydration', newHydrationData)
-      .then(data => confirmationMessage());
-    startData()
-    renderHydration()
+      .then(data => confirmationMessage())
+      .then(data => updateData())
+      .then(data => renderHydration(currentUser));
   } else if (event.target.id === "sleepSubmitButton") {
-    const newSleepData = new Sleep({userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)});
-    fetchPost('sleep', newSleepData);
-    fetchData('sleep', 'sleepData');
+      const newSleepData = new Sleep({userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)});
+      fetchPost('sleep', newSleepData);
+        .then(data => confirmationMessage())
+        .then(data => updateData())
+        .then(data => renderSleep(currentUser));
   } else if (event.target.id === "activitySubmitButton") {
-    const newActivityData = new Activity({userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)});
-    fetchPost('activity', newActivityData);
-    fetchData('activity', 'activityData');
+      const newActivityData = new Activity({userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)});
+      fetchPost('activity', newActivityData);
+        .then(data => confirmationMessage())
+        .then(data => updateData())
+        .then(data => renderActivity(currentUser));
   }
 
 }
