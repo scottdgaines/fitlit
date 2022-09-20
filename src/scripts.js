@@ -22,6 +22,7 @@ let allActivityData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
 let stepChart;
+let regex = /^[0-9]+$/;
 
 //FETCH PROMISE:
 function startData() {
@@ -165,15 +166,23 @@ function selectForm() {
 }
 
 function validateForm() {
-  if (hydrationDateInput.value && numOuncesInput.value) {
+  if (hydrationDateInput.value && numOuncesInput.value && validateInputType(numOuncesInput)) {
     hydrationSubmitButton.disabled = false 
-  } else if (sleepDateInput.value && hoursSleptInput.value && sleepQualityInput.value) {
+  } else if (sleepDateInput.value && hoursSleptInput.value && sleepQualityInput.value && validateInputType(hoursSleptInput)) {
     sleepSubmitButton.disabled = false 
-  } else if (activityDateInput.value && flightsOfStairsInput.value && minutesActiveInput.value && numStepsInput.value) {
+  } else if (activityDateInput.value && flightsOfStairsInput.value && minutesActiveInput.value && numStepsInput.value && validateInputType(flightsOfStairsInput) && validateInputType(minutesActiveInput) && validateInputType(numStepsInput)) {
     activitySubmitButton.disabled = false
   }
 }
-  
+
+function validateInputType(input) {
+  if(!regex.test(input.value)) {
+    alert ('Please enter a numeric value')
+    return false
+  } else {
+    return true
+  }
+}
 
 function submitForm() {
   event.preventDefault();
