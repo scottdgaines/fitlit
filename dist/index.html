@@ -10,10 +10,10 @@
   <body>
     <aside class="left-aside aside" id="leftAside">
       <nav class="navigation-bar display-box" id="navigationBar"><span class="header text">Dashboard</span>
-        <img role="button" src="./images/fitlit_water_icon.svg" class="icon" id="water-icon" alt="water icon">
-        <img role="button" src="./images/fitlit_sleep_icon.svg" class="icon" id="sleep-icon" alt="sleep icon">
-        <img role="button" src="./images/fitlit_step_icon.svg" class="icon" id="activity-icon" alt="activity icon">
-        <img role="button" src="./images/plus_icon_1.svg" class="icon form-icon" id="form-icon" alt="add your information" />
+        <img tabindex="0" role="button" src="./images/fitlit_water_icon.svg" class="icon" id="water-icon" alt="water icon" />
+        <img tabindex="0" role="button" src="./images/fitlit_sleep_icon.svg" class="icon" id="sleep-icon" alt="sleep icon" />
+        <img tabindex="0" role="button" src="./images/fitlit_step_icon.svg" class="icon" id="activity-icon" alt="activity icon" />
+        <img tabindex="0" role="button" src="./images/plus_icon_1.svg" class="icon form-icon" id="form-icon" alt="add your information" />
       </nav>
       <section class="my-friend-box-container display-box">
         <h4 class="my-friends-header text header" id="myFriendsHeader">My Friends</h4>
@@ -28,40 +28,40 @@
       <section class="form-display hide" id="formDisplay">
         <h2 class="header text">Enter your information!</h2>
         <form class="category-form text" id="categoryForm">
-          <input type="radio" name="data-set" id="hydrationRadio" />Hydration
-          <input type="radio" name="data-set" id="sleepRadio" />Sleep
-          <input type="radio" name="data-set" id="activityRadio" />Activity
+          <input tabindex="0" type="radio" name="data-set" id="hydrationRadio" />Hydration
+          <input tabindex="0" type="radio" name="data-set" id="sleepRadio" />Sleep
+          <input tabindex="0" type="radio" name="data-set" id="activityRadio" />Activity
         </form>
-        <div class="form-container">
-          <form class="hydration-form hide text" id="hydrationForm" autocomplete="off">
+        <div class="form-container" id="formContainer">
+          <form class="hydration-form hide text" id="hydrationForm" name="hydrationForm">
             <label for="date">Date</label>
-            <input type="date" id="hydrationDate" name="date" required/>
+            <input tabindex="0" type="date" id="hydrationDate" name="date" required />
             <br><label for="numOunces">How many ounces did you drink?</label>
-            <input type="text" id="numOunces" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" required/>
-            <br><button type="button" class="hydration-submit-button" id="hydrationSubmitButton">Submit</button>
+            <input tabindex="0" type="text" id="numOunces" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" required />
+            <br><button tabindex="0" type="submit" class="hydration-submit-button" id="hydrationSubmitButton" disabled>Submit</button>
           </form>
-          <form class="sleep-form hide text" id="sleepForm" autocomplete="off">
+          <form class="sleep-form hide text" id="sleepForm" name="sleepForm">
             <label for="date">Date</label>
-            <input type="date" id="sleepDate" name="date" required/>
+            <input tabindex="0" type="date" id="sleepDate" name="date" required />
             <br><label for="hoursSlept">How many hours did you sleep? </label>
-            <input type="text" id="hoursSlept" name="hoursSlept" pattern="[0-9]+" title="Please enter numbers only" required />
+            <input tabindex="0" type="text" id="hoursSlept" name="hoursSlept" pattern="[0-9]+" title="Please enter numbers only" required />
             <br><label for="sleepQuality">On a scale of 1 to 5, how well did you sleep? </label>
-            <input type="number" id="sleepQuality" name="sleepQuality" min="0" max="5" required/>
-            <br><button type="button" class="sleep-submit-button" id="sleepSubmitButton">Submit</button>
+            <input tabindex="0" type="number" id="sleepQuality" name="sleepQuality" min="0" max="5" required />
+            <br><button tabindex="0" type="submit" class="sleep-submit-button" id="sleepSubmitButton" disabled>Submit</button>
           </form>
-          <form class="activity-form hide text" id="activityForm" autocomplete="off">
+          <form class="activity-form hide text" id="activityForm" name="activityForm">
             <label for="date">Date</label>
-            <input type="date" id="activityDate" name="date" required/>
+            <input tabindex="0" type="date" id="activityDate" name="date" required />
             <br><label for="flightsOfStairs">How many flights of stairs did you climb?</label>
-            <input type="text" id="flightsOfStairs" name="flightsOfStairs" pattern="[0-9]+" title="Please enter numbers only" required/>
+            <input tabindex="0" type="text" id="flightsOfStairs" name="flightsOfStairs" pattern="[0-9]+" title="Please enter numbers only" required />
             <br><label for="minutesActive">How many minutes were you active?</label>
-            <input type="text" id="minutesActive" name="minutesActive" pattern="[0-9]+" title="Please enter numbers only" required/>
+            <input tabindex="0" type="text" id="minutesActive" name="minutesActive" pattern="[0-9]+" title="Please enter numbers only" required />
             <br><label for="numSteps">How many steps did you take?</label>
-            <input type="text" id="numSteps" name="numSteps" pattern="[0-9]+" title="Please enter numbers only" required/>
-            <br><button type="button" class="activity-submit-button" id="activitySubmitButton">Submit</button>
+            <input tabindex="0" type="text" id="numSteps" name="numSteps" pattern="[0-9]+" title="Please enter numbers only" required />
+            <br><button tabindex="0" type="submit" class="activity-submit-button" id="activitySubmitButton" disabled>Submit</button>
           </form>
-          <h3 class="confirmation-message hide" id="confirmationMessage"> Your data has been recorded. Go you!</h3>
-      </div>
+          <h3 class="confirmation-message hide" id="confirmationMessage">Your data has been recorded. Go you!</h3>
+        </div>
       </section>
       <section class="user-data-container text hide display-box" id="userDataContainer">
         <div class="data-display" id="myDayInfoContainer">
@@ -87,10 +87,10 @@
       </section>
       <section class="steps-box-container text display-box" id="stepsBoxContainer">
         <div class="user-steps-container" id="userStepsContainer">
-          <h5 class="user-steps-header" id="userStepsHeader">My Daily Step Goal: <br><span id="userStepGoalText"</span></h5>
+          <h5 class="user-steps-header" id="userStepsHeader">My Daily Step Goal: <br><span id="userStepGoalText"></span></h5>
         </div>
         <div class="average-step-goal-container" id="averageStepGoalContainer">
-          <h5 class="average-steps-header" id="averageStepsHeader">Average Step Goal of all Fitlit Users: <span id="avgStepGoal"</span> </h5>
+          <h5 class="average-steps-header" id="averageStepsHeader">Average Step Goal of all Fitlit Users: <span id="avgStepGoal"></span> </h5>
         </div>
       </section>
     </aside>
