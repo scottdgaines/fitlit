@@ -10,31 +10,72 @@
   <body>
     <aside class="left-aside aside" id="leftAside">
       <nav class="navigation-bar display-box" id="navigationBar"><span class="header text">Dashboard</span>
-        <img role="button" src="./images/fitlit_water_icon.svg" class="icon" id="water-icon" alt="water icon">
-        <img role="button" src="./images/fitlit_sleep_icon.svg" class="icon" id="sleep-icon" alt="sleep icon">
-        <img role="button" src="./images/fitlit_step_icon.svg" class="icon" id="activity-icon" alt="activity icon">
+        <img tabindex="0" role="button" src="./images/fitlit_water_icon.svg" class="icon" id="water-icon" alt="water icon" />
+        <img tabindex="0" role="button" src="./images/fitlit_sleep_icon.svg" class="icon" id="sleep-icon" alt="sleep icon" />
+        <img tabindex="0" role="button" src="./images/fitlit_step_icon.svg" class="icon" id="activity-icon" alt="activity icon" />
+        <img tabindex="0" role="button" src="./images/plus_icon_1.svg" class="icon form-icon" id="form-icon" alt="add your information" />
       </nav>
-      <section class="my-friend-box-container header display-box" id="myFriendBoxContainer">
-        <h4 class="my-friends-header text" id="myFriendsHeader">My Friends</h4>
+      <section class="my-friend-box-container display-box">
+        <h4 class="my-friends-header text header" id="myFriendsHeader">My Friends</h4>
+        <section class="my-friend-box-container scroll" id="myFriendBoxContainer"></section>
       </section>
     </aside>
     <section class="main-display" id="mainDisplay">
       <section class="logo-container display-box" id="logoContainer">
         <img src= "./images/logo.svg" class="logo-icon" id="logo" alt="project logo">
       </section>
-      <section class="welcome-message text" id="welcomeMessage"><span id="welcomeUserName"></span> Welcome to your fitlit page! <p>&#8598; Click on the icons to the left to navigate through your dashboard.</p></section>
+      <section class="welcome-message text" id="welcomeMessage"><span id="welcomeUserName"></span> Welcome to your fitlit page! <p>&#8598; Click on the icons to navigate through your dashboard.</p></section>
+      <section class="form-display hide" id="formDisplay">
+        <h2 class="header text">Enter your information!</h2>
+        <form class="category-form text" id="categoryForm">
+          <input tabindex="0" type="radio" name="data-set" id="hydrationRadio" />Hydration
+          <input tabindex="0" type="radio" name="data-set" id="sleepRadio" />Sleep
+          <input tabindex="0" type="radio" name="data-set" id="activityRadio" />Activity
+        </form>
+        <div class="form-container" id="formContainer">
+          <form class="hydration-form hide text" id="hydrationForm" name="hydrationForm" autocomplete="off">
+            <label for="date">Date</label>
+            <input tabindex="0" type="date" id="hydrationDate" name="date" />
+            <br><label for="numOunces">How many ounces did you drink?</label>
+            <input tabindex="0" type="text" id="numOunces" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" />
+            <br><button tabindex="0" type="submit" class="hydration-submit-button" id="hydrationSubmitButton" disabled>Submit</button>
+          </form>
+          <form class="sleep-form hide text" id="sleepForm" name="sleepForm" autocomplete="off">
+            <label for="date">Date</label>
+            <input tabindex="0" type="date" id="sleepDate" name="date"  />
+            <br><label for="hoursSlept">How many hours did you sleep? </label>
+            <input tabindex="0" type="text" id="hoursSlept" name="hoursSlept" pattern="[0-9]+" title="Please enter numbers only"  />
+            <br><label for="sleepQuality">On a scale of 1 to 5, how well did you sleep? </label>
+            <input tabindex="0" type="text" id="sleepQuality" name="sleepQuality" pattern="[0-9]+" title="Please enter numbers only"  />
+            <br><button tabindex="0" type="submit" class="sleep-submit-button" id="sleepSubmitButton" disabled>Submit</button>
+          </form>
+          <form class="activity-form hide text" id="activityForm" name="activityForm" autocomplete="off">
+            <label for="date">Date</label>
+            <input tabindex="0" type="date" id="activityDate" name="date"  />
+            <br><label for="flightsOfStairs">How many flights of stairs did you climb?</label>
+            <input tabindex="0" type="text" id="flightsOfStairs" name="flightsOfStairs" pattern="[0-9]+" title="Please enter numbers only"  />
+            <br><label for="minutesActive">How many minutes were you active?</label>
+            <input tabindex="0" type="text" id="minutesActive" name="minutesActive" pattern="[0-9]+" title="Please enter numbers only"  />
+            <br><label for="numSteps">How many steps did you take?</label>
+            <input tabindex="0" type="text" id="numSteps" name="numSteps" pattern="[0-9]+" title="Please enter numbers only"  />
+            <br><button tabindex="0" type="submit" class="activity-submit-button" id="activitySubmitButton" disabled>Submit</button>
+          </form>
+          <h3 class="confirmation-message hide" id="confirmationMessage">Your data has been recorded. Go you!</h3>
+        </div>
+      </section>
       <section class="user-data-container text hide display-box" id="userDataContainer">
         <div class="data-display" id="myDayInfoContainer">
           <h3 class="header" id="infoContainerHeader">Today: </h3>
           <p id="dayInfoText"></p>
         </div>
         <div class="data-display" id="myAverageInfoContainer">
-          <h3 class="info-container header">All-time stats: </h3>
+          <h3 class="header" id="infoContainerHeader">All-time stats: </h3>
           <p id="averageInfoText"></p>
         </div>
         <div class="my-week-info-container" id="myWeekInfoContainer">
           <h3 class="info-container-header"><span id="weekInfoText"></span></h3>
-           <canvas class="my-chart" id="myChart"></canvas>
+          <canvas class="step-chart" id="stepChart"></canvas>
+          <canvas class="my-chart" id="myChart"></canvas>
         </div>
       </section>
     </section>
@@ -42,17 +83,14 @@
       <section class="my-user-info-container display-box" id="myUserInfoContainer">
         <h4 class="header text" id="myInfoHeader">My Info</h4>
         <img class="user-avatar" src="./images/sample_avatar.svg" alt='Cartoon woman' />
-        <div class="my-user-info-text-container">
-          <div class="my-user-info text" id="myUserInfo">
-          </div>
-        </div>
+        <div class="my-user-info text" id="myUserInfo"></div>
       </section>
       <section class="steps-box-container text display-box" id="stepsBoxContainer">
         <div class="user-steps-container" id="userStepsContainer">
-          <h5 class="user-steps-header" id="userStepsHeader">My Daily Step Goal: <br><span id="userStepGoalText"</span></h5>
+          <h5 class="user-steps-header" id="userStepsHeader">My Daily Step Goal: <br><span id="userStepGoalText"></span></h5>
         </div>
         <div class="average-step-goal-container" id="averageStepGoalContainer">
-          <h5 class="average-steps-header" id="averageStepsHeader">Average Step Goal of all Fitlit Users: <span id="avgStepGoal"</span> </h5>
+          <h5 class="average-steps-header" id="averageStepsHeader">Average Step Goal of all Fitlit Users: <span id="avgStepGoal"></span> </h5>
         </div>
       </section>
     </aside>

@@ -19,21 +19,28 @@ class UserRepository {
     return userInfo
   };
 
-  returnAverageUserData(dataArray) {
-    if (dataArray === 'steps') {
-        let average = this.userData.reduce((total, user) => {
-            total += user.dailyStepGoal
-            return total;
-          }, 0)
-          return parseInt(average / this.userData.length)
-    } else {
-        let average = dataArray.reduce((total, id) => {
-            total += id.sleepQuality
-            return total;
-          }, 0)
-          return parseFloat(average / dataArray.length).toFixed(2)
-        };
-    }
+  returnAverageUserData(array, dataNeeded) {
+      let average = array.reduce((total, current) => {
+        total += current[dataNeeded]
+        return total;
+      }, 0)
+      return parseInt(average / array.length)
+    };
+
+    returnAverageMilesWalked(array, date) {
+        const filteredArray = array
+        .filter(activityObj => {
+          return activityObj.date === date})
+        .map(activityObj => {
+          return parseFloat((activityObj.numSteps * this.userData.find(userObj => userObj.id === activityObj.userID).strideLength) / 5280);
+        })
+
+        const total = filteredArray.reduce((totalMilesWalked, curr) => {
+          return totalMilesWalked += curr;
+        }, 0)
+        return (total / filteredArray.length).toFixed(2);
+    };
+
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UserRepository);
@@ -77,20 +84,10 @@ class User {
     return datesArray[0];
   };
 
-  returnAllTimeHydration(array) {
+  returnUserDataByDay(array, date, neededData) {
     const newArray = this.findUser(array);
-    const userTotal = newArray.reduce((totalOunces, day) => {
-          totalOunces += day.numOunces;
-          return totalOunces
-      }, 0)
-    let userAverage = parseFloat(userTotal / newArray.length).toFixed(2);
-    return userAverage
-  };
-
-  returnUserOuncesByDay(array, date) {
-    const newArray = this.findUser(array);
-    const dailyOunces = newArray.find(element => element.date === date)
-    return dailyOunces.numOunces;
+    const dailyData = newArray.find(element => element.date === date)
+    return dailyData[neededData];
   };
 
   returnUserWeekData(array, neededData) {
@@ -103,34 +100,53 @@ class User {
     return userDatesArray;
   };
 
-  returnOverallAverageHours(array) {
+  returnOverallAverage(array, neededData) {
     const newArray = this.findUser(array);
-    const averageHours = newArray.reduce((totalHours, day) => {
-        totalHours += day.hoursSlept;
-        return totalHours
+    const averageData = newArray.reduce((total, day) => {
+        total += day[neededData];
+        return total
     }, 0)
-      return parseFloat(averageHours / newArray.length).toFixed(2);
+      return (averageData / newArray.length).toFixed(2);
   };
 
-  returnOverallAverageQuality(array) {
+  returnWeeksActivity(array, date) {
     const newArray = this.findUser(array);
-    const averageQuality = newArray.reduce((totalQuality, day) => {
-      totalQuality += day.sleepQuality;
-      return totalQuality
-    }, 0)
-    return parseFloat(averageQuality / newArray.length).toFixed(2);
+    const index = newArray.indexOf(newArray.find(dataSet => dataSet.date === date));
+    const userDatesArray = newArray
+      .reverse()
+      .splice(index,7);
+    const totalMinutes = userDatesArray.reduce((totalActivity, day) => {
+      totalActivity += day.minutesActive;
+      return totalActivity;
+      }, 0);
+
+      return totalMinutes / userDatesArray.length;
   };
 
-  returnSleepHoursByDay(array, date) {
-    const newArray = this.findUser(array);
-    const dailyHours = newArray.find(element => element.date === date)
-    return dailyHours.hoursSlept;
-  };
+    returnExceededStepGoals(array) {
+      const newArray = this.findUser(array);
+      return newArray.filter(dataSet => {return this.achieveStepGoal(array, dataSet.date) === true})
+        .map(dataSet => dataSet.date)
+    };
 
-  returnSleepQualityByDay(array, date) {
-    const newArray = this.findUser(array);
-    const dailyQuality = newArray.find(element => element.date === date)
-    return dailyQuality.sleepQuality;
+    returnMilesWalked(array, date) {
+      return (this.returnUserDataByDay(array, date, 'numSteps') * this.strideLength / 5280).toFixed(2)
+    };
+
+    returnStairRecord(array) {
+      const newArray = this.findUser(array);
+      return newArray.sort((a, b) => {
+        return b.flightsOfStairs - a.flightsOfStairs
+      })[0].flightsOfStairs;
+    }
+
+    achieveStepGoal(array, date) {
+      const numSteps = this.returnUserDataByDay(array, date, 'numSteps')
+      if (numSteps >= this.dailyStepGoal) {
+          return true
+      } else {
+          return false
+      };
   };
 };
 
@@ -143,15 +159,39 @@ class User {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "fetchData": () => (/* binding */ fetchData),
+/* harmony export */   "fetchPost": () => (/* binding */ fetchPost)
 /* harmony export */ });
 const fetchData = (dataFileName, dataKey) => {
-return fetch(`https://fitlit-api.herokuapp.com/api/v1/${dataFileName}`)
+return fetch(`http://localhost:3001/api/v1/${dataFileName}`)
   .then(response => response.json())
   .then(data => data[dataKey])
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (fetchData);
+const fetchPost = (url, initObject) => {
+  return fetch(`http://localhost:3001/api/v1/${url}`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(initObject)
+  })
+    .then(response => handleErrors(response))
+    .then(response => response.json())
+    .catch(err => showErrorMessage())
+};
+
+function handleErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  } else {
+  return response;
+  }
+}
+
+function showErrorMessage() {
+ alert('There was an error!')
+}
+
+
 
 
 /***/ }),
@@ -14067,7 +14107,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_g
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(_images_sleep_background_svg__WEBPACK_IMPORTED_MODULE_4__["default"]);
 var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(_images_step_background_svg__WEBPACK_IMPORTED_MODULE_5__["default"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* Styling index.html */\n/* General styling classes; Arranged alphabetically */\n.aside {\n  align-items: right;\n  display: flex;\n  flex-direction: column;\n  height: 750px;\n  margin-bottom: 10px;\n  margin-top: 10px;\n  width: 200px;\n}\n\n.header {\n  text-align: center;\n  font-size: 25px;\n}\n\n.icon {\n  cursor: pointer;\n  fill: none;\n  height: 85px;\n  width: 130px;\n}\n\n.data-display {\n  background-size: cover;\n  background-position: center;\n  height: 200px;\n  font-size: 18px;\n  margin-top: 25px;\n  text-align: center;\n  width: 200px;\n}\n\n.display-box {\n  background-color: #FFFFFF;\n  border: 2px solid #8892B3;\n  border-radius: 20px;\n  box-shadow: 3px 3px 3px #8892B3;\n  height: 400px;\n  margin: 0px 0px 10px 0px;\n  width: 200px;\n}\n\n.text {\n  color: #464F6D;\n}\n\n/* Specific styling classes */\n/* Arranged according to order of elements */\nbody, html { /* line 10 */\n  background-color: #F0F4FF;\n  display: flex;\n  font-family: \"Dosis\", sans-serif;\n  justify-content: center;\n}\n\n.navigation-bar { /* line 12 */\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-evenly;\n  text-align: center;\n}\n\n.my-friend-box-container { /* line 17 */\n  display: flex;\n  flex-direction: column;\n  overflow-y: scroll;\n  text-align: center;\n}\n\n.main-display { /* line 21 */\n  height: 750px;\n  margin: 10px 20px;\n  width: 950px;\n}\n\n.logo-container { /* line 22 */\n  align-items: center;\n  display: flex;\n  height: 100px;\n  justify-content: space-between;\n  width: 950px;\n}\n\n.logo-icon { /* line 23 */\n  height: 100px;\n}\n\n.welcome-header {\n  padding-right: 25px;\n}\n\n.welcome-message { /* line 26 */\n  font-size: 30px;\n  margin-top: 120px;\n  text-align: center;\n}\n\n.user-data-container { /* line 27 */\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-around;\n  height: 605px;\n  margin-top: 25px;\n  width: 950px;\n}\n\n.my-week-info-container { /* line 36 */\n  height: 300px;\n  padding-bottom: 100px;\n  width: 750px;\n}\n\n.my-info-header { /* line 44 */\n  text-align: center;\n}\n\n.user-avatar { /* line 45 */\n  height: 130px;\n  margin: 5px 0px 10px 50px;\n}\n\n.my-user-info-text-container { /* line 46 */\n  overflow-x: scroll;\n}\n\n.my-user-info { /* line 46 */\n  margin-left: 10px;\n}\n\n.steps-box-container { /* line 48 */\n  font-size: 20px;\n  height: 175px;\n  text-align: center;\n}\n\n/* Styling Properties Added by Javascipt */\n.hide {\n  display: none;\n}\n\n.large {\n  height: 600px;\n  width: 600px;\n}\n\n.medium {\n  height: 300px;\n  width: 300px;\n}\n\n.small {\n  height: 85px;\n  width: 85px;\n}\n\n.hydration-background {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n}\n\n.sleep-background {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n}\n\n.step-background {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n}", "",{"version":3,"sources":["webpack://./src/css/styles.css"],"names":[],"mappings":"AAAA,uBAAA;AACA,qDAAA;AACA;EACE,kBAAA;EACA,aAAA;EACA,sBAAA;EACA,aAAA;EACA,mBAAA;EACA,gBAAA;EACA,YAAA;AACF;;AAEA;EACE,kBAAA;EACA,eAAA;AACF;;AAEA;EACE,eAAA;EACA,UAAA;EACA,YAAA;EACA,YAAA;AACF;;AAEA;EACE,sBAAA;EACA,2BAAA;EACA,aAAA;EACA,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,YAAA;AACF;;AAEA;EACE,yBAAA;EACA,yBAAA;EACA,mBAAA;EACA,+BAAA;EACA,aAAA;EACA,wBAAA;EACA,YAAA;AACF;;AAEA;EACE,cAAA;AACF;;AAEA,6BAAA;AACA,4CAAA;AACA,aAAA,YAAA;EACE,yBAAA;EACA,aAAA;EACA,gCAAA;EACA,uBAAA;AACF;;AAEA,kBAAA,YAAA;EACE,mBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,kBAAA;AACF;;AAEA,2BAAA,YAAA;EACE,aAAA;EACA,sBAAA;EACA,kBAAA;EACA,kBAAA;AACF;;AAEA,gBAAA,YAAA;EACE,aAAA;EACA,iBAAA;EACA,YAAA;AACF;;AAEA,kBAAA,YAAA;EACE,mBAAA;EACA,aAAA;EACA,aAAA;EACA,8BAAA;EACA,YAAA;AACF;;AAEA,aAAA,YAAA;EACE,aAAA;AACF;;AAEA;EACE,mBAAA;AACF;;AAEA,mBAAA,YAAA;EACE,eAAA;EACA,iBAAA;EACA,kBAAA;AACF;;AAEA,uBAAA,YAAA;EACE,aAAA;EACA,eAAA;EACA,6BAAA;EACA,aAAA;EACA,gBAAA;EACA,YAAA;AACF;;AAEA,0BAAA,YAAA;EACE,aAAA;EACA,qBAAA;EACA,YAAA;AACF;;AAEA,kBAAA,YAAA;EACE,kBAAA;AACF;;AAEA,eAAA,YAAA;EACE,aAAA;EACA,yBAAA;AACF;;AAEA,+BAAA,YAAA;EACE,kBAAA;AACF;;AAEA,gBAAA,YAAA;EACE,iBAAA;AACF;;AAEA,uBAAA,YAAA;EACE,eAAA;EACA,aAAA;EACA,kBAAA;AACF;;AAEA,0CAAA;AACA;EACE,aAAA;AACF;;AAEA;EACE,aAAA;EACA,YAAA;AACF;;AAEA;EACE,aAAA;EACA,YAAA;AACF;;AAEA;EACE,YAAA;EACA,WAAA;AACF;;AAEA;EACE,yDAAA;AACF;;AAEA;EACE,yDAAA;AACF;;AAEA;EACE,yDAAA;AACF","sourcesContent":["/* Styling index.html */\n/* General styling classes; Arranged alphabetically */\n.aside {\n  align-items: right;\n  display: flex;\n  flex-direction: column;\n  height: 750px;\n  margin-bottom: 10px;\n  margin-top: 10px;\n  width: 200px;\n}\n\n.header {\n  text-align: center;\n  font-size: 25px;\n}\n\n.icon {\n  cursor: pointer;\n  fill: none;\n  height: 85px;\n  width: 130px;\n}\n\n.data-display {\n  background-size: cover;\n  background-position: center;\n  height: 200px;\n  font-size: 18px;\n  margin-top: 25px;\n  text-align: center;\n  width: 200px;\n}\n\n.display-box {\n  background-color: #FFFFFF;\n  border: 2px solid #8892B3;\n  border-radius: 20px;\n  box-shadow: 3px 3px 3px #8892B3;\n  height: 400px;\n  margin: 0px 0px 10px 0px;\n  width: 200px;\n}\n\n.text {\n  color: #464F6D;\n}\n\n/* Specific styling classes */\n/* Arranged according to order of elements */\nbody, html { /* line 10 */\n  background-color: #F0F4FF;\n  display: flex;\n  font-family: 'Dosis', sans-serif;\n  justify-content: center;\n}\n\n.navigation-bar { /* line 12 */\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-evenly;\n  text-align: center;\n}\n\n.my-friend-box-container { /* line 17 */\n  display: flex;\n  flex-direction: column;\n  overflow-y: scroll;\n  text-align: center;\n}\n\n.main-display { /* line 21 */\n  height: 750px;\n  margin: 10px 20px;\n  width: 950px;\n}\n\n.logo-container { /* line 22 */\n  align-items: center;\n  display: flex;\n  height: 100px;\n  justify-content: space-between;\n  width: 950px;\n}\n\n.logo-icon { /* line 23 */\n  height: 100px;\n}\n\n.welcome-header {\n  padding-right: 25px;\n}\n\n.welcome-message { /* line 26 */\n  font-size: 30px;\n  margin-top: 120px;\n  text-align: center;\n}\n\n.user-data-container { /* line 27 */\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-around;\n  height: 605px;\n  margin-top: 25px;\n  width: 950px;\n}\n\n.my-week-info-container { /* line 36 */\n  height: 300px;\n  padding-bottom: 100px;\n  width: 750px;\n}\n\n.my-info-header { /* line 44 */\n  text-align: center;\n}\n\n.user-avatar { /* line 45 */\n  height: 130px;\n  margin: 5px 0px 10px 50px;\n}\n\n.my-user-info-text-container { /* line 46 */\n  overflow-x: scroll;\n}\n\n.my-user-info { /* line 46 */\n  margin-left: 10px;\n}\n\n.steps-box-container { /* line 48 */\n  font-size: 20px;\n  height: 175px;\n  text-align: center;\n}\n\n/* Styling Properties Added by Javascipt */\n.hide {\n  display: none;\n}\n\n.large{\n  height: 600px;\n  width: 600px;\n}\n\n.medium{\n  height: 300px;\n  width: 300px;\n}\n\n.small{\n  height: 85px;\n  width: 85px;\n}\n\n.hydration-background {\n  background-image: url('../images/hydration-background.svg');\n}\n\n.sleep-background {\n  background-image: url('../images/sleep-background.svg');\n}\n\n.step-background {\n  background-image: url('../images/step-background.svg');\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* Styling index.html */\n/* General styling classes; Arranged alphabetically */\n.aside {\n  align-items: right;\n  display: flex;\n  flex-direction: column;\n  height: 750px;\n  margin-bottom: 10px;\n  margin-top: 10px;\n  width: 200px;\n}\n\nbutton {\n  background-color: #E1E8FF;\n  border-radius: 10px;\n}\n\n.header {\n  text-align: center;\n  font-size: 25px;\n  margin-top: 20px;\n  margin-bottom: 15px;\n}\n\n.icon {\n  cursor: pointer;\n  height: 80px;\n  width: 130px;\n}\n\n.icon:hover {\n  transform: scale(1.1);\n  transition: 0.2s ease;\n}\n\nform {\n  margin-left: 20px;\n  margin-top: 15px;\n}\n\n.form-display {\n  margin-top: 100px;\n  margin-left: 160px;\n  height: 300px;\n  background-color: #FFFFFF;\n  border: 2px solid #8892B3;\n  border-radius: 20px;\n  box-shadow: 3px 3px 3px #8892b3;\n  width: 450px;\n}\n\n.confirmation-message {\n  padding-left: 20px;\n}\n\n.data-display {\n  background-size: cover;\n  background-position: center;\n  height: 200px;\n  font-size: 18px;\n  margin-top: 25px;\n  text-align: center;\n  width: 200px;\n}\n\n.display-box {\n  background-color: #FFFFFF;\n  border: 2px solid #8892B3;\n  border-radius: 20px;\n  box-shadow: 3px 3px 3px #8892B3;\n  height: 400px;\n  margin: 0px 0px 10px 0px;\n  width: 200px;\n}\n\n.text {\n  color: #464F6D;\n}\n\n/* Specific styling classes */\n/* Arranged according to order of elements */\nbody, html { /* line 10 */\n  background-color: #F0F4FF;\n  display: flex;\n  font-family: \"Dosis\", sans-serif;\n  justify-content: center;\n}\n\n.navigation-bar { /* line 12 */\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-evenly;\n  text-align: center;\n  height: 500px;\n}\n\n.form-icon { /* line 16*/\n  height: 80px;\n  margin-bottom: 15px;\n}\n\n.my-friend-box-container { /* line 17 */\n  display: flex;\n  flex-direction: column;\n  text-align: center;\n  height: 300px;\n}\n\n.scroll { /* line 19 */\n  overflow-y: scroll;\n}\n\n.main-display { /* line 21 */\n  height: 750px;\n  margin: 10px 20px;\n  width: 800px;\n}\n\n.logo-container { /* line 22 */\n  align-items: center;\n  display: flex;\n  height: 100px;\n  justify-content: space-between;\n  width: 800px;\n}\n\n.logo-icon { /* line 23 */\n  height: 130px;\n}\n\n.welcome-header {\n  padding-right: 25px;\n}\n\n.welcome-message { /* line 26 */\n  font-size: 30px;\n  margin-top: 120px;\n  text-align: center;\n}\n\n.user-data-container { /* line 27 */\n  align-content: flex-start;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-around;\n  height: 605px;\n  margin-top: 25px;\n  width: 800px;\n}\n\n.category-form { /* line 30 */\n  text-align: center;\n}\n\n.form-container { /* line 35 */\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.step-chart {\n  padding-bottom: 25px;\n}\n\n.my-week-info-container { /* line 36 */\n  height: 300px;\n  padding-bottom: 100px;\n  width: 750px;\n}\n\n.my-info-header { /* line 44 */\n  text-align: center;\n}\n\n.user-avatar { /* line 45 */\n  height: 130px;\n  margin: 5px 0px 10px 50px;\n}\n\n.my-user-info { /* line 46 */\n  margin-left: 10px;\n  overflow-x: scroll;\n  overflow-y: scroll;\n}\n\n.steps-box-container { /* line 48 */\n  font-size: 20px;\n  height: 175px;\n  text-align: center;\n}\n\n/* Styling Properties Added by Javascipt */\n.activity-data-display {\n  height: 1000px;\n}\n\n.hide {\n  display: none !important;\n}\n\n.large {\n  height: 600px;\n  width: 600px;\n}\n\n.medium {\n  height: 300px;\n  width: 300px;\n}\n\n.small {\n  height: 85px;\n  width: 85px;\n}\n\n.hydration-background {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n}\n\n.sleep-background {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n}\n\n.step-background {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n}\n\n.wiggle {\n  animation: wiggle 2s;\n}\n\n@keyframes wiggle {\n  0% {\n    transform: translate(1px, 1px) rotate(5deg);\n  }\n  10% {\n    transform: translate(1px, -1px) rotate(-5deg);\n  }\n  20% {\n    transform: translate(1px, 2px) rotate(5deg);\n  }\n  30% {\n    transform: translate(-3px, 1px) rotate(-5deg);\n  }\n  40% {\n    transform: translate(-1px, -1px) rotate(5deg);\n  }\n}", "",{"version":3,"sources":["webpack://./src/css/styles.css"],"names":[],"mappings":"AAAA,uBAAA;AACA,qDAAA;AACA;EACE,kBAAA;EACA,aAAA;EACA,sBAAA;EACA,aAAA;EACA,mBAAA;EACA,gBAAA;EACA,YAAA;AACF;;AAEA;EACE,yBAAA;EACA,mBAAA;AACF;;AAEA;EACE,kBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;AACF;;AAEA;EACE,eAAA;EACA,YAAA;EACA,YAAA;AACF;;AAEA;EACE,qBAAA;EACA,qBAAA;AACF;;AAEA;EACE,iBAAA;EACA,gBAAA;AACF;;AAEA;EACE,iBAAA;EACA,kBAAA;EACA,aAAA;EACA,yBAAA;EACA,yBAAA;EACA,mBAAA;EACA,+BAAA;EACA,YAAA;AACF;;AAEA;EACE,kBAAA;AACF;;AAEA;EACE,sBAAA;EACA,2BAAA;EACA,aAAA;EACA,eAAA;EACA,gBAAA;EACA,kBAAA;EACA,YAAA;AACF;;AAEA;EACE,yBAAA;EACA,yBAAA;EACA,mBAAA;EACA,+BAAA;EACA,aAAA;EACA,wBAAA;EACA,YAAA;AACF;;AAEA;EACE,cAAA;AACF;;AAEA,6BAAA;AACA,4CAAA;AACA,aAAA,YAAA;EACE,yBAAA;EACA,aAAA;EACA,gCAAA;EACA,uBAAA;AACF;;AAEA,kBAAA,YAAA;EACE,mBAAA;EACA,aAAA;EACA,sBAAA;EACA,6BAAA;EACA,kBAAA;EACA,aAAA;AACF;;AAEA,aAAA,WAAA;EACE,YAAA;EACA,mBAAA;AACF;;AAEA,2BAAA,YAAA;EACE,aAAA;EACA,sBAAA;EACA,kBAAA;EACA,aAAA;AACF;;AAEA,UAAA,YAAA;EACE,kBAAA;AACF;;AAEA,gBAAA,YAAA;EACE,aAAA;EACA,iBAAA;EACA,YAAA;AACF;;AAEA,kBAAA,YAAA;EACE,mBAAA;EACA,aAAA;EACA,aAAA;EACA,8BAAA;EACA,YAAA;AACF;;AAEA,aAAA,YAAA;EACE,aAAA;AACF;;AAEA;EACE,mBAAA;AACF;;AAEA,mBAAA,YAAA;EACE,eAAA;EACA,iBAAA;EACA,kBAAA;AACF;;AAEA,uBAAA,YAAA;EACE,yBAAA;EACA,aAAA;EACA,eAAA;EACA,6BAAA;EACA,aAAA;EACA,gBAAA;EACA,YAAA;AACF;;AAEA,iBAAA,YAAA;EACE,kBAAA;AACF;;AAEA,kBAAA,YAAA;EACE,aAAA;EACA,sBAAA;EACA,uBAAA;AACF;;AAEA;EACE,oBAAA;AACF;;AAEA,0BAAA,YAAA;EACE,aAAA;EACA,qBAAA;EACA,YAAA;AACF;;AAEA,kBAAA,YAAA;EACE,kBAAA;AACF;;AAEA,eAAA,YAAA;EACE,aAAA;EACA,yBAAA;AACF;;AAEA,gBAAA,YAAA;EACE,iBAAA;EACA,kBAAA;EACA,kBAAA;AACF;;AAEA,uBAAA,YAAA;EACE,eAAA;EACA,aAAA;EACA,kBAAA;AACF;;AAEA,0CAAA;AACA;EACE,cAAA;AACF;;AAEA;EACE,wBAAA;AACF;;AAEA;EACE,aAAA;EACA,YAAA;AACF;;AAEA;EACE,aAAA;EACA,YAAA;AACF;;AAEA;EACE,YAAA;EACA,WAAA;AACF;;AAEA;EACE,yDAAA;AACF;;AAEA;EACE,yDAAA;AACF;;AAEA;EACE,yDAAA;AACF;;AAEA;EACE,oBAAA;AACF;;AAEA;EACE;IAAK,2CAAA;EAEL;EADA;IAAM,6CAAA;EAIN;EAHA;IAAM,2CAAA;EAMN;EALA;IAAM,6CAAA;EAQN;EAPA;IAAK,6CAAA;EAUL;AACF","sourcesContent":["/* Styling index.html */\n/* General styling classes; Arranged alphabetically */\n.aside {\n  align-items: right;\n  display: flex;\n  flex-direction: column;\n  height: 750px;\n  margin-bottom: 10px;\n  margin-top: 10px;\n  width: 200px;\n}\n\nbutton {\n  background-color: #E1E8FF;\n  border-radius: 10px;\n}\n\n.header {\n  text-align: center;\n  font-size: 25px;\n  margin-top: 20px;\n  margin-bottom: 15px;\n}\n\n.icon {\n  cursor: pointer;\n  height: 80px;\n  width: 130px;\n}\n\n.icon:hover {\n  transform: scale(1.1);\n  transition: 0.2s ease;\n  }\n\nform {\n  margin-left: 20px;\n  margin-top: 15px;\n}\n\n.form-display {\n  margin-top: 100px;\n  margin-left: 160px;\n  height: 300px;\n  background-color: #FFFFFF;\n  border: 2px solid #8892B3;\n  border-radius: 20px;\n  box-shadow: 3px 3px 3px #8892b3;\n  width: 450px;\n}\n\n.confirmation-message {\n  padding-left: 20px;\n}\n\n.data-display {\n  background-size: cover;\n  background-position: center;\n  height: 200px;\n  font-size: 18px;\n  margin-top: 25px;\n  text-align: center;\n  width: 200px;\n}\n\n.display-box {\n  background-color: #FFFFFF;\n  border: 2px solid #8892B3;\n  border-radius: 20px;\n  box-shadow: 3px 3px 3px #8892B3;\n  height: 400px;\n  margin: 0px 0px 10px 0px;\n  width: 200px;\n}\n\n.text {\n  color: #464F6D;\n}\n\n/* Specific styling classes */\n/* Arranged according to order of elements */\nbody, html { /* line 10 */\n  background-color: #F0F4FF;\n  display: flex;\n  font-family: 'Dosis', sans-serif;\n  justify-content: center;\n}\n\n.navigation-bar { /* line 12 */\n  align-items: center;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-evenly;\n  text-align: center;\n  height: 500px;\n}\n\n.form-icon { /* line 16*/\n  height: 80px;\n  margin-bottom: 15px;\n}\n\n.my-friend-box-container { /* line 17 */\n  display: flex;\n  flex-direction: column;\n  text-align: center;\n  height: 300px;\n}\n\n.scroll { /* line 19 */\n  overflow-y: scroll;\n}\n\n.main-display { /* line 21 */\n  height: 750px;\n  margin: 10px 20px;\n  width: 800px;\n}\n\n.logo-container { /* line 22 */\n  align-items: center;\n  display: flex;\n  height: 100px;\n  justify-content: space-between;\n  width: 800px;\n}\n\n.logo-icon { /* line 23 */\n  height: 130px;\n}\n\n.welcome-header {\n  padding-right: 25px;\n}\n\n.welcome-message { /* line 26 */\n  font-size: 30px;\n  margin-top: 120px;\n  text-align: center;\n}\n\n.user-data-container { /* line 27 */\n  align-content: flex-start;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-around;\n  height: 605px;\n  margin-top: 25px;\n  width: 800px;\n}\n\n.category-form { /* line 30 */\n  text-align: center;\n}\n\n.form-container { /* line 35 */\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.step-chart {\n  padding-bottom: 25px;\n}\n\n.my-week-info-container { /* line 36 */\n  height: 300px;\n  padding-bottom: 100px;\n  width: 750px;\n}\n\n.my-info-header { /* line 44 */\n  text-align: center;\n}\n\n.user-avatar { /* line 45 */\n  height: 130px;\n  margin: 5px 0px 10px 50px;\n}\n\n.my-user-info { /* line 46 */\n  margin-left: 10px;\n  overflow-x: scroll;\n  overflow-y: scroll;\n}\n\n.steps-box-container { /* line 48 */\n  font-size: 20px;\n  height: 175px;\n  text-align: center;\n}\n\n/* Styling Properties Added by Javascipt */\n.activity-data-display {\n  height: 1000px;\n}\n\n.hide {\n  display: none !important;\n}\n\n.large{\n  height: 600px;\n  width: 600px;\n}\n\n.medium{\n  height: 300px;\n  width: 300px;\n}\n\n.small{\n  height: 85px;\n  width: 85px;\n}\n\n.hydration-background {\n  background-image: url('../images/hydration-background.svg');\n}\n\n.sleep-background {\n  background-image: url('../images/sleep-background.svg');\n}\n\n.step-background {\n  background-image: url('../images/step-background.svg');\n}\n\n.wiggle {\n  animation: wiggle 2s;\n}\n\n@keyframes wiggle {\n  0% { transform: translate(1px, 1px) rotate(5deg); }\n  10% { transform: translate(1px, -1px) rotate(-5deg); }\n  20% { transform: translate(1px, 2px) rotate(5deg); }\n  30% { transform: translate(-3px, 1px) rotate(-5deg); }\n  40% {transform: translate(-1px, -1px) rotate(5deg); }\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14433,17 +14473,30 @@ let currentUser;
 let allUserData;
 let allSleepData;
 let allHydrationData;
+let allActivityData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
+let stepChart;
+let regex = /^[0-9]+$/;
 
 //FETCH PROMISE:
 function startData() {
-    Promise.all([(0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__["default"])('users', 'userData'), (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__["default"])('sleep', 'sleepData'), (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__["default"])('hydration', 'hydrationData')])
+    Promise.all([(0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchData)('users', 'userData'), (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchData)('sleep', 'sleepData'), (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchData)('hydration', 'hydrationData'), (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchData)('activity', 'activityData')])
       .then((dataSet) => {
         allUserData = new _UserRepository__WEBPACK_IMPORTED_MODULE_0__["default"](dataSet[0]);
         allSleepData = dataSet[1];
         allHydrationData = dataSet[2];
+        allActivityData = dataSet[3];
         generatePageLoad(allUserData);
+  })
+};
+
+function updateData() {
+  Promise.all([(0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchData)('sleep', 'sleepData'), (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchData)('hydration', 'hydrationData'), (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchData)('activity', 'activityData')])
+    .then((dataSet) => {
+      allSleepData = dataSet[0];
+      allHydrationData = dataSet[1];
+      allActivityData = dataSet[2];
   })
 };
 
@@ -14451,26 +14504,68 @@ function startData() {
 let waterIcon = document.getElementById('water-icon');
 let sleepIcon = document.getElementById('sleep-icon');
 let activityIcon = document.getElementById('activity-icon');
+let formIcon = document.getElementById('form-icon');
 let welcomeUserName = document.getElementById('welcomeUserName')
 let welcomeMessage = document.getElementById('welcomeMessage');
 let userInfoContainer = document.getElementById('myUserInfo');
-let infoContainerHeader = document.getElementById('infoContainerHeader')
 let userStepGoalText = document.getElementById('userStepGoalText');
-let averageStepGoalContainer = document.getElementById('averageStepGoalContainer');
 let averageStepGoalText = document.getElementById('avgStepGoal');
 let userDataContainer = document.getElementById('userDataContainer')
 let myDayInfoContainer = document.getElementById('myDayInfoContainer');
 let dayInfoText = document.getElementById('dayInfoText');
 let myAverageInfo = document.getElementById('myAverageInfoContainer');
 let averageInfoText = document.getElementById('averageInfoText');
-let myaverageInfoContainer = document.getElementById('myAverageInfoContainer');
+let myAverageInfoContainer = document.getElementById('myAverageInfoContainer');
 let weekInfoText = document.getElementById('weekInfoText');
 let myWeekInfo = document.getElementById('myWeekInfoContainer');
-let navIcons = [waterIcon, sleepIcon, activityIcon];
+let navIcons = [waterIcon, sleepIcon, activityIcon, formIcon];
 let logoContainer = document.getElementById('logoContainer');
+let formDisplay = document.getElementById('formDisplay');
+let hydrationForm = document.getElementById('hydrationForm');
+let sleepForm = document.getElementById('sleepForm');
+let activityForm = document.getElementById('activityForm');
+let forms = [hydrationForm, sleepForm, activityForm];
+let hydrationRadio = document.getElementById('hydrationRadio');
+let sleepRadio = document.getElementById('sleepRadio');
+let activityRadio = document.getElementById('activityRadio');
+let radioButtons = [hydrationRadio, sleepRadio, activityRadio];
+let bubbleHeaders = document.querySelectorAll('#infoContainerHeader');
+let stepChartDisplay = document.getElementById('stepChart');
+let hydrationSubmitButton = document.getElementById('hydrationSubmitButton');
+let sleepSubmitButton = document.getElementById('sleepSubmitButton');
+let activitySubmitButton = document.getElementById('activitySubmitButton');
+let submitButtons = [hydrationSubmitButton, sleepSubmitButton, activitySubmitButton];
+let numOuncesInput = document.getElementById('numOunces');
+let hoursSleptInput = document.getElementById('hoursSlept');
+let sleepQualityInput = document.getElementById('sleepQuality');
+let flightsOfStairsInput = document.getElementById('flightsOfStairs');
+let minutesActiveInput = document.getElementById('minutesActive');
+let numStepsInput = document.getElementById('numSteps');
+let hydrationDateInput = document.getElementById('hydrationDate');
+let sleepDateInput = document.getElementById('sleepDate');
+let activityDateInput = document.getElementById('activityDate');
+let confirmationMessage = document.getElementById('confirmationMessage');
+let formContainer = document.getElementById('formContainer');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
+navIcons.forEach(icon => {
+  icon.addEventListener('click', function() {changeDisplay(currentUser)
+  })
+});
+navIcons.forEach(icon => {
+  icon.addEventListener('keydown', function() { if (event.key === 'Enter') { changeDisplay(currentUser) }
+})
+});
+radioButtons.forEach(button => {
+  button.addEventListener('click', function() {selectForm()
+  })
+});
+submitButtons.forEach(button => {
+  button.addEventListener('click', function() {submitForm()
+  })
+});
+formContainer.addEventListener('keyup', validateForm);
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -14480,11 +14575,7 @@ function generatePageLoad(userData) {
   renderMyFriends(currentUser, userData.userData);
   renderMyStepGoal(currentUser);
   renderAvgStepGoal(userData);
-  navIcons.forEach(icon => {
-    icon.addEventListener('click', function() {changeDisplay(currentUser)
-    })
-  })
-};
+}
 
 function generateRandomUser(userData) {
   let currentUserObj = userData[Math.floor(Math.random() * userData.length)];
@@ -14499,29 +14590,120 @@ function moveWelcomeMessage() {
   welcomeUser(currentUser);
   logoContainer.appendChild(welcomeUserName);
   welcomeUserName.classList.add('welcome-header');
+  welcomeUserName.classList.add('header');
 };
 
 function changeDisplay(currentUser) {
   if (event.target.id === 'water-icon') {
     renderUserData('water', currentUser);
+    unhide(userDataContainer);
   } else if (event.target.id === 'sleep-icon') {
     renderUserData('sleep', currentUser);
+    unhide(userDataContainer);
   } else if (event.target.id === 'activity-icon') {
     renderUserData('activity', currentUser);
+    unhide(userDataContainer);
+  } else if (event.target.id === 'form-icon') {
+    unhide(formDisplay);
+    hide(userDataContainer)
   }
   hide(welcomeMessage);
-  unhide(userDataContainer);
-  unhide(logoContainer);
   moveWelcomeMessage();
 };
 
-function hide(element) {
-  element.classList.add('hide');
+function selectForm() {
+  if (event.target.id === "hydrationRadio") {
+    hideAllForms();
+    unhide(hydrationForm)
+  } else if (event.target.id === "sleepRadio") {
+    hideAllForms();
+    unhide(sleepForm)
+  } else if (event.target.id === "activityRadio") {
+    hideAllForms();
+    unhide(activityForm)
+  }
 };
 
-function unhide(element) {
-  element.classList.remove('hide');
+function validateSleepInput() {
+  if (sleepDateInput.value && hoursSleptInput.value && sleepQualityInput.value && validateInputType(hoursSleptInput)) {
+    sleepSubmitButton.disabled = false
+  }
 };
+
+function validateActivityInput() {
+  if (activityDateInput.value && flightsOfStairsInput.value && minutesActiveInput.value && numStepsInput.value && validateInputType(flightsOfStairsInput) && validateInputType(minutesActiveInput) && validateInputType(numStepsInput)) {
+    activitySubmitButton.disabled = false
+  }
+};
+
+function validateHydrationInput() {
+  if (hydrationDateInput.value && numOuncesInput.value && validateInputType(numOuncesInput)) {
+    hydrationSubmitButton.disabled = false
+  }
+};
+
+function validateForm() {
+  validateSleepInput();
+  validateActivityInput();
+  validateHydrationInput();
+};
+
+function validateInputType(input) {
+  if(!regex.test(input.value)) {
+    alert ('Please enter a numeric value')
+    return false
+  } else {
+    return true
+  }
+};
+
+function submitForm() {
+  event.preventDefault();
+
+  const id = currentUser.id
+  if (event.target.id === "hydrationSubmitButton") {
+    const newHydrationData = {userID:id, date: hydrationDateInput.value, numOunces: parseInt(numOuncesInput.value)};
+    (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchPost)('hydration', newHydrationData)
+      .then(data => showConfirmationMessage())
+      .then(data => updateData())
+  } else if (event.target.id === "sleepSubmitButton") {
+      const newSleepData = {userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)};
+      (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchPost)('sleep', newSleepData)
+        .then(data => showConfirmationMessage())
+        .then(data => updateData())
+  } else if (event.target.id === "activitySubmitButton") {
+      const newActivityData = {userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)};
+      (0,_apiCalls_js__WEBPACK_IMPORTED_MODULE_2__.fetchPost)('activity', newActivityData)
+        .then(data => showConfirmationMessage())
+        .then(data => updateData())
+  }
+}
+
+function showConfirmationMessage() {
+  resetForm();
+  unhide(confirmationMessage);
+  confirmationMessage.classList.add('wiggle');
+  setTimeout(function() {
+    hide(confirmationMessage)
+    hideAllForms();
+  }, 2000 )
+}
+
+function resetForm() {
+  forms.forEach(form => {
+    form.reset()
+    })
+
+  radioButtons.forEach(button => {
+    button.checked = false
+    })
+}
+
+function hideAllForms() {
+  forms.forEach(form => {
+    form.classList.add('hide')
+  })
+}
 
 function renderMyInfo(currentUser) {
   var userAvatar = document.createElement('img');
@@ -14559,99 +14741,171 @@ function renderMyStepGoal(user) {
 };
 
 function renderAvgStepGoal(dataSet) {
-  averageStepGoalText.innerText = dataSet.returnAverageUserData('steps');
+  averageStepGoalText.innerText = dataSet.returnAverageUserData(allUserData.userData, 'dailyStepGoal');
+};
+
+function renderHydration(user) {
+  unhideHeaders();
+  dayInfoText.innerText = `You have consumed ${user.returnUserDataByDay(allHydrationData, user.findMostRecentDate(allHydrationData), 'numOunces')} ounces of water!`
+  averageInfoText.innerText = ` ${user.returnOverallAverage(allHydrationData, 'numOunces')} fluid ounces per day!`
+  weekInfoText.innerText = `Here is the water you consumed in the last week: `
+  clearContainerBackgrounds();
+  fillContainerBackgrounds('hydration-background');
+  userDataContainer.classList.remove('activity-data-display');
+  displayWeeklyData(allHydrationData, 'numOunces', user);
+};
+
+function renderSleep(user) {
+  unhideHeaders();
+  dayInfoText.innerText = `Today, you slept ${user.returnUserDataByDay(allSleepData, user.findMostRecentDate(allSleepData), 'hoursSlept')} hours and your quality of sleep was ${user.returnUserDataByDay(allSleepData, user.findMostRecentDate(allSleepData), 'sleepQuality')} / 5!`
+  averageInfoText.innerText = ` ${user.returnOverallAverage(allSleepData, 'hoursSlept')} hours of sleep per night and your average sleep quality is ${user.returnOverallAverage(allSleepData, 'sleepQuality')} / 5! `
+  weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
+  clearContainerBackgrounds();
+  fillContainerBackgrounds('sleep-background');
+  userDataContainer.classList.remove('activity-data-display');
+  displayWeeklyData(allSleepData, 'hoursSlept', user)
+};
+
+function renderActivity(user) {
+  hideHeaders();
+  weekInfoText.innerHTML = "Here's how you did this week:"
+  dayInfoText.innerHTML = `<h3 class="header">Your most recent stats: </h3><p>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'numSteps')} steps <br>
+    ${user.returnMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked<br>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'flightsOfStairs')} flights of stairs climbed<br>
+    ${user.returnUserDataByDay(allActivityData, user.findMostRecentDate(allActivityData), 'minutesActive')} minutes active</p>`
+  clearContainerBackgrounds();
+  fillContainerBackgrounds('step-background');
+  userDataContainer.classList.add('activity-data-display');
+  displayWeeklyData(allActivityData, 'activity', user)
+};
+
+function renderAllUserActivity(user) {
+  averageInfoText.innerHTML = `<h3 class="header">Compared to other FitLit users:</h3><p>
+    ${allUserData.returnAverageUserData(allActivityData, 'numSteps')} steps <br>
+    ${allUserData.returnAverageMilesWalked(allActivityData, user.findMostRecentDate(allActivityData))} miles walked<br>
+    ${allUserData.returnAverageUserData(allActivityData, 'flightsOfStairs')} flights of stairs climbed<br>
+    ${allUserData.returnAverageUserData(allActivityData, 'minutesActive')} minutes active</p>`
+};
+
+function renderUserData(dataType, user) {
+  if (dataType === 'water') {
+    showUserDataArea();
+    renderHydration(user);
+  } else if (dataType === 'sleep') {
+    showUserDataArea();
+    renderSleep(user);
+  } else {
+    showUserDataArea();
+    renderActivity(user);
+    renderAllUserActivity(user);
+  }
+};
+
+function displayWeeklyData(array, neededData, user) {
+  if (neededData === 'hoursSlept') {
+    let userWeekData = user.returnUserWeekData(array, neededData);
+    let sleepQualData = user.returnUserWeekData(array, 'sleepQuality');
+    let data = {dates: [], sleepQuality: [], hoursSlept: [] };
+    pushIntoObj(userWeekData, 'dates', 0, data);
+    pushIntoObj(userWeekData, 'hoursSlept', 1, data);
+    pushIntoObj(sleepQualData, 'sleepQuality', 1, data);
+
+    renderSleepChart(data);
+
+  } else if (neededData === 'numOunces'){
+    const userWeekData = user.returnUserWeekData(array, neededData)
+    const data = { dates: [], numOunces: []};
+    pushIntoObj(userWeekData, 'dates', 0, data);
+    pushIntoObj(userWeekData, 'numOunces', 1, data);
+
+    renderHydrationChart(data);
+
+  } else {
+    const userWeekSteps = user.returnUserWeekData(array, 'numSteps');
+    const userWeekStairs = user.returnUserWeekData(array, 'flightsOfStairs');
+    const userWeekActiveMin = user.returnUserWeekData(array, 'minutesActive');
+    const data = { dates: [], steps: [], stairs: [], minutes: [] };
+    pushIntoObj(userWeekSteps, 'dates', 0, data);
+    pushIntoObj(userWeekSteps, 'steps', 1, data);
+    pushIntoObj(userWeekStairs, 'stairs', 1, data);
+    pushIntoObj(userWeekActiveMin, 'minutes', 1, data);
+    renderActivityChart(data);
+    renderStepChart(data);
+  }
+};
+
+function pushIntoObj(array, key, index, objName) {
+  objName[key] = (array.map(date => {
+    return date.split(": ")[index]}));
+};
+
+
+//DISPLAY HELPER FUNCTIONS:
+function clearContainerBackgrounds() {
+  const backgrounds = ['sleep-background', 'step-background', 'hydration-background'];
+  backgrounds.forEach(background => {
+    myDayInfoContainer.classList.remove(background);
+    myAverageInfoContainer.classList.remove(background);
+  })
+};
+
+function hideHeaders() {
+  bubbleHeaders.forEach(header => {
+    hide(header);
+  });
+};
+
+function unhideHeaders() {
+  bubbleHeaders.forEach(header => {
+    unhide(header);
+  });
+}
+
+function fillContainerBackgrounds(icon) {
+  myDayInfoContainer.classList.add(icon);
+  myAverageInfoContainer.classList.add(icon);
+};
+
+function showUserDataArea() {
+  hide(welcomeMessage);
+  hide(formDisplay);
+  unhide(userDataContainer);
+  unhide(myAverageInfo);
+  unhide(myWeekInfo);
+};
+
+function hide(element) {
+  element.classList.add('hide');
+};
+
+function unhide(element) {
+  element.classList.remove('hide');
 };
 
 function resetChart() {
   myChart.destroy();
 };
 
-function renderUserData(dataType, user) {
-  hide(welcomeMessage);
-  unhide(userDataContainer);
-
-  if (dataType === 'water') {
-    unhide(myAverageInfo);
-    unhide(myWeekInfo);
-    dayInfoText.innerText = `You have consumed ${user.returnUserOuncesByDay(allHydrationData, user.findMostRecentDate(allHydrationData))} ounces of water!`
-    averageInfoText.innerText = ` ${user.returnAllTimeHydration(allHydrationData)} fluid ounces per day!`
-    weekInfoText.innerText = `Here is the water you consumed in the last week: `
-    myDayInfoContainer.classList.remove('sleep-background');
-    myDayInfoContainer.classList.remove('step-background');
-    myDayInfoContainer.classList.add('hydration-background');
-    myaverageInfoContainer.classList.remove('sleep-background');
-    myaverageInfoContainer.classList.remove('step-background');
-    myaverageInfoContainer.classList.add('hydration-background');
-    weeklyDataMessage(allHydrationData, 'numOunces', user);
-  } else if (dataType === 'sleep') {
-    unhide(myAverageInfo);
-    unhide(myWeekInfo);
-    dayInfoText.innerText = `Today, you slept ${user.returnSleepHoursByDay(allSleepData, user.findMostRecentDate(allSleepData))} hours and your quality of sleep was ${user.returnSleepQualityByDay(allSleepData, user.findMostRecentDate(allSleepData))} / 5!`
-    averageInfoText.innerText = ` ${user.returnOverallAverageHours(allSleepData)} hours of sleep per night and your average sleep quality is ${user.returnOverallAverageQuality(allSleepData)} / 5! `
-    weekInfoText.innerText = `Here are the hours and quality of sleep you achieved in the last week: `
-    myDayInfoContainer.classList.remove('hydration-background');
-    myDayInfoContainer.classList.remove('step-background');
-    myDayInfoContainer.classList.add('sleep-background');
-    myaverageInfoContainer.classList.remove('hydration-background');
-    myaverageInfoContainer.classList.remove('step-background');
-    myaverageInfoContainer.classList.add('sleep-background');
-    weeklyDataMessage(allSleepData, 'hoursSlept', user)
-  } else {
-    hide(myWeekInfo);
-    hide(myAverageInfo);
-    dayInfoText.innerText = `Go take a walk!`
-    myDayInfoContainer.classList.remove('hydration-background');
-    myDayInfoContainer.classList.remove('sleep-background');
-    myDayInfoContainer.classList.add('step-background');
-  }
+function resetStepChart() {
+  stepChart.destroy();
 }
 
-function weeklyDataMessage(array, neededData, user) {
-  if (neededData === 'hoursSlept') {
-    let userWeekData = user.returnUserWeekData(array, neededData);
-    let otherWeekData = user.returnUserWeekData(array, 'sleepQuality');
-    let data = [[],[]];
-    let dates = userWeekData.map(date => {
-      let splits = date.split(": ");
-      data[0].push(splits[1]);
-      return splits[0];
-      });
-
-    otherWeekData.forEach(dataPoint => {
-      let newSplits = dataPoint.split(": ");
-      data[1].push(newSplits[1]);
-      });
-
-    renderSleepChart(data, dates)
-
-  } else {
-    const userWeekData = user.returnUserWeekData(array, neededData)
-    const data = [ ];
-    const dates = userWeekData.map(date => {
-      const splits = date.split(": ");
-      data.push(splits[1]);
-      return splits[0];
-    });
-    renderHydrationChart(data, dates);
-    };
-  };
-
-function renderSleepChart(data, dates) {
+function renderSleepChart(data) {
   const chartLayout = document.getElementById('myChart');
-  const dataSet1 = data[0];
-  const dataSet2 = data[1];
+  hide(stepChartDisplay);
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](chartLayout, {
       type: 'line',
       data: {
-          labels: dates,
+          labels: data['dates'],
           datasets: [{
               label: 'Hours slept',
-              data: dataSet1,
+              data: data['hoursSlept'],
               backgroundColor: [
                 '#8892B3',
               ],
@@ -14662,7 +14916,7 @@ function renderSleepChart(data, dates) {
           },
           {
               label: 'Sleep quality (out of 5)',
-              data: dataSet2,
+              data: data['sleepQuality'],
               backgroundColor: [
                   '#D6C2FF'
               ],
@@ -14685,22 +14939,23 @@ function renderSleepChart(data, dates) {
           maintainAspectRatio: false,
       }
   });
-}
+};
 
-function renderHydrationChart(data, dates) {
+function renderHydrationChart(data) {
   const chartLayout = document.getElementById('myChart');
+  hide(stepChartDisplay);
 
   if(myChart) {
-    resetChart(myChart)
+    resetChart()
   };
 
   myChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](chartLayout, {
       type: 'line',
       data: {
-          labels: dates,
+          labels: data['dates'],
           datasets: [{
               label: 'Ounces of water consumed',
-              data: data,
+              data: data['numOunces'],
               backgroundColor: [
                   '#8892B3',
               ],
@@ -14723,6 +14978,83 @@ function renderHydrationChart(data, dates) {
           maintainAspectRatio: false,
       }
   });
+};
+
+function renderActivityChart(data) {
+  const chartLayout = document.getElementById('myChart');
+
+  if(myChart) {
+    resetChart()
+  };
+
+  myChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](chartLayout, {
+      type: 'line',
+      data: {
+          labels: data['dates'],
+          datasets: [{
+              label: 'Flights of stairs climbed',
+              data: data['stairs'],
+              backgroundColor: [
+                  '#D6C2FF'
+              ],
+              borderColor: [
+                  '#5F6E7D'
+              ],
+              borderWidth: 1
+          },
+          {
+              label: 'Minutes active',
+              data: data['minutes'],
+              backgroundColor: [
+                  'black'
+              ],
+              borderColor: [
+                  'black'
+              ],
+              borderWidth: 1
+          }
+        ]
+      },
+      options: {
+          interaction: {
+            mode: 'index'
+          },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          },
+          maintainAspectRatio: false,
+      }
+  });
+}
+
+function renderStepChart(data) {
+  const chartLayout = stepChartDisplay;
+
+  unhide(stepChartDisplay);
+
+  if(stepChart) {
+    resetStepChart();
+  };
+
+  stepChart = new chart_js_auto__WEBPACK_IMPORTED_MODULE_3__["default"](chartLayout, {
+      type: 'line',
+      data: {
+          labels: data['dates'],
+          datasets: [{
+              label: 'Step count',
+              data: data['steps'],
+              backgroundColor: [
+                  '#8892B3',
+              ],
+              borderColor: [
+                  '#88B3B3',
+              ],
+              borderWidth: 1
+          }]
+        }
+      });
 };
 
 })();
