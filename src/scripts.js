@@ -98,6 +98,10 @@ navIcons.forEach(icon => {
   icon.addEventListener('click', function() {changeDisplay(currentUser)
   })
 });
+navIcons.forEach(icon => {
+  icon.addEventListener('keydown', function() { if (event.key === 'Enter') { changeDisplay(currentUser) }
+})
+});
 radioButtons.forEach(button => {
   button.addEventListener('click', function() {selectForm()
   })
@@ -106,7 +110,7 @@ submitButtons.forEach(button => {
   button.addEventListener('click', function() {submitForm()
   })
 });
-formContainer.addEventListener('keyup', validateForm)
+formContainer.addEventListener('keyup', validateForm);
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -163,17 +167,31 @@ function selectForm() {
     hideAllForms();
     unhide(activityForm)
   }
-}
+};
 
-function validateForm() {
-  if (hydrationDateInput.value && numOuncesInput.value && validateInputType(numOuncesInput)) {
-    hydrationSubmitButton.disabled = false 
-  } else if (sleepDateInput.value && hoursSleptInput.value && sleepQualityInput.value && validateInputType(hoursSleptInput)) {
-    sleepSubmitButton.disabled = false 
-  } else if (activityDateInput.value && flightsOfStairsInput.value && minutesActiveInput.value && numStepsInput.value && validateInputType(flightsOfStairsInput) && validateInputType(minutesActiveInput) && validateInputType(numStepsInput)) {
+function validateSleepInput() {
+  if (sleepDateInput.value && hoursSleptInput.value && sleepQualityInput.value && validateInputType(hoursSleptInput)) {
+    sleepSubmitButton.disabled = false
+  }
+};
+
+function validateActivityInput() {
+  if (activityDateInput.value && flightsOfStairsInput.value && minutesActiveInput.value && numStepsInput.value && validateInputType(flightsOfStairsInput) && validateInputType(minutesActiveInput) && validateInputType(numStepsInput)) {
     activitySubmitButton.disabled = false
   }
-}
+};
+
+function validateHydrationInput() {
+  if (hydrationDateInput.value && numOuncesInput.value && validateInputType(numOuncesInput)) {
+    hydrationSubmitButton.disabled = false
+  }
+};
+
+function validateForm() {
+  validateSleepInput();
+  validateActivityInput();
+  validateHydrationInput();
+};
 
 function validateInputType(input) {
   if(!regex.test(input.value)) {
@@ -182,15 +200,14 @@ function validateInputType(input) {
   } else {
     return true
   }
-}
+};
 
 function submitForm() {
   event.preventDefault();
-  
+
   const id = currentUser.id
   if (event.target.id === "hydrationSubmitButton") {
     const newHydrationData = {userID:id, date: hydrationDateInput.value, numOunces: parseInt(numOuncesInput.value)};
-    console.log(newHydrationData)
     fetchPost('hydration', newHydrationData)
       .then(data => showConfirmationMessage())
       .then(data => updateData())
@@ -208,9 +225,9 @@ function submitForm() {
 }
 
 function showConfirmationMessage() {
-  console.log('jello')
   resetForm();
   unhide(confirmationMessage);
+  confirmationMessage.classList.add('wiggle');
   setTimeout(function() {
     hide(confirmationMessage)
     hideAllForms();
@@ -584,4 +601,3 @@ function renderStepChart(data) {
         }
       });
 };
-

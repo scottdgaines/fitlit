@@ -41,12 +41,16 @@ form {
 .form-display {
   margin-top: 100px;
   margin-left: 160px;
-  height: 250px;
+  height: 300px;
   background-color: #FFFFFF;
   border: 2px solid #8892B3;
   border-radius: 20px;
   box-shadow: 3px 3px 3px #8892b3;
   width: 450px;
+}
+
+.confirmation-message {
+  padding-left: 20px;
 }
 
 .data-display {
@@ -220,4 +224,16 @@ body, html { /* line 10 */
 
 .step-background {
   background-image: url('../images/step-background.svg');
+}
+
+.wiggle {
+  animation: wiggle 2s;
+}
+
+@keyframes wiggle {
+  0% { transform: translate(1px, 1px) rotate(5deg); }
+  10% { transform: translate(1px, -1px) rotate(-5deg); }
+  20% { transform: translate(1px, 2px) rotate(5deg); }
+  30% { transform: translate(-3px, 1px) rotate(-5deg); }
+  40% {transform: translate(-1px, -1px) rotate(5deg); }
 }
