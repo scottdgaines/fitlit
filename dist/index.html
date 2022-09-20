@@ -33,31 +33,31 @@
           <input tabindex="0" type="radio" name="data-set" id="activityRadio" />Activity
         </form>
         <div class="form-container" id="formContainer">
-          <form class="hydration-form hide text" id="hydrationForm" name="hydrationForm">
+          <form class="hydration-form hide text" id="hydrationForm" name="hydrationForm" autocomplete="off">
             <label for="date">Date</label>
-            <input tabindex="0" type="date" id="hydrationDate" name="date" required />
+            <input tabindex="0" type="date" id="hydrationDate" name="date" />
             <br><label for="numOunces">How many ounces did you drink?</label>
-            <input tabindex="0" type="text" id="numOunces" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" required />
+            <input tabindex="0" type="text" id="numOunces" name="numOunces" pattern="[0-9]+" title="Please enter numbers only" />
             <br><button tabindex="0" type="submit" class="hydration-submit-button" id="hydrationSubmitButton" disabled>Submit</button>
           </form>
-          <form class="sleep-form hide text" id="sleepForm" name="sleepForm">
+          <form class="sleep-form hide text" id="sleepForm" name="sleepForm" autocomplete="off">
             <label for="date">Date</label>
-            <input tabindex="0" type="date" id="sleepDate" name="date" required />
+            <input tabindex="0" type="date" id="sleepDate" name="date"  />
             <br><label for="hoursSlept">How many hours did you sleep? </label>
-            <input tabindex="0" type="text" id="hoursSlept" name="hoursSlept" pattern="[0-9]+" title="Please enter numbers only" required />
+            <input tabindex="0" type="text" id="hoursSlept" name="hoursSlept" pattern="[0-9]+" title="Please enter numbers only"  />
             <br><label for="sleepQuality">On a scale of 1 to 5, how well did you sleep? </label>
-            <input tabindex="0" type="number" id="sleepQuality" name="sleepQuality" min="0" max="5" required />
+            <input tabindex="0" type="text" id="sleepQuality" name="sleepQuality" pattern="[0-9]+" title="Please enter numbers only"  />
             <br><button tabindex="0" type="submit" class="sleep-submit-button" id="sleepSubmitButton" disabled>Submit</button>
           </form>
-          <form class="activity-form hide text" id="activityForm" name="activityForm">
+          <form class="activity-form hide text" id="activityForm" name="activityForm" autocomplete="off">
             <label for="date">Date</label>
-            <input tabindex="0" type="date" id="activityDate" name="date" required />
+            <input tabindex="0" type="date" id="activityDate" name="date"  />
             <br><label for="flightsOfStairs">How many flights of stairs did you climb?</label>
-            <input tabindex="0" type="text" id="flightsOfStairs" name="flightsOfStairs" pattern="[0-9]+" title="Please enter numbers only" required />
+            <input tabindex="0" type="text" id="flightsOfStairs" name="flightsOfStairs" pattern="[0-9]+" title="Please enter numbers only"  />
             <br><label for="minutesActive">How many minutes were you active?</label>
-            <input tabindex="0" type="text" id="minutesActive" name="minutesActive" pattern="[0-9]+" title="Please enter numbers only" required />
+            <input tabindex="0" type="text" id="minutesActive" name="minutesActive" pattern="[0-9]+" title="Please enter numbers only"  />
             <br><label for="numSteps">How many steps did you take?</label>
-            <input tabindex="0" type="text" id="numSteps" name="numSteps" pattern="[0-9]+" title="Please enter numbers only" required />
+            <input tabindex="0" type="text" id="numSteps" name="numSteps" pattern="[0-9]+" title="Please enter numbers only"  />
             <br><button tabindex="0" type="submit" class="activity-submit-button" id="activitySubmitButton" disabled>Submit</button>
           </form>
           <h3 class="confirmation-message hide" id="confirmationMessage">Your data has been recorded. Go you!</h3>
