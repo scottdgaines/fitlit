@@ -11,9 +11,6 @@ import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
 import './images/logo.svg';
-import Hydration from './Hydration';
-import Sleep from './Sleep';
-import Activity from './Activity';
 
 //GLOBAL VARIABLES:
 let userRepository;
@@ -25,6 +22,7 @@ let allActivityData;
 let allDataPoints = [allUserData, allSleepData, allHydrationData];
 let myChart;
 let stepChart;
+let regex = /^[0-9]+$/;
 
 //FETCH PROMISE:
 function startData() {
@@ -92,6 +90,7 @@ let hydrationDateInput = document.getElementById('hydrationDate');
 let sleepDateInput = document.getElementById('sleepDate');
 let activityDateInput = document.getElementById('activityDate');
 let confirmationMessage = document.getElementById('confirmationMessage');
+let formContainer = document.getElementById('formContainer');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
@@ -107,6 +106,7 @@ submitButtons.forEach(button => {
   button.addEventListener('click', function() {submitForm()
   })
 });
+formContainer.addEventListener('keyup', validateForm)
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -165,29 +165,50 @@ function selectForm() {
   }
 }
 
+function validateForm() {
+  if (hydrationDateInput.value && numOuncesInput.value && validateInputType(numOuncesInput)) {
+    hydrationSubmitButton.disabled = false 
+  } else if (sleepDateInput.value && hoursSleptInput.value && sleepQualityInput.value && validateInputType(hoursSleptInput)) {
+    sleepSubmitButton.disabled = false 
+  } else if (activityDateInput.value && flightsOfStairsInput.value && minutesActiveInput.value && numStepsInput.value && validateInputType(flightsOfStairsInput) && validateInputType(minutesActiveInput) && validateInputType(numStepsInput)) {
+    activitySubmitButton.disabled = false
+  }
+}
+
+function validateInputType(input) {
+  if(!regex.test(input.value)) {
+    alert ('Please enter a numeric value')
+    return false
+  } else {
+    return true
+  }
+}
+
 function submitForm() {
   event.preventDefault();
+  
   const id = currentUser.id
   if (event.target.id === "hydrationSubmitButton") {
-    const newHydrationData = new Hydration({userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)});
+    const newHydrationData = {userID:id, date: hydrationDateInput.value, numOunces: parseInt(numOuncesInput.value)};
+    console.log(newHydrationData)
     fetchPost('hydration', newHydrationData)
       .then(data => showConfirmationMessage())
       .then(data => updateData())
   } else if (event.target.id === "sleepSubmitButton") {
-      const newSleepData = new Sleep({userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)});
-      console.log(newSleepData)
+      const newSleepData = {userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)};
       fetchPost('sleep', newSleepData)
         .then(data => showConfirmationMessage())
         .then(data => updateData())
   } else if (event.target.id === "activitySubmitButton") {
-      const newActivityData = new Activity({userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)});
+      const newActivityData = {userID:id, date:`${activityDateInput.value}`, flightsOfStairs:parseInt(flightsOfStairsInput.value), minutesActive: parseInt(minutesActiveInput.value), numSteps: parseInt(numStepsInput.value)};
       fetchPost('activity', newActivityData)
         .then(data => showConfirmationMessage())
         .then(data => updateData())
   }
 }
 
-function showConfirmationMessage(){
+function showConfirmationMessage() {
+  console.log('jello')
   resetForm();
   unhide(confirmationMessage);
   setTimeout(function() {

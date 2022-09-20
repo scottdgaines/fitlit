@@ -69,7 +69,7 @@ class User {
 
     returnExceededStepGoals(array) {
       const newArray = this.findUser(array);
-      return newArray.filter(dataSet => {return dataSet.achieveStepGoal(this) === true})
+      return newArray.filter(dataSet => {return this.achieveStepGoal(array, dataSet.date) === true})
         .map(dataSet => dataSet.date)
     };
 
@@ -84,7 +84,14 @@ class User {
       })[0].flightsOfStairs;
     }
 
-
+    achieveStepGoal(array, date) {
+      const numSteps = this.returnUserDataByDay(array, date, 'numSteps')
+      if (numSteps >= this.dailyStepGoal) {
+          return true
+      } else {
+          return false
+      };
+  };
 };
 
 export default User;
