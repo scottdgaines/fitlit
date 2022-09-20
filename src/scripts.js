@@ -11,9 +11,6 @@ import './images/fitlit_step_icon.svg';
 import './images/sample_avatar.svg';
 import './images/friendIcon.svg';
 import './images/logo.svg';
-// import Hydration from './Hydration';
-// import Sleep from './Sleep';
-// import Activity from './Activity';
 
 //GLOBAL VARIABLES:
 let userRepository;
@@ -92,6 +89,7 @@ let hydrationDateInput = document.getElementById('hydrationDate');
 let sleepDateInput = document.getElementById('sleepDate');
 let activityDateInput = document.getElementById('activityDate');
 let confirmationMessage = document.getElementById('confirmationMessage');
+let formContainer = document.getElementById('formContainer');
 
 //EVENT LISTENERS:
 window.addEventListener('load', startData);
@@ -107,6 +105,7 @@ submitButtons.forEach(button => {
   button.addEventListener('click', function() {submitForm()
   })
 });
+formContainer.addEventListener('keyup', validateForm)
 
 //EVENT HANDLERS:
 function generatePageLoad(userData) {
@@ -165,17 +164,29 @@ function selectForm() {
   }
 }
 
+function validateForm() {
+  if (hydrationDateInput.value && numOuncesInput.value) {
+    hydrationSubmitButton.disabled = false 
+  } else if (sleepDateInput.value && hoursSleptInput.value && sleepQualityInput.value) {
+    sleepSubmitButton.disabled = false 
+  } else if (activityDateInput.value && flightsOfStairsInput.value && minutesActiveInput.value && numStepsInput.value) {
+    activitySubmitButton.disabled = false
+  }
+}
+  
+
 function submitForm() {
   event.preventDefault();
+  
   const id = currentUser.id
   if (event.target.id === "hydrationSubmitButton") {
-    const newHydrationData = {userID:id, date:`${hydrationDateInput.value}`, numOunces: parseInt(numOuncesInput.value)};
+    const newHydrationData = {userID:id, date: hydrationDateInput.value, numOunces: parseInt(numOuncesInput.value)};
+    console.log(newHydrationData)
     fetchPost('hydration', newHydrationData)
       .then(data => showConfirmationMessage())
       .then(data => updateData())
   } else if (event.target.id === "sleepSubmitButton") {
       const newSleepData = {userID:id, date:`${sleepDateInput.value}`, hoursSlept: parseInt(hoursSleptInput.value), sleepQuality: parseInt(sleepQualityInput.value)};
-      console.log(newSleepData)
       fetchPost('sleep', newSleepData)
         .then(data => showConfirmationMessage())
         .then(data => updateData())
@@ -187,7 +198,8 @@ function submitForm() {
   }
 }
 
-function showConfirmationMessage(){
+function showConfirmationMessage() {
+  console.log('jello')
   resetForm();
   unhide(confirmationMessage);
   setTimeout(function() {
