@@ -1,7 +1,7 @@
 # [FitLit](https://scottdgaines.github.io/fitlit/)
 let's get lit
 ---------
-[Project Board](https://trello.com/b/QivjNRBQ/fitlit) | 
+[Project Board](https://trello.com/b/F5SCYd5l/fitlit) | 
 [Project Wireframe](https://excalidraw.com/#json=wc3HAMJ52biTE6rWEUDRs,g2YzqQF7BI6AmCAkdvSW-A)
 
 ## Overview
