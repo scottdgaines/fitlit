@@ -1,11 +1,11 @@
 const fetchData = (dataFileName, dataKey) => {
-return fetch(`http://localhost:3001/api/v1/${dataFileName}`)
+return fetch(`https://fitlit-9ss8e7vre-scottdgaines.vercel.app/api/v1/${dataFileName}`)
   .then(response => response.json())
   .then(data => data[dataKey])
 };
 
 const fetchPost = (url, initObject) => {
-  return fetch(`http://localhost:3001/api/v1/${url}`, {
+  return fetch(`https://fitlit-9ss8e7vre-scottdgaines.vercel.app/api/v1/${url}`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(initObject)
