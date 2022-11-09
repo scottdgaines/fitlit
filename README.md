@@ -1,6 +1,6 @@
-# [FitLit](https://scottdgaines.github.io/fitlit/)
-let's get lit
----------
+# FitLit
+
+[Deployed Link](https://scottdgaines.github.io/fitlit/) | 
 [Project Board](https://trello.com/b/F5SCYd5l/fitlit) | 
 [Project Wireframe](https://excalidraw.com/#json=wc3HAMJ52biTE6rWEUDRs,g2YzqQF7BI6AmCAkdvSW-A)
 
